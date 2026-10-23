@@ -113,6 +113,38 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
+
+        /* Contenedor estandarizado para logos de clientes del mismo tamaño */
+        .client-logo-box {
+            width: 180px;
+            height: 90px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 16px;
+            background-color: #ffffff;
+            border: 1px solid #f1f5f9;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        .client-logo-box:hover {
+            border-color: #cbd5e1;
+            box-shadow: 0 4px 12px rgba(6, 21, 45, 0.06);
+        }
+        .client-logo-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: grayscale(100%);
+            opacity: 0.65;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+        .client-logo-box:hover .client-logo-img {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
     </style>
 </head>
 <body class="font-sans text-slate-800 antialiased bg-white selection:bg-saeCyan selection:text-saeNavy">
@@ -174,7 +206,7 @@
                     <a href="#tecnologia" class="font-industrial text-lg font-bold uppercase tracking-wider text-slate-600 hover:text-saeBlue transition">Tecnología</a>
                     <a href="#clientes" class="font-industrial text-lg font-bold uppercase tracking-wider text-slate-600 hover:text-saeBlue transition">Clientes</a>
                     <a href="#cobertura" class="font-industrial text-lg font-bold uppercase tracking-wider text-saeBlue hover:text-saeNavy transition flex items-center gap-1.5">
-                        <i class="fa-solid fa-map-location-dot text-sm"></i> Cobertura
+                        <i class="fa-solid fa-map-location-dot text-sm"></i> Sucursales
                     </a>
                 </div>
 
@@ -201,6 +233,7 @@
             <a href="#historia" class="block px-3 py-2.5 rounded-lg font-industrial text-xl font-bold uppercase tracking-wider text-slate-600 hover:bg-slate-50">Nuestra Historia</a>
             <a href="#servicios" class="block px-3 py-2.5 rounded-lg font-industrial text-xl font-bold uppercase tracking-wider text-slate-600 hover:bg-slate-50">Servicios</a>
             <a href="#clientes" class="block px-3 py-2.5 rounded-lg font-industrial text-xl font-bold uppercase tracking-wider text-slate-600 hover:bg-slate-50">Clientes</a>
+            <a href="#cobertura" class="block px-3 py-2.5 rounded-lg font-industrial text-xl font-bold uppercase tracking-wider text-slate-600 hover:bg-slate-50">Cobertura</a>
             <a href="#contacto" class="block px-4 py-3 mt-4 text-center rounded-lg font-industrial text-xl font-extrabold uppercase tracking-wider bg-saeNavy text-white">Cotizar Servicio</a>
         </div>
     </nav>
@@ -211,13 +244,13 @@
     <header id="inicio" class="relative bg-white min-h-[88vh] flex items-center overflow-hidden">
         <div class="absolute inset-0 z-0">
             <div class="hero-slide absolute inset-0 opacity-100" data-slide="0">
-                <img id="hero-img-0" src="src/2.png" onerror="this.onerror=null; this.src='src/2.jpeg';" decoding="async" fetchpriority="high" alt="Hero SAE 1" class="w-full h-full object-cover object-center">
+                <img id="hero-img-0" src="src/2_2.jpeg" onerror="this.onerror=null; this.src='src/2.jpeg';" decoding="async" fetchpriority="high" alt="Hero SAE 1" class="w-full h-full object-cover object-center">
             </div>
             <div class="hero-slide absolute inset-0 opacity-0 pointer-events-none" data-slide="1">
-                <img id="hero-img-1" src="src/8.jpeg" onerror="this.onerror=null; this.src='src/1.jpeg';" decoding="async" alt="Hero SAE 2" class="w-full h-full object-cover object-center">
+                <img id="hero-img-1" src="src/1.jpg" onerror="this.onerror=null; this.src='src/1.jpeg';" decoding="async" alt="Hero SAE 2" class="w-full h-full object-cover object-center">
             </div>
             <div class="hero-slide absolute inset-0 opacity-0 pointer-events-none" data-slide="2">
-                <img id="hero-img-2" src="src/1.jpeg" onerror="this.onerror=null; this.src='src/8.jpeg';" decoding="async" alt="Hero SAE 3" class="w-full h-full object-cover object-center">
+                <img id="hero-img-2" src="src/8_2.jpeg" onerror="this.onerror=null; this.src='src/8.jpeg';" decoding="async" alt="Hero SAE 3" class="w-full h-full object-cover object-center">
             </div>
             <!-- Overlay Blanco Degradado MUY LEVE -->
             <div class="absolute inset-0 bg-gradient-to-r from-white/65 via-white/25 to-transparent"></div>
@@ -443,7 +476,7 @@
                 <!-- 2. Frutícola -->
                 <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-xl hover:border-saeBlue transition-all duration-300 flex flex-col w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] max-w-sm">
                     <div class="relative h-56 overflow-hidden bg-slate-100">
-                        <img src="src/5.jpeg" onerror="this.onerror=null; this.src='src/5.jpg';" loading="lazy" class="w-full h-full object-cover" alt="Frutícola">
+                        <img src="src/5_2.jpg" onerror="this.onerror=null; this.src='src/5.jpg';" loading="lazy" class="w-full h-full object-cover" alt="Frutícola">
                     </div>
                     <div class="p-6">
                         <div class="flex items-center justify-between mb-2">
@@ -458,7 +491,7 @@
                 <!-- 3. Granos -->
                 <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-xl hover:border-saeBlue transition-all duration-300 flex flex-col w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] max-w-sm">
                     <div class="relative h-56 overflow-hidden bg-slate-100">
-                        <img src="src/4.jpeg" onerror="this.onerror=null; this.src='src/4.jpg';" loading="lazy" class="w-full h-full object-cover" alt="Granos">
+                        <img src="src/4_2.jpg" onerror="this.onerror=null; this.src='src/4.jpg';" loading="lazy" class="w-full h-full object-cover" alt="Granos">
                     </div>
                     <div class="p-6">
                         <div class="flex items-center justify-between mb-2">
@@ -473,7 +506,7 @@
                 <!-- 4. Carga Peligrosa -->
                 <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-xl hover:border-saeBlue transition-all duration-300 flex flex-col w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] max-w-sm">
                     <div class="relative h-56 overflow-hidden bg-slate-100">
-                        <img src="src/7.jpeg" onerror="this.onerror=null; this.src='src/7.jpeg';" loading="lazy" class="w-full h-full object-cover" alt="Carga Peligrosa">
+                        <img src="src/7_2.jpeg" onerror="this.onerror=null; this.src='src/7.jpeg';" loading="lazy" class="w-full h-full object-cover" alt="Carga Peligrosa">
                     </div>
                     <div class="p-6">
                         <div class="flex items-center justify-between mb-2">
@@ -488,7 +521,7 @@
                 <!-- 5. Corporativo -->
                 <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-xl hover:border-saeBlue transition-all duration-300 flex flex-col w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] max-w-sm">
                     <div class="relative h-56 overflow-hidden bg-slate-100">
-                        <img src="src/6.jpeg" onerror="this.onerror=null; this.src='src/6.jpg';" loading="lazy" class="w-full h-full object-cover" alt="Corporativo">
+                        <img src="src/6_2.jpg" onerror="this.onerror=null; this.src='src/6.jpg';" loading="lazy" class="w-full h-full object-cover" alt="Corporativo">
                     </div>
                     <div class="p-6">
                         <div class="flex items-center justify-between mb-2">
@@ -599,7 +632,7 @@
     </section>
 
     <!-- =====================================================================
-         5. ALIANZAS ESTRATÉGICAS / CLIENTES (Fondo Blanco + Drag to Scroll)
+         5. ALIANZAS ESTRATÉGICAS / CLIENTES (Logos Estandarizados + Drag to Scroll)
     ====================================================================== -->
     <section id="clientes" class="py-20 bg-white border-t border-slate-200 overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10 text-center">
@@ -608,6 +641,7 @@
                 CONFIARON EN <span class="text-saeBlue">NOSOTROS</span>
             </h2>
             <p class="text-xs text-slate-400 mt-2 uppercase tracking-wider font-semibold">
+                <i class="fa-solid fa-hand-pointer mr-1"></i> Haz clic y arrastra para deslizar los clientes
             </p>
         </div>
         
@@ -616,45 +650,47 @@
             <div class="pointer-events-none absolute top-0 left-0 h-full w-24 bg-gradient-to-r from-white to-transparent z-10"></div>
             <div class="pointer-events-none absolute top-0 right-0 h-full w-24 bg-gradient-to-l from-white to-transparent z-10"></div>
             
-            <!-- Slider arrastrable con auto-scroll infinito -->
+            <!-- Slider arrastrable con auto-scroll infinito y cajas de tamaño idéntico (180x90px) -->
             <div id="clients-slider" class="flex overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing select-none py-4">
-                <div class="flex gap-12 sm:gap-20 items-center px-6 min-w-max">
-                    <!-- Set original de 13 clientes -->
-                    <img draggable="false" src="src/cliente1.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/ffffff/94a3b8?text=CLIENTE+1';" alt="Cliente 1" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 select-none">
-                    <img draggable="false" src="src/cliente2.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/ffffff/94a3b8?text=CLIENTE+2';" alt="Cliente 2" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 select-none">
-                    <img draggable="false" src="src/cliente3.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/ffffff/94a3b8?text=CLIENTE+3';" alt="Cliente 3" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 select-none">
-                    <img draggable="false" src="src/cliente4.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/ffffff/94a3b8?text=CLIENTE+4';" alt="Cliente 4" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 select-none">
-                    <img draggable="false" src="src/cliente5.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/ffffff/94a3b8?text=CLIENTE+5';" alt="Cliente 5" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 select-none">
-                    <img draggable="false" src="src/cliente6.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/ffffff/94a3b8?text=CLIENTE+6';" alt="Cliente 6" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 select-none">
-                    <img draggable="false" src="src/cliente7.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/ffffff/94a3b8?text=CLIENTE+7';" alt="Cliente 7" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 select-none">
-                    <img draggable="false" src="src/cliente8.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/ffffff/94a3b8?text=CLIENTE+8';" alt="Cliente 8" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 select-none">
-                    <img draggable="false" src="src/cliente9.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/ffffff/94a3b8?text=CLIENTE+9';" alt="Cliente 9" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 select-none">
-                    <img draggable="false" src="src/cliente10.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/ffffff/94a3b8?text=CLIENTE+10';" alt="Cliente 10" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 select-none">
-                    <img draggable="false" src="src/cliente11.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/ffffff/94a3b8?text=CLIENTE+11';" alt="Cliente 11" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 select-none">
-                    <img draggable="false" src="src/cliente12.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/ffffff/94a3b8?text=CLIENTE+12';" alt="Cliente 12" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 select-none">
-                    <img draggable="false" src="src/cliente13.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/ffffff/94a3b8?text=CLIENTE+13';" alt="Cliente 13" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 select-none">
+                <div class="flex gap-6 sm:gap-8 items-center px-6 min-w-max">
+                    
+                    <!-- Set 1: 13 Clientes (Cajas de igual dimensión) -->
+                    <div class="client-logo-box"><img draggable="false" src="src/cliente1.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+1';" alt="Cliente 1" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="src/cliente2.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+2';" alt="Cliente 2" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="src/cliente3.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+3';" alt="Cliente 3" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="src/cliente4.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+4';" alt="Cliente 4" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="src/cliente5.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+5';" alt="Cliente 5" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="src/cliente6.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+6';" alt="Cliente 6" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="src/cliente7.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+7';" alt="Cliente 7" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="src/cliente8.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+8';" alt="Cliente 8" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="src/cliente9.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+9';" alt="Cliente 9" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="src/cliente10.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+10';" alt="Cliente 10" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="src/cliente11.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+11';" alt="Cliente 11" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="src/cliente12.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+12';" alt="Cliente 12" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="src/cliente13.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+13';" alt="Cliente 13" class="client-logo-img"></div>
 
-                    <!-- Duplicado para efecto seamless infinito al arrastrar -->
-                    <img draggable="false" src="src/cliente1.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/ffffff/94a3b8?text=CLIENTE+1';" alt="Cliente 1" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 select-none">
-                    <img draggable="false" src="src/cliente2.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/ffffff/94a3b8?text=CLIENTE+2';" alt="Cliente 2" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 select-none">
-                    <img draggable="false" src="src/cliente3.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/ffffff/94a3b8?text=CLIENTE+3';" alt="Cliente 3" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 select-none">
-                    <img draggable="false" src="src/cliente4.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/ffffff/94a3b8?text=CLIENTE+4';" alt="Cliente 4" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 select-none">
-                    <img draggable="false" src="src/cliente5.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/ffffff/94a3b8?text=CLIENTE+5';" alt="Cliente 5" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 select-none">
-                    <img draggable="false" src="src/cliente6.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/ffffff/94a3b8?text=CLIENTE+6';" alt="Cliente 6" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 select-none">
-                    <img draggable="false" src="src/cliente7.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/ffffff/94a3b8?text=CLIENTE+7';" alt="Cliente 7" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 select-none">
-                    <img draggable="false" src="src/cliente8.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/ffffff/94a3b8?text=CLIENTE+8';" alt="Cliente 8" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 select-none">
-                    <img draggable="false" src="src/cliente9.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/ffffff/94a3b8?text=CLIENTE+9';" alt="Cliente 9" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 select-none">
-                    <img draggable="false" src="src/cliente10.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/ffffff/94a3b8?text=CLIENTE+10';" alt="Cliente 10" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 select-none">
-                    <img draggable="false" src="src/cliente11.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/ffffff/94a3b8?text=CLIENTE+11';" alt="Cliente 11" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 select-none">
-                    <img draggable="false" src="src/cliente12.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/ffffff/94a3b8?text=CLIENTE+12';" alt="Cliente 12" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 select-none">
-                    <img draggable="false" src="src/cliente13.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/ffffff/94a3b8?text=CLIENTE+13';" alt="Cliente 13" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 select-none">
+                    <!-- Set 2: Duplicado para efecto seamless infinito al arrastrar -->
+                    <div class="client-logo-box"><img draggable="false" src="src/cliente1.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+1';" alt="Cliente 1" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="src/cliente2.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+2';" alt="Cliente 2" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="src/cliente3.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+3';" alt="Cliente 3" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="src/cliente4.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+4';" alt="Cliente 4" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="src/cliente5.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+5';" alt="Cliente 5" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="src/cliente6.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+6';" alt="Cliente 6" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="src/cliente7.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+7';" alt="Cliente 7" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="src/cliente8.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+8';" alt="Cliente 8" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="src/cliente9.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+9';" alt="Cliente 9" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="src/cliente10.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+10';" alt="Cliente 10" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="src/cliente11.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+11';" alt="Cliente 11" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="src/cliente12.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+12';" alt="Cliente 12" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="src/cliente13.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+13';" alt="Cliente 13" class="client-logo-img"></div>
+
                 </div>
             </div>
         </div>
     </section>
 
     <!-- =====================================================================
-         6. RED DE SUCURSALES / COBERTURA (Fondo Gris)
+         6. RED DE SUCURSALES / COBERTURA (3 COLUMNAS: Botones | Mapa | Google Maps)
     ====================================================================== -->
     <section id="cobertura" class="py-24 bg-slate-50 border-t border-slate-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -663,13 +699,68 @@
                 <h2 class="font-industrial text-4xl sm:text-5xl font-black text-saeNavy uppercase leading-none mt-2">
                     MAPA DE COBERTURA <span class="text-saeBlue">NACIONAL</span>
                 </h2>
-                <p class="text-slate-600 mt-4">Haz clic en cualquier punto del mapa o selecciona una sucursal de la lista para ver su ubicación.</p>
+                <p class="text-slate-600 mt-4">Selecciona una sucursal para visualizar su cobertura regional y su ubicación exacta en Google Maps.</p>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+            <!-- Estructura de 3 Columnas: Botones Compactos (3) | Mapa Vectorial (4) | Google Maps Embed (5) -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
                 
-                <!-- Lienzo del Mapa -->
-                <div class="lg:col-span-7 map-bg-pattern rounded-3xl border border-slate-200 shadow-lg relative overflow-hidden min-h-[760px] flex items-center justify-center p-4 sm:p-8">
+                <!-- COLUMNA 1: Botones Compactos de Sucursales (Solo Nombre) -->
+                <div class="lg:col-span-3 flex flex-col justify-center space-y-2.5">
+
+
+                   <!-- COLUMNA 1: Botones Compactos de Sucursales (Solo Nombre) -->
+                <div class="lg:col-span-3 flex flex-col justify-center space-y-2.5">
+                    <span class="font-industrial text-sm font-bold uppercase tracking-widest text-slate-400 px-1 mb-1 block">
+                        Seleccionar Sucursal:
+                    </span>
+
+                    <!-- 1. Alto Hospicio -->
+                    <button onclick="selectBranch('alto-hospicio')" id="btn-alto-hospicio" class="branch-item w-full text-left bg-white border border-slate-200 rounded-xl px-4 py-3.5 shadow-sm border-l-4 border-l-saeBlue hover:shadow-md transition flex items-center justify-between group">
+                        <span class="font-industrial text-xl font-bold uppercase text-saeNavy group-hover:text-saeBlue transition">SAE Alto Hospicio</span>
+                        <i class="fa-solid fa-location-dot text-slate-300 group-hover:text-saeBlue text-base transition"></i>
+                    </button>
+
+                    <!-- 2. Calama -->
+                    <button onclick="selectBranch('calama')" id="btn-calama" class="branch-item w-full text-left bg-white border border-slate-200 rounded-xl px-4 py-3.5 shadow-sm border-l-4 border-l-saeBlue hover:shadow-md transition flex items-center justify-between group">
+                        <span class="font-industrial text-xl font-bold uppercase text-saeNavy group-hover:text-saeBlue transition">SAE Calama</span>
+                        <i class="fa-solid fa-location-dot text-slate-300 group-hover:text-saeBlue text-base transition"></i>
+                    </button>
+
+                    <!-- 3. La Portada -->
+                    <button onclick="selectBranch('la-portada')" id="btn-la-portada" class="branch-item w-full text-left bg-white border border-slate-200 rounded-xl px-4 py-3.5 shadow-sm border-l-4 border-l-saeBlue hover:shadow-md transition flex items-center justify-between group">
+                        <span class="font-industrial text-xl font-bold uppercase text-saeNavy group-hover:text-saeBlue transition">SAE La Portada</span>
+                        <i class="fa-solid fa-location-dot text-slate-300 group-hover:text-saeBlue text-base transition"></i>
+                    </button>
+
+                    <!-- 4. La Negra -->
+                    <button onclick="selectBranch('la-negra')" id="btn-la-negra" class="branch-item w-full text-left bg-white border border-slate-200 rounded-xl px-4 py-3.5 shadow-sm border-l-4 border-l-saeBlue hover:shadow-md transition flex items-center justify-between group">
+                        <span class="font-industrial text-xl font-bold uppercase text-saeNavy group-hover:text-saeBlue transition">SAE La Negra</span>
+                        <i class="fa-solid fa-location-dot text-slate-300 group-hover:text-saeBlue text-base transition"></i>
+                    </button>
+
+                    <!-- 5. Copiapó -->
+                    <button onclick="selectBranch('copiapo')" id="btn-copiapo" class="branch-item w-full text-left bg-white border border-slate-200 rounded-xl px-4 py-3.5 shadow-sm border-l-4 border-l-saeBlue hover:shadow-md transition flex items-center justify-between group">
+                        <span class="font-industrial text-xl font-bold uppercase text-saeNavy group-hover:text-saeBlue transition">SAE Copiapó</span>
+                        <i class="fa-solid fa-location-dot text-slate-300 group-hover:text-saeBlue text-base transition"></i>
+                    </button>
+
+                    <!-- 6. Casa Matriz (COQUIMBO) -->
+                    <button onclick="selectBranch('coquimbo')" id="btn-coquimbo" class="branch-item w-full text-left bg-white border border-slate-200 rounded-xl px-4 py-3.5 shadow-sm border-l-4 border-l-amber-500 hover:shadow-md transition flex items-center justify-between group">
+                        <span class="font-industrial text-xl font-bold uppercase text-saeNavy group-hover:text-amber-600 transition">SAE Coquimbo (Matriz)</span>
+                        <i class="fa-solid fa-star text-amber-500 text-base"></i>
+                    </button>
+
+                    <!-- 7. Lampa - Santiago -->
+                    <button onclick="selectBranch('lampa')" id="btn-lampa" class="branch-item w-full text-left bg-white border border-slate-200 rounded-xl px-4 py-3.5 shadow-sm border-l-4 border-l-saeBlue hover:shadow-md transition flex items-center justify-between group">
+                        <span class="font-industrial text-xl font-bold uppercase text-saeNavy group-hover:text-saeBlue transition">SAE Lampa (Santiago)</span>
+                        <i class="fa-solid fa-location-dot text-slate-300 group-hover:text-saeBlue text-base transition"></i>
+                    </button>
+                </div>
+                </div>
+
+                <!-- COLUMNA 2: Mapa de Chile Interactivo con Cuadro Desplegable -->
+                <div class="lg:col-span-4 map-bg-pattern rounded-3xl border border-slate-200 shadow-lg relative overflow-hidden min-h-[640px] flex items-center justify-center p-3 sm:p-5">
                     
                     <!-- Líneas decorativas tipo mapa vial de fondo -->
                     <svg class="absolute inset-0 w-full h-full pointer-events-none opacity-35" viewBox="0 0 500 800" preserveAspectRatio="none">
@@ -681,10 +772,10 @@
                     </svg>
 
                     <!-- Contenedor relativo del SVG y la tarjeta flotante -->
-                    <div class="relative w-full max-w-[460px] h-[720px] flex items-center">
+                    <div class="relative w-full h-[600px] flex items-center">
                         
-                        <!-- SVG DE CHILE COMPLETO CON SUS 16 REGIONES Y ARCHIPIÉLAGOS AUSTRALES -->
-                        <svg id="chile-full-map" viewBox="0 0 320 940" class="w-full h-full select-none overflow-visible">
+                        <!-- SVG DE CHILE COMPLETO -->
+                        <svg id="chile-full-map" viewBox="40 15 240 915" class="w-full h-full select-none overflow-visible">
                             
                             <!-- XV. Arica y Parinacota -->
                             <path id="reg-arica" class="chile-reg" d="M 118,28 L 125,30 L 129,39 L 133,48 L 131,58 L 129,67 L 114,68 L 112,57 L 115,44 Z" />
@@ -705,7 +796,7 @@
                             <path id="reg-valparaiso" class="chile-reg" d="M 100,383 L 120,385 L 123,399 L 121,415 L 113,417 L 108,427 L 96,426 L 95,409 L 98,396 Z" />
 
                             <!-- RM. Región Metropolitana -->
-                            <path id="reg-rm" onclick="selectBranch('santiago')" class="chile-reg region-clickable" d="M 108,427 L 113,417 L 121,415 L 123,429 L 121,445 L 107,446 L 104,436 Z" />
+                            <path id="reg-rm" onclick="selectBranch('lampa')" class="chile-reg region-clickable" d="M 108,427 L 113,417 L 121,415 L 123,429 L 121,445 L 107,446 L 104,436 Z" />
 
                             <!-- VI. O'Higgins -->
                             <path id="reg-ohiggins" class="chile-reg" d="M 96,426 L 108,427 L 104,436 L 107,446 L 121,445 L 119,465 L 94,464 L 93,445 Z" />
@@ -734,109 +825,70 @@
                             <!-- Puntos en el Mapa -->
                             <circle cx="121" cy="50" r="6" class="branch-dot opacity-60 pointer-events-none" />
                             <circle id="dot-alto-hospicio" onclick="selectBranch('alto-hospicio')" cx="123" cy="96" r="6.5" class="branch-dot" />
-                            <circle id="dot-la-chimba" onclick="selectBranch('la-chimba')" cx="117" cy="148" r="6.5" class="branch-dot" />
+                            <circle id="dot-la-portada" onclick="selectBranch('la-portada')" cx="117" cy="148" r="6.5" class="branch-dot" />
                             <circle id="dot-calama" onclick="selectBranch('calama')" cx="139" cy="152" r="6.5" class="branch-dot" />
                             <circle id="dot-la-negra" onclick="selectBranch('la-negra')" cx="131" cy="208" r="7" class="branch-dot dot-active" />
                             <circle id="dot-copiapo" onclick="selectBranch('copiapo')" cx="117" cy="296" r="6.5" class="branch-dot" />
                             <circle id="dot-coquimbo" onclick="selectBranch('coquimbo')" cx="116" cy="370" r="6.5" class="branch-dot" />
-                            <circle id="dot-santiago" onclick="selectBranch('santiago')" cx="111" cy="431" r="6.5" class="branch-dot" />
+                            <circle id="dot-lampa" onclick="selectBranch('lampa')" cx="111" cy="431" r="6.5" class="branch-dot" />
                             <circle cx="94" cy="835" r="6" class="branch-dot opacity-60 pointer-events-none" />
                         </svg>
 
-                        <!-- TARJETA FLOTANTE AZUL -->
-                        <div id="map-floating-card" style="top: 20%;" class="absolute right-0 sm:right-2 w-[210px] sm:w-[235px] bg-mapRoyal text-white rounded-2xl p-5 sm:p-6 shadow-2xl z-20 pointer-events-auto">
-                            <span id="card-badge" class="inline-block text-[10px] font-bold uppercase tracking-widest text-saeSky mb-1">II Región de Antofagasta</span>
-                            <h4 id="card-title" class="font-sans text-lg sm:text-xl font-extrabold uppercase tracking-wide text-white mb-2 leading-tight">
-                                LA NEGRA
+                        <!-- TARJETA FLOTANTE AZUL CON LA DESCRIPCIÓN DE LA SUCURSAL -->
+                        <div id="map-floating-card" style="top: 19%;" class="absolute right-0 w-[185px] sm:w-[200px] bg-mapRoyal text-white rounded-2xl p-4 shadow-2xl z-20 pointer-events-auto">
+                            <span id="card-badge" class="inline-block text-[9px] font-bold uppercase tracking-widest text-saeSky mb-1">II Región de Antofagasta</span>
+                            <h4 id="card-title" class="font-sans text-base font-extrabold uppercase tracking-wide text-white mb-1.5 leading-tight">
+                                SAE LA NEGRA
                             </h4>
-                            <p id="card-desc" class="font-sans text-xs sm:text-sm text-white/90 leading-relaxed font-normal">
-                                Base Operativa Industrial La Negra, Sector Industrial y Logístico, Antofagasta.
+                            <p id="card-desc" class="font-sans text-xs text-white/90 leading-relaxed font-normal">
+                                Complejo Industrial La Negra, hub estratégico para transporte pesado, ácido y carga minera en Antofagasta.
                             </p>
                         </div>
 
                     </div>
                 </div>
 
-                <!-- Lista Interactiva de las 7 Sucursales -->
-                <div class="lg:col-span-5 flex flex-col justify-between space-y-3">
-                    
-                    <!-- 1. Alto Hospicio -->
-                    <button onclick="selectBranch('alto-hospicio')" id="btn-alto-hospicio" class="branch-item w-full text-left bg-white border border-slate-200 rounded-xl p-4 shadow-sm border-l-4 border-l-saeBlue hover:shadow-md transition flex items-center justify-between group">
+                <!-- COLUMNA 3: Mapa Embebido de Google Maps -->
+                <div class="lg:col-span-5 bg-white border border-slate-200 rounded-3xl p-4 sm:p-5 shadow-lg flex flex-col justify-between min-h-[640px]">
+                    <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-100">
                         <div>
-                            <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">I Región de Tarapacá</span>
-                            <h3 class="font-industrial text-2xl font-bold uppercase text-saeNavy group-hover:text-saeBlue transition">Alto Hospicio</h3>
-                            <p class="text-xs text-slate-600">Base operativa para logística portuaria y minera del Norte Grande.</p>
+                            <span class="text-[11px] font-bold uppercase tracking-wider text-saeBlue block">Ubicación Georreferenciada</span>
+                            <h3 id="gmap-branch-title" class="font-industrial text-2xl font-black uppercase text-saeNavy leading-none mt-0.5">
+                                SAE La Negra — Antofagasta
+                            </h3>
                         </div>
-                        <i class="fa-solid fa-location-dot text-slate-300 group-hover:text-saeBlue text-xl transition"></i>
-                    </button>
+                        <a id="gmap-external-link" href="https://maps.app.goo.gl/gRZQFQ1moYK7dL9N6?g_st=ic" target="_blank" rel="noopener noreferrer" class="bg-saeNavy hover:bg-saeBlue text-white text-xs font-industrial font-bold uppercase tracking-wider px-3.5 py-2 rounded-lg transition flex items-center gap-1.5 shadow-sm">
+                            <span>Abrir en Maps</span>
+                            <i class="fa-solid fa-up-right-from-square text-[10px]"></i>
+                        </a>
+                    </div>
 
-                    <!-- 2. Calama -->
-                    <button onclick="selectBranch('calama')" id="btn-calama" class="branch-item w-full text-left bg-white border border-slate-200 rounded-xl p-4 shadow-sm border-l-4 border-l-saeBlue hover:shadow-md transition flex items-center justify-between group">
-                        <div>
-                            <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">II Región de Antofagasta</span>
-                            <h3 class="font-industrial text-2xl font-bold uppercase text-saeNavy group-hover:text-saeBlue transition">Calama</h3>
-                            <p class="text-xs text-slate-600">Centro de soporte directo a faenas mineras y operaciones de alta montaña.</p>
-                        </div>
-                        <i class="fa-solid fa-location-dot text-slate-300 group-hover:text-saeBlue text-xl transition"></i>
-                    </button>
+                    <!-- Iframe Google Maps -->
+                    <div class="relative w-full flex-1 rounded-2xl overflow-hidden border border-slate-200 bg-slate-100">
+                        <iframe 
+                            id="gmap-iframe"
+                            src="https://maps.google.com/maps?q=-23.7885,-70.3125+(Transportes+SAE+La+Negra)&t=&z=14&ie=UTF8&iwloc=&output=embed"
+                            class="w-full h-full min-h-[500px] border-0"
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
 
-                    <!-- 3. La Chimba -->
-                    <button onclick="selectBranch('la-chimba')" id="btn-la-chimba" class="branch-item w-full text-left bg-white border border-slate-200 rounded-xl p-4 shadow-sm border-l-4 border-l-saeBlue hover:shadow-md transition flex items-center justify-between group">
-                        <div>
-                            <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">II Región de Antofagasta</span>
-                            <h3 class="font-industrial text-2xl font-bold uppercase text-saeNavy group-hover:text-saeBlue transition">La Chimba</h3>
-                            <p class="text-xs text-slate-600">Sucursal costera enfocada en distribución regional y suministros.</p>
-                        </div>
-                        <i class="fa-solid fa-location-dot text-slate-300 group-hover:text-saeBlue text-xl transition"></i>
-                    </button>
-
-                    <!-- 4. La Negra (Activa por defecto) -->
-                    <button onclick="selectBranch('la-negra')" id="btn-la-negra" class="branch-item w-full text-left bg-blue-50/70 border border-mapRoyal rounded-xl p-4 shadow-md border-l-4 border-l-mapRoyal transition flex items-center justify-between group">
-                        <div>
-                            <span class="text-[11px] font-bold uppercase tracking-wider text-mapRoyal block">II Región de Antofagasta</span>
-                            <h3 class="font-industrial text-2xl font-bold uppercase text-saeNavy">La Negra</h3>
-                            <p class="text-xs text-slate-600">Hub industrial estratégico para transporte pesado, ácido y carga minera.</p>
-                        </div>
-                        <i class="fa-solid fa-location-dot text-mapRoyal text-xl"></i>
-                    </button>
-
-                    <!-- 5. Copiapó -->
-                    <button onclick="selectBranch('copiapo')" id="btn-copiapo" class="branch-item w-full text-left bg-white border border-slate-200 rounded-xl p-4 shadow-sm border-l-4 border-l-saeBlue hover:shadow-md transition flex items-center justify-between group">
-                        <div>
-                            <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">III Región de Atacama</span>
-                            <h3 class="font-industrial text-2xl font-bold uppercase text-saeNavy group-hover:text-saeBlue transition">Copiapó</h3>
-                            <p class="text-xs text-slate-600">Base operativa de conexión minera y agroindustrial en Atacama.</p>
-                        </div>
-                        <i class="fa-solid fa-location-dot text-slate-300 group-hover:text-saeBlue text-xl transition"></i>
-                    </button>
-
-                    <!-- 6. Casa Matriz (COQUIMBO) -->
-                    <button onclick="selectBranch('coquimbo')" id="btn-coquimbo" class="branch-item w-full text-left bg-white border border-amber-300 rounded-xl p-4 shadow-sm border-l-4 border-l-amber-500 hover:shadow-md transition flex items-center justify-between group">
-                        <div>
-                            <span class="text-[11px] font-bold uppercase tracking-wider text-amber-600 block">IV Región de Coquimbo • Sede Central</span>
-                            <h3 class="font-industrial text-2xl font-bold uppercase text-saeNavy group-hover:text-amber-600 transition">Casa Matriz (COQUIMBO)</h3>
-                            <p class="text-xs text-slate-600">Gerencia General, Torre de Control CIF 24/7 y Centro Logístico Principal.</p>
-                        </div>
-                        <i class="fa-solid fa-star text-amber-500 text-xl"></i>
-                    </button>
-
-                    <!-- 7. Santiago -->
-                    <button onclick="selectBranch('santiago')" id="btn-santiago" class="branch-item w-full text-left bg-white border border-slate-200 rounded-xl p-4 shadow-sm border-l-4 border-l-saeBlue hover:shadow-md transition flex items-center justify-between group">
-                        <div>
-                            <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">Región Metropolitana</span>
-                            <h3 class="font-industrial text-2xl font-bold uppercase text-saeNavy group-hover:text-saeBlue transition">Santiago</h3>
-                            <p class="text-xs text-slate-600">Centro de consolidación en Lampa para rutas troncales y clientes corporativos.</p>
-                        </div>
-                        <i class="fa-solid fa-location-dot text-slate-300 group-hover:text-saeBlue text-xl transition"></i>
-                    </button>
-
+                    <div class="pt-3 mt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                        <span id="gmap-address-footer" class="font-medium truncate">
+                            <i class="fa-solid fa-map-pin text-saeBlue mr-1"></i> Sector Industrial La Negra, Antofagasta
+                        </span>
+                        <span class="font-bold text-saeNavy uppercase font-industrial tracking-wider">Operativo 24/7</span>
+                    </div>
                 </div>
+
             </div>
         </div>
     </section>
 
     <!-- =====================================================================
-         7. CONTACTO (Fondo Blanco)
+         7. CONTACTO (Fondo Blanco + Nombre Empresa y Combobox Tipo de Servicio)
     ====================================================================== -->
     <section id="contacto" class="py-24 bg-white border-t border-slate-200">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -847,10 +899,40 @@
             
             <form class="bg-slate-50 border border-slate-200 p-8 rounded-2xl shadow-lg max-w-2xl mx-auto text-left">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
-                    <input type="text" placeholder="Nombre / Empresa" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
-                    <input type="email" placeholder="Correo Corporativo" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
+                    <div>
+                        <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Nombre de Contacto</label>
+                        <input type="text" placeholder="Ej: Juan Pérez" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
+                    </div>
+                    <div>
+                        <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Nombre Empresa</label>
+                        <input type="text" placeholder="Ej: Minera / Exportadora S.A." class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
+                    </div>
                 </div>
-                <textarea rows="3" placeholder="Requerimientos logísticos..." class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue mb-5"></textarea>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+                    <div>
+                        <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Correo Corporativo</label>
+                        <input type="email" placeholder="contacto@empresa.cl" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
+                    </div>
+                    <div>
+                        <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Tipo de Servicio</label>
+                        <select class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
+                            <option value="" disabled selected>Seleccione un servicio...</option>
+                            <option value="mineria">Transporte Sector Minería</option>
+                            <option value="fruticola">Transporte Frutícola (Cadena de Frío)</option>
+                            <option value="granos">Transporte de Granos a Granel</option>
+                            <option value="carga-peligrosa">Transporte de Carga Peligrosa / Combustible</option>
+                            <option value="corporativo">Transporte Corporativo Dedicado</option>
+                            <option value="operador-logistico">Servicio de Operador Logístico y Bodega</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-5">
+                    <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Detalles del Requerimiento</label>
+                    <textarea rows="3" placeholder="Indíquenos origen, destino, tipo de carga o requerimientos logísticos..." class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue"></textarea>
+                </div>
+
                 <button type="button" class="w-full bg-saeNavy hover:bg-saeBlue text-white font-industrial text-xl font-black uppercase tracking-wider py-4 rounded-xl transition shadow-md">
                     Enviar Cotización
                 </button>
@@ -868,8 +950,7 @@
             <p class="text-sm">&copy; 2026. Todos los derechos reservados. Casa Matriz: Coquimbo, Chile.</p>
         </div>
     </footer>
-
-    <script>
+<script>
         // Hero Slider (Optimizado sin transform scale en imágenes pesadas)
         let currentHeroSlide = 0;
         const heroSlides = document.querySelectorAll('.hero-slide');
@@ -959,57 +1040,85 @@
                 regionId: 'reg-tarapaca',
                 dotId: 'dot-alto-hospicio',
                 badge: 'I Región de Tarapacá',
-                title: 'ALTO HOSPICIO',
-                desc: 'Sucursal Alto Hospicio, conexión logística portuaria y minera del Norte Grande.',
-                topPos: '7%'
+                title: 'SAE ALTO HOSPICIO',
+                desc: 'Base operativa para logística portuaria y minera del Norte Grande.',
+                topPos: '6%',
+                gmapTitle: 'SAE Alto Hospicio — Tarapacá',
+                gmapAddress: 'Alto Hospicio, Región de Tarapacá',
+                gmapLink: 'https://maps.app.goo.gl/hq4KGef1yJhXZFL27?g_st=ic',
+                gmapEmbed: 'https://maps.google.com/maps?q=-20.2689,-70.0950+(Transportes+SAE+Alto+Hospicio)&t=&z=15&ie=UTF8&iwloc=&output=embed'
             },
             'calama': {
                 regionId: 'reg-antofagasta',
                 dotId: 'dot-calama',
                 badge: 'II Región de Antofagasta',
-                title: 'CALAMA',
-                desc: 'Base Operativa Calama, soporte logístico directo a faenas mineras.',
-                topPos: '14%'
+                title: 'SAE CALAMA',
+                desc: 'Centro de soporte directo a faenas mineras y operaciones de alta montaña.',
+                topPos: '13%',
+                gmapTitle: 'SAE Calama — Antofagasta',
+                gmapAddress: 'Calama, Región de Antofagasta',
+                gmapLink: 'https://maps.app.goo.gl/Mp3m6zgiWgHDJpoL8?g_st=ic',
+                gmapEmbed: 'https://maps.google.com/maps?q=Transportes+SAE+Calama,+Chile&t=&z=14&ie=UTF8&iwloc=&output=embed'
             },
-            'la-chimba': {
+            'la-portada': {
                 regionId: 'reg-antofagasta',
-                dotId: 'dot-la-chimba',
+                dotId: 'dot-la-portada',
                 badge: 'II Región de Antofagasta',
-                title: 'LA CHIMBA',
-                desc: 'Sector Industrial La Chimba, Antofagasta. Logística y distribución.',
-                topPos: '15%'
+                title: 'SAE LA PORTADA',
+                desc: 'Sucursal industrial sector La Portada en Antofagasta, enfocada en distribución regional y suministros.',
+                topPos: '14%',
+                gmapTitle: 'SAE La Portada — Antofagasta',
+                gmapAddress: 'Sector La Portada, Antofagasta',
+                gmapLink: 'https://maps.app.goo.gl/pQYVMxQz4D62PWmSA?g_st=ic',
+                gmapEmbed: 'https://maps.google.com/maps?q=-23.5136,-70.3814+(Transportes+SAE+La+Portada)&t=&z=15&ie=UTF8&iwloc=&output=embed'
             },
             'la-negra': {
                 regionId: 'reg-antofagasta',
                 dotId: 'dot-la-negra',
                 badge: 'II Región de Antofagasta',
-                title: 'LA NEGRA',
-                desc: 'Complejo Industrial La Negra, ruta estratégica para minería y carga pesada, Antofagasta.',
-                topPos: '20%'
+                title: 'SAE LA NEGRA',
+                desc: 'Complejo Industrial La Negra, hub estratégico para transporte pesado, ácido y carga minera en Antofagasta.',
+                topPos: '19%',
+                gmapTitle: 'SAE La Negra — Antofagasta',
+                gmapAddress: 'Sector Industrial La Negra, Antofagasta',
+                gmapLink: 'https://maps.app.goo.gl/gRZQFQ1moYK7dL9N6?g_st=ic',
+                gmapEmbed: 'https://maps.google.com/maps?q=-23.7885,-70.3125+(Transportes+SAE+La+Negra)&t=&z=14&ie=UTF8&iwloc=&output=embed'
             },
             'copiapo': {
                 regionId: 'reg-atacama',
                 dotId: 'dot-copiapo',
                 badge: 'III Región de Atacama',
-                title: 'COPIAPÓ',
-                desc: 'Sucursal Copiapó, centro operativo para minería y agroexportación en Atacama.',
-                topPos: '28%'
+                title: 'SAE COPIAPÓ',
+                desc: 'Base operativa de conexión minera y agroindustrial en la Región de Atacama.',
+                topPos: '27%',
+                gmapTitle: 'SAE Copiapó — Atacama',
+                gmapAddress: 'Copiapó, Región de Atacama',
+                gmapLink: 'https://maps.app.goo.gl/qu5jSNEbKRiK4C6Z8?g_st=ic',
+                gmapEmbed: 'https://maps.google.com/maps?q=Transportes+SAE+Copiapo,+Chile&t=&z=14&ie=UTF8&iwloc=&output=embed'
             },
             'coquimbo': {
                 regionId: 'reg-coquimbo',
                 dotId: 'dot-coquimbo',
-                badge: 'IV Región de Coquimbo',
+                badge: 'IV Región de Coquimbo • Sede Central',
                 title: 'CASA MATRIZ (COQUIMBO)',
-                desc: 'Sede Central Transportes SAE, Barrio Industrial, Coquimbo. Torre de Control CIF.',
-                topPos: '36%'
+                desc: 'Gerencia General, Torre de Control CIF 24/7 y Centro Logístico Principal en Barrio Industrial, Coquimbo.',
+                topPos: '35%',
+                gmapTitle: 'Casa Matriz SAE — Coquimbo',
+                gmapAddress: 'Barrio Industrial, Coquimbo',
+                gmapLink: 'https://maps.app.goo.gl/tXTgNYGjikzQHQzv7?g_st=ic',
+                gmapEmbed: 'https://maps.google.com/maps?q=Transportes+SAE+Coquimbo,+Chile&t=&z=15&ie=UTF8&iwloc=&output=embed'
             },
-            'santiago': {
+            'lampa': {
                 regionId: 'reg-rm',
-                dotId: 'dot-santiago',
+                dotId: 'dot-lampa',
                 badge: 'Región Metropolitana',
-                title: 'SANTIAGO',
-                desc: 'Centro Logístico Lampa, consolidación de carga y distribución zona central.',
-                topPos: '43%'
+                title: 'SAE LAMPA (SANTIAGO)',
+                desc: 'Centro de consolidación en Lampa para rutas troncales y distribución a clientes corporativos.',
+                topPos: '42%',
+                gmapTitle: 'SAE Lampa — Santiago RM',
+                gmapAddress: 'Lampa, Región Metropolitana, Santiago',
+                gmapLink: 'https://maps.app.goo.gl/TAKzGgL58QskpaR5A?g_st=ic',
+                gmapEmbed: 'https://maps.google.com/maps?q=Transportes+SAE+Lampa,+Santiago,+Chile&t=&z=14&ie=UTF8&iwloc=&output=embed'
             }
         };
 
@@ -1017,29 +1126,56 @@
             const data = branchesData[key];
             if (!data) return;
 
+            // 1. Pintar región activa en el mapa SVG
             document.querySelectorAll('.chile-reg').forEach(reg => reg.classList.remove('region-active'));
             const activeReg = document.getElementById(data.regionId);
             if (activeReg) activeReg.classList.add('region-active');
 
+            // 2. Resaltar punto activo en el mapa SVG
             document.querySelectorAll('.branch-dot').forEach(dot => dot.classList.remove('dot-active'));
             const activeDot = document.getElementById(data.dotId);
             if (activeDot) activeDot.classList.add('dot-active');
 
+            // 3. Mover y actualizar cuadro flotante azul
             const card = document.getElementById('map-floating-card');
             document.getElementById('card-badge').textContent = data.badge;
             document.getElementById('card-title').textContent = data.title;
             document.getElementById('card-desc').textContent = data.desc;
             card.style.top = data.topPos;
 
+            // 4. Actualizar estado visual de los botones de la izquierda (limpiar todos y activar el seleccionado)
             document.querySelectorAll('.branch-item').forEach(btn => {
-                btn.classList.remove('bg-blue-50/70', 'border-mapRoyal', 'border-l-mapRoyal', 'shadow-md');
+                btn.classList.remove('bg-blue-50/80', 'border-mapRoyal', 'border-l-mapRoyal', 'shadow-md');
                 btn.classList.add('bg-white', 'border-slate-200');
+                const icon = btn.querySelector('i');
+                if (icon) {
+                    if (btn.id === 'btn-coquimbo') {
+                        icon.className = 'fa-solid fa-star text-amber-500 text-base';
+                    } else {
+                        icon.className = 'fa-solid fa-location-dot text-slate-300 text-base transition';
+                    }
+                }
             });
+
             const activeBtn = document.getElementById('btn-' + key);
             if (activeBtn) {
                 activeBtn.classList.remove('bg-white', 'border-slate-200');
-                activeBtn.classList.add('bg-blue-50/70', 'border-mapRoyal', 'border-l-mapRoyal', 'shadow-md');
+                activeBtn.classList.add('bg-blue-50/80', 'border-mapRoyal', 'border-l-mapRoyal', 'shadow-md');
+                const activeIcon = activeBtn.querySelector('i');
+                if (activeIcon) {
+                    if (key === 'coquimbo') {
+                        activeIcon.className = 'fa-solid fa-star text-amber-500 text-base';
+                    } else {
+                        activeIcon.className = 'fa-solid fa-location-dot text-mapRoyal text-base';
+                    }
+                }
             }
+
+            // 5. Actualizar Google Maps
+            document.getElementById('gmap-branch-title').textContent = data.gmapTitle;
+            document.getElementById('gmap-external-link').href = data.gmapLink;
+            document.getElementById('gmap-iframe').src = data.gmapEmbed;
+            document.getElementById('gmap-address-footer').innerHTML = '<i class="fa-solid fa-map-pin text-saeBlue mr-1"></i> ' + data.gmapAddress;
         }
 
         // Contadores Animados
@@ -1070,6 +1206,12 @@
         document.getElementById('mobile-menu-btn').addEventListener('click', () => {
             document.getElementById('mobile-menu').classList.toggle('hidden');
         });
+
+        // Seleccionar la primera sucursal por defecto al cargar la página
+        window.addEventListener('DOMContentLoaded', () => {
+            selectBranch('alto-hospicio');
+        });
     </script>
+    
 </body>
 </html>
