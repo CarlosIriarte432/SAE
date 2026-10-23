@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transportes SAE Ltda. | Especialistas en Transporte de Carga y Logística</title>
+    
+    <!-- Google Fonts: Barlow Condensed (Industrial/Títulos) + Plus Jakarta Sans (Cuerpo) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;0,800;0,900;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Configuración de Tailwind: Tipografía Industrial y Paleta Corporativa SAE -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        display: ['"Barlow Condensed"', 'sans-serif'],
+                    },
+                    colors: {
+                        saeNavy: '#06152d',      // Azul marino profundo
+                        saeBlue: '#004b93',      // Azul corporativo SAE
+                        saeCyan: '#00b4d8',      // Cian vibrante
+                        saeSky: '#48cae4',       // Cian claro
+                        saeGold: '#f59e0b',      // Acento
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .font-industrial {
+            font-family: 'Barlow Condensed', sans-serif;
+            letter-spacing: 0.02em;
+        }
+        
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 0.9; }
+            80%, 100% { transform: scale(2.4); opacity: 0; }
+        }
+        .map-pulse {
+            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+            transform-origin: center;
+            transform-box: fill-box;
+        }
+
+        /* Estilos interactivos para Mapa de Chile (Tema Claro) */
+        .chile-region {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            stroke: #ffffff;
+            stroke-width: 1.5px;
+            stroke-linejoin: round;
+        }
+        .chile-region.inactive-region {
+            fill: #e2e8f0;
+        }
+        .chile-region.inactive-region:hover {
+            fill: #cbd5e1;
+        }
+        .chile-region.active-region {
+            fill: #93c5fd;
+            stroke: #2563eb;
+            stroke-width: 1.2px;
+        }
+        .chile-region.active-region:hover,
+        .chile-region.selected-region {
+            fill: #3b82f6 !important;
+            stroke: #ffffff !important;
+            stroke-width: 2px !important;
+            filter: drop-shadow(0px 4px 6px rgba(37, 99, 235, 0.3));
+        }
+        .chile-region.hq-region {
+            fill: #fcd34d;
+            stroke: #d97706;
+        }
+        .chile-region.hq-region.selected-region,
+        .chile-region.hq-region:hover {
+            fill: #f59e0b !important;
+            stroke: #ffffff !important;
+            filter: drop-shadow(0px 4px 6px rgba(245, 158, 11, 0.4));
+        }
+
+        .highway-line {
+            stroke-dasharray: 6 4;
+            animation: dash-move 20s linear infinite;
+        }
+        @keyframes dash-move {
+            to { stroke-dashoffset: -200; }
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+            display: flex;
+            width: max-content;
+            animation: marquee 35s linear infinite;
+        }
+        .animate-marquee:hover {
+            animation-play-state: paused;
+        }
+
+        .hero-slide {
+            transition: opacity 1s ease-in-out, transform 6s ease-out;
+        }
+
+        /* Timeline Custom Scrollbar */
+        .timeline-scroll::-webkit-scrollbar {
+            height: 6px;
+        }
+        .timeline-scroll::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 4px;
+        }
+        .timeline-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .timeline-scroll::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="font-sans text-slate-800 antialiased bg-white selection:bg-saeCyan selection:text-saeNavy">
+
+    <!-- =====================================================================
+         BARRA SUPERIOR (Tema Claro)
+    ====================================================================== -->
+    <div class="bg-slate-100 text-slate-600 text-xs border-b border-slate-200 hidden lg:block">
+        <div class="max-w-7xl mx-auto px-6 h-10 flex justify-between items-center">
+            <div class="flex items-center space-x-6">
+                <span class="flex items-center gap-2">
+                    <i class="fa-solid fa-Satellite-dish text-saeBlue"></i>
+                    <strong class="text-saeNavy tracking-wide uppercase font-industrial text-sm">Torre de Control CIF 24/7</strong> — Monitoreo en Tiempo Real
+                </span>
+                <span class="text-slate-300">|</span>
+                <span class="flex items-center gap-2">
+                    <i class="fa-solid fa-location-dot text-saeGold"></i>
+                    Casa Matriz: <strong class="text-saeNavy">Coquimbo, Chile</strong>
+                </span>
+            </div>
+            <div class="flex items-center space-x-5">
+                <span class="flex items-center gap-1.5 text-emerald-600 font-semibold">
+                    <i class="fa-solid fa-leaf"></i> Sello Giro Limpio 2026
+                </span>
+                <span class="text-slate-300">|</span>
+                <span class="flex items-center gap-1.5 text-amber-600 font-semibold">
+                    <i class="fa-solid fa-trophy"></i> Premio Flota Más Segura 2026
+                </span>
+                <span class="text-slate-300">|</span>
+                <a href="https://www.sae.cl" target="_blank" class="text-saeNavy hover:text-saeBlue transition font-semibold">www.sae.cl</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         NAVBAR PRINCIPAL (Fondo Blanco)
+    ====================================================================== -->
+    <nav class="sticky top-0 w-full z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo SAE -->
+                <a href="#inicio" class="flex items-center gap-3 group">
+                    <div class="w-12 h-12 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center p-1.5 group-hover:border-saeCyan transition">
+                        <svg viewBox="0 0 100 100" class="w-full h-full">
+                            <path d="M50 10 C25 10, 10 30, 12 55 C14 78, 35 90, 58 88 C40 82, 26 68, 26 50 C26 32, 40 20, 58 22 C72 24, 82 36, 80 52 C78 64, 68 72, 56 70 C64 65, 68 56, 66 46 C64 36, 54 30, 44 34 C34 38, 32 50, 38 58 C36 48, 42 40, 50 42 C56 44, 58 52, 52 56 C62 56, 68 46, 64 36 C60 24, 44 20, 34 28 C22 38, 22 58, 34 70 C48 84, 72 82, 84 64 C94 48, 88 24, 70 14 C64 11, 57 10, 50 10 Z" fill="#00b4d8"/>
+                            <path d="M50 10 C30 10, 14 25, 12 46 C18 28, 34 18, 52 18 C70 18, 84 32, 84 50 C84 58, 80 66, 74 72 C84 64, 90 50, 88 36 C85 20, 68 10, 50 10 Z" fill="#004b93"/>
+                        </svg>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-industrial text-4xl font-black text-saeNavy tracking-wider leading-none">
+                            SAE<span class="text-saeCyan text-xl align-top">®</span>
+                        </span>
+                        <span class="font-industrial text-xs font-bold text-saeBlue tracking-[0.28em] uppercase -mt-0.5">
+                            Transportes
+                        </span>
+                    </div>
+                </a>
+                
+                <!-- Navegación Desktop -->
+                <div class="hidden lg:flex items-center space-x-7">
+                    <a href="#inicio" class="font-industrial text-lg font-bold uppercase tracking-wider text-saeNavy hover:text-saeBlue transition">Inicio</a>
+                    <a href="#historia" class="font-industrial text-lg font-bold uppercase tracking-wider text-slate-600 hover:text-saeBlue transition">Historia</a>
+                    <a href="#servicios" class="font-industrial text-lg font-bold uppercase tracking-wider text-slate-600 hover:text-saeBlue transition">Servicios</a>
+                    <a href="#tecnologia" class="font-industrial text-lg font-bold uppercase tracking-wider text-slate-600 hover:text-saeBlue transition">Tecnología</a>
+                    <a href="#clientes" class="font-industrial text-lg font-bold uppercase tracking-wider text-slate-600 hover:text-saeBlue transition">Clientes</a>
+                    <a href="#cobertura" class="font-industrial text-lg font-bold uppercase tracking-wider text-saeBlue hover:text-saeNavy transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-map-location-dot text-sm"></i> Cobertura
+                    </a>
+                </div>
+
+                <!-- Botón CTA Desktop -->
+                <div class="hidden lg:flex items-center gap-3">
+                    <a href="#contacto" class="bg-saeNavy hover:bg-saeBlue text-white font-industrial text-lg font-extrabold uppercase tracking-wider px-6 py-2.5 rounded-lg transition-all shadow-md flex items-center gap-2">
+                        <span>Cotizar Carga</span>
+                        <i class="fa-solid fa-arrow-right text-sm"></i>
+                    </a>
+                </div>
+
+                <!-- Botón Menú Móvil -->
+                <div class="lg:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-saeNavy hover:text-saeBlue focus:outline-none p-2">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel Menú Móvil -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-slate-200 px-4 pt-3 pb-6 space-y-2 shadow-lg">
+            <a href="#inicio" class="block px-3 py-2.5 rounded-lg font-industrial text-xl font-bold uppercase tracking-wider text-saeNavy bg-slate-50">Inicio</a>
+            <a href="#historia" class="block px-3 py-2.5 rounded-lg font-industrial text-xl font-bold uppercase tracking-wider text-slate-600 hover:bg-slate-50">Nuestra Historia</a>
+            <a href="#servicios" class="block px-3 py-2.5 rounded-lg font-industrial text-xl font-bold uppercase tracking-wider text-slate-600 hover:bg-slate-50">Servicios</a>
+            <a href="#clientes" class="block px-3 py-2.5 rounded-lg font-industrial text-xl font-bold uppercase tracking-wider text-slate-600 hover:bg-slate-50">Clientes</a>
+            <a href="#contacto" class="block px-4 py-3 mt-4 text-center rounded-lg font-industrial text-xl font-extrabold uppercase tracking-wider bg-saeNavy text-white">Cotizar Servicio</a>
+        </div>
+    </nav>
+
+    <!-- =====================================================================
+         1. HERO SECTION (Fondo Blanco Transparente sobre Imágenes - Gradiente Leve)
+    ====================================================================== -->
+    <header id="inicio" class="relative bg-white min-h-[88vh] flex items-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <div class="hero-slide absolute inset-0 opacity-100 scale-105" data-slide="0">
+                <img id="hero-img-0" src="src/2.jpeg" onerror="this.onerror=null; this.src='src/2.jpeg';" alt="Hero SAE 1" class="w-full h-full object-cover object-center">
+            </div>
+            <div class="hero-slide absolute inset-0 opacity-0 scale-100" data-slide="1">
+                <img id="hero-img-1" src="src/1.jpeg" onerror="this.onerror=null; this.src='src/1.jpeg';" alt="Hero SAE 2" class="w-full h-full object-cover object-center">
+            </div>
+            <div class="hero-slide absolute inset-0 opacity-0 scale-100" data-slide="2">
+                <img id="hero-img-2" src="src/8.jpeg" onerror="this.onerror=null; this.src='src/8.jpeg';" alt="Hero SAE 3" class="w-full h-full object-cover object-center">
+            </div>
+            <!-- Overlay Blanco Degradado LEVE -->
+            <div class="absolute inset-0 bg-gradient-to-r from-white/70 via-white/40 to-transparent"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full drop-shadow-md">
+            <div class="max-w-3xl">
+                <div class="inline-flex items-center gap-2.5 bg-white border border-saeCyan/30 px-4 py-1.5 rounded-full mb-6 shadow-sm">
+                    <span class="w-2.5 h-2.5 rounded-full bg-saeCyan animate-ping"></span>
+                    <span class="font-industrial text-sm md:text-base font-bold uppercase tracking-widest text-saeBlue">
+                        Desde 1970 Moviendo las Industrias Clave
+                    </span>
+                </div>
+
+                <h1 class="font-industrial text-5xl sm:text-6xl md:text-7xl font-black text-saeNavy uppercase leading-[0.95] tracking-tight mb-6">
+                    ESPECIALISTAS EN TRANSPORTE TERRESTRE DE <span class="text-saeBlue">CARGA POR CARRETERA</span>
+                </h1>
+
+                <p class="text-lg md:text-xl text-saeNavy mb-10 max-w-2xl font-semibold leading-relaxed">
+                    Más de <strong>40 años de experiencia</strong> operando la cadena de suministro con cobertura nacional y los más altos estándares de tecnología, trazabilidad y seguridad.
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4 mb-12">
+                    <a href="#contacto" class="bg-saeNavy hover:bg-saeBlue text-white font-industrial text-xl font-black uppercase tracking-wider px-8 py-4 rounded-xl transition-all shadow-lg flex items-center justify-center gap-3">
+                        <span>Cotizar Servicio</span>
+                        <i class="fa-solid fa-chevron-right text-base"></i>
+                    </a>
+                    <a href="#contacto" class="bg-white hover:bg-slate-50 border border-slate-300 text-saeNavy font-industrial text-xl font-bold uppercase tracking-wider px-8 py-4 rounded-xl transition-all shadow-sm flex items-center justify-center gap-3">
+                        <i class="fa-solid fa-headset text-saeBlue"></i>
+                        <span>Hablar con Operaciones</span>
+                    </a>
+                </div>
+
+                <div class="flex items-center gap-4 pt-4 border-t border-slate-400/50">
+                    <span class="font-industrial text-sm uppercase tracking-widest text-saeNavy font-bold">Vista Flota:</span>
+                    <button onclick="setHeroSlide(0)" class="hero-dot px-3 py-1 rounded text-xs font-industrial font-bold uppercase tracking-wider bg-saeNavy text-white transition shadow-sm">
+                        01
+                    </button>
+                    <button onclick="setHeroSlide(1)" class="hero-dot px-3 py-1 rounded text-xs font-industrial font-bold uppercase tracking-wider bg-white text-slate-700 border border-slate-300 hover:bg-slate-100 transition shadow-sm">
+                        02
+                    </button>
+                    <button onclick="setHeroSlide(2)" class="hero-dot px-3 py-1 rounded text-xs font-industrial font-bold uppercase tracking-wider bg-white text-slate-700 border border-slate-300 hover:bg-slate-100 transition shadow-sm">
+                        03
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Barra de Cifras (Fondo Blanco) -->
+    <div class="bg-white border-y border-slate-200 relative z-20 shadow-sm">
+        <div class="max-w-7xl mx-auto px-8 py-6 grid grid-cols-2 md:grid-cols-5 divide-x divide-slate-200">
+            <div class="px-4 text-center md:text-left flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
+                <span class="font-industrial text-4xl font-black text-saeBlue">+<span class="counter" data-target="40">40</span></span>
+                <span class="text-xs uppercase tracking-wider text-slate-500 font-semibold leading-tight">Años de<br>Experiencia</span>
+            </div>
+            <div class="px-4 text-center md:text-left flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
+                <span class="font-industrial text-4xl font-black text-saeNavy counter" data-target="888">888</span>
+                <span class="text-xs uppercase tracking-wider text-slate-500 font-semibold leading-tight">Colaboradores<br>Activos</span>
+            </div>
+            <div class="px-4 text-center md:text-left flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
+                <span class="font-industrial text-4xl font-black text-saeBlue counter" data-target="185">185</span>
+                <span class="text-xs uppercase tracking-wider text-slate-500 font-semibold leading-tight">Vehículos<br>Motrices</span>
+            </div>
+            <div class="px-4 text-center md:text-left flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
+                <span class="font-industrial text-4xl font-black text-saeNavy counter" data-target="266">266</span>
+                <span class="text-xs uppercase tracking-wider text-slate-500 font-semibold leading-tight">Equipos y<br>Ramplas</span>
+            </div>
+            <div class="px-4 text-center md:text-left flex flex-col md:flex-row md:items-center gap-2 md:gap-4 hidden md:flex">
+                <span class="font-industrial text-4xl font-black text-saeBlue counter" data-target="7">7</span>
+                <span class="text-xs uppercase tracking-wider text-slate-500 font-semibold leading-tight">Bases Operativas<br>Norte y Centro</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         2. HISTORIA (Timeline Horizontal y Dotación)
+    ====================================================================== -->
+    <section id="historia" class="py-24 bg-white relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <div class="inline-flex items-center gap-2 text-saeBlue font-industrial font-bold uppercase tracking-widest text-base mb-2">
+                    <span class="w-8 h-0.5 bg-saeBlue"></span> Trayectoria Corporativa <span class="w-8 h-0.5 bg-saeBlue"></span>
+                </div>
+                <h2 class="font-industrial text-4xl sm:text-5xl font-black text-saeNavy uppercase leading-none">
+                    MÁS DE 40 AÑOS LIDERANDO EL <span class="text-saeBlue">TRANSPORTE TERRESTRE</span>
+                </h2>
+            </div>
+
+            <!-- TIMELINE HORIZONTAL -->
+            <div class="relative w-full mb-20 overflow-x-auto pb-12 timeline-scroll">
+                <div class="flex items-center min-w-[1200px] relative pt-16 pb-16 px-4">
+                    <!-- Línea Base central -->
+                    <div class="absolute top-1/2 left-0 w-full h-1 bg-slate-200 -translate-y-1/2"></div>
+                    
+                    <!-- Hito 1 -->
+                    <div class="flex-1 relative flex flex-col items-center">
+                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-saeNavy border-4 border-white shadow-sm z-10"></div>
+                        <div class="absolute bottom-[calc(50%+1rem)] w-full text-center px-2">
+                            <h4 class="font-industrial text-3xl font-black text-saeBlue mb-1">1970</h4>
+                            <p class="text-xs text-slate-600 bg-slate-50 p-2 rounded border border-slate-200 shadow-sm mx-auto max-w-[160px]">Nace ante la necesidad interna del rubro avícola.</p>
+                        </div>
+                    </div>
+
+                    <!-- Hito 2 -->
+                    <div class="flex-1 relative flex flex-col items-center">
+                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-saeCyan border-4 border-white shadow-sm z-10"></div>
+                        <div class="absolute top-[calc(50%+1rem)] w-full text-center px-2">
+                            <h4 class="font-industrial text-3xl font-black text-saeNavy mb-1">1980-1990</h4>
+                            <p class="text-xs text-slate-600 bg-slate-50 p-2 rounded border border-slate-200 shadow-sm mx-auto max-w-[160px]">Consolidación gracias al rubro frutícola.</p>
+                        </div>
+                    </div>
+
+                    <!-- Hito 3 -->
+                    <div class="flex-1 relative flex flex-col items-center">
+                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-saeNavy border-4 border-white shadow-sm z-10"></div>
+                        <div class="absolute bottom-[calc(50%+1rem)] w-full text-center px-2">
+                            <h4 class="font-industrial text-3xl font-black text-saeBlue mb-1">1990-2000</h4>
+                            <p class="text-xs text-slate-600 bg-slate-50 p-2 rounded border border-slate-200 shadow-sm mx-auto max-w-[160px]">Adjudicación primer contrato corporativo rubro minería.</p>
+                        </div>
+                    </div>
+
+                    <!-- Hito 4 -->
+                    <div class="flex-1 relative flex flex-col items-center">
+                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-saeCyan border-4 border-white shadow-sm z-10"></div>
+                        <div class="absolute top-[calc(50%+1rem)] w-full text-center px-2">
+                            <h4 class="font-industrial text-3xl font-black text-saeNavy mb-1">2000-2015</h4>
+                            <p class="text-xs text-slate-600 bg-slate-50 p-2 rounded border border-slate-200 shadow-sm mx-auto max-w-[160px]">Importante crecimiento en el norte de Chile bajo el alero del impulso minero.</p>
+                        </div>
+                    </div>
+
+                    <!-- Hito 5 -->
+                    <div class="flex-1 relative flex flex-col items-center">
+                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-saeNavy border-4 border-white shadow-sm z-10"></div>
+                        <div class="absolute bottom-[calc(50%+1rem)] w-full text-center px-2">
+                            <h4 class="font-industrial text-3xl font-black text-saeBlue mb-1">2015-2020</h4>
+                            <p class="text-xs text-slate-600 bg-slate-50 p-2 rounded border border-slate-200 shadow-sm mx-auto max-w-[160px]">Adjudicación de contrato transporte de combustible carga peligrosa.</p>
+                        </div>
+                    </div>
+
+                    <!-- Hito 6 -->
+                    <div class="flex-1 relative flex flex-col items-center">
+                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-saeCyan border-4 border-white shadow-sm z-10"></div>
+                        <div class="absolute top-[calc(50%+1rem)] w-full text-center px-2">
+                            <h4 class="font-industrial text-3xl font-black text-saeNavy mb-1">2020-2025</h4>
+                            <p class="text-xs text-slate-600 bg-slate-50 p-2 rounded border border-slate-200 shadow-sm mx-auto max-w-[160px]">Adjudicación de contratos de servicio de operador logístico rubro minería.</p>
+                        </div>
+                    </div>
+
+                    <!-- Hito 7 -->
+                    <div class="flex-1 relative flex flex-col items-center">
+                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-saeBlue border-4 border-white shadow-md z-10"></div>
+                        <div class="absolute bottom-[calc(50%+1rem)] w-full text-center px-2">
+                            <h4 class="font-industrial text-3xl font-black text-saeCyan mb-1">Actualmente</h4>
+                            <p class="text-xs font-bold text-saeNavy bg-saeCyan/10 p-2 rounded border border-saeCyan/30 shadow-sm mx-auto max-w-[160px]">En proceso de cierre de contrato de operación bodega mineral CoCu CLU-Panul CQBO.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dotación -->
+            <div class="max-w-4xl mx-auto bg-slate-50 border border-slate-200 rounded-2xl p-6 md:p-8 shadow-sm border-l-4 border-l-saeBlue">
+                <div class="flex flex-col md:flex-row justify-between items-center mb-6 pb-4 border-b border-slate-200">
+                    <div class="text-center md:text-left mb-4 md:mb-0">
+                        <span class="font-industrial text-sm uppercase tracking-widest text-saeBlue block">Capital Humano Activo</span>
+                        <h3 class="font-industrial text-3xl font-extrabold text-saeNavy uppercase">Distribución de Dotación</h3>
+                    </div>
+                    <div class="text-center md:text-right">
+                        <span class="font-industrial text-5xl font-black text-saeBlue leading-none">888</span>
+                        <span class="block text-xs uppercase tracking-wider text-slate-500 font-bold mt-1">Colaboradores</span>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+                    <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-100">
+                        <span class="font-industrial text-3xl font-bold text-saeNavy block">220</span>
+                        <span class="text-sm font-semibold text-slate-500">Conductores</span>
+                    </div>
+                    <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-100">
+                        <span class="font-industrial text-3xl font-bold text-saeBlue block">39</span>
+                        <span class="text-sm font-semibold text-slate-500">Administrativos</span>
+                    </div>
+                    <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-100">
+                        <span class="font-industrial text-3xl font-bold text-saeNavy block">19</span>
+                        <span class="text-sm font-semibold text-slate-500">Bodega/Mant.</span>
+                    </div>
+                    <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-100">
+                        <span class="font-industrial text-3xl font-bold text-saeBlue block">18</span>
+                        <span class="text-sm font-semibold text-slate-500">Operaciones</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =====================================================================
+         3. SERVICIOS 
+    ====================================================================== -->
+    <section id="servicios" class="py-24 bg-slate-50 relative border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-saeBlue font-industrial font-bold uppercase tracking-widest text-base">Divisiones Operativas</span>
+                <h2 class="font-industrial text-4xl sm:text-5xl font-black text-saeNavy uppercase leading-none mt-2">
+                    NUESTROS SERVICIOS DE <span class="text-saeBlue">CARGA POR CARRETERA</span>
+                </h2>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-6">
+                <!-- 1. Minería -->
+                <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-xl hover:border-saeBlue transition-all duration-300 flex flex-col w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] max-w-sm">
+                    <div class="relative h-56 overflow-hidden bg-slate-100">
+                        <img src="src/8.jpeg" onerror="this.onerror=null; this.src='src/8.jpeg';" class="w-full h-full object-cover" alt="Minería">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-industrial text-2xl font-extrabold uppercase text-saeNavy">Minería</h3>
+                            <i class="fa-solid fa-helmet-safety text-saeBlue text-xl"></i>
+                        </div>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4">Transporte de insumos y productos mineros cumpliendo exigentes estándares de seguridad en faena.</p>
+                        <span class="text-xs text-slate-400 font-bold uppercase">Ramplas Planas • Camas Bajas</span>
+                    </div>
+                </div>
+
+                <!-- 2. Frutícola -->
+                <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-xl hover:border-saeBlue transition-all duration-300 flex flex-col w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] max-w-sm">
+                    <div class="relative h-56 overflow-hidden bg-slate-100">
+                        <img src="src/5.jpeg" onerror="this.onerror=null; this.src='src/5.jpeg';" class="w-full h-full object-cover" alt="Frutícola">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-industrial text-2xl font-extrabold uppercase text-saeNavy">Frutícola</h3>
+                            <i class="fa-solid fa-snowflake text-saeBlue text-xl"></i>
+                        </div>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4">Mantenemos la cadena de frío asegurando que los productos lleguen frescos a su destino de exportación.</p>
+                        <span class="text-xs text-slate-400 font-bold uppercase">Termos Frigoríficos</span>
+                    </div>
+                </div>
+
+                <!-- 3. Granos -->
+                <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-xl hover:border-saeBlue transition-all duration-300 flex flex-col w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] max-w-sm">
+                    <div class="relative h-56 overflow-hidden bg-slate-100">
+                        <img src="src/4.jpeg" onerror="this.onerror=null; this.src='src/4.jpeg';" class="w-full h-full object-cover" alt="Granos">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-industrial text-2xl font-extrabold uppercase text-saeNavy">Granos</h3>
+                            <i class="fa-solid fa-wheat-awn text-saeBlue text-xl"></i>
+                        </div>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4">Logística especializada de alto tonelaje para el traslado eficiente de granos hacia plantas de silos.</p>
+                        <span class="text-xs text-slate-400 font-bold uppercase">Tolvas y Etelvinas</span>
+                    </div>
+                </div>
+
+                <!-- 4. Carga Peligrosa -->
+                <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-xl hover:border-saeBlue transition-all duration-300 flex flex-col w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] max-w-sm">
+                    <div class="relative h-56 overflow-hidden bg-slate-100">
+                        <img src="src/7.jpeg" onerror="this.onerror=null; this.src='src/7.jpeg';" class="w-full h-full object-cover" alt="Carga Peligrosa">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-industrial text-2xl font-extrabold uppercase text-saeNavy">Carga Peligrosa</h3>
+                            <i class="fa-solid fa-fire-flame-curved text-saeBlue text-xl"></i>
+                        </div>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4">Transporte seguro de combustibles y sustancias peligrosas bajo estricta normativa vigente.</p>
+                        <span class="text-xs text-slate-400 font-bold uppercase">Estanques • Certificaciones Especiales</span>
+                    </div>
+                </div>
+
+                <!-- 5. Corporativo -->
+                <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-xl hover:border-saeBlue transition-all duration-300 flex flex-col w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] max-w-sm">
+                    <div class="relative h-56 overflow-hidden bg-slate-100">
+                        <img src="src/6.jpeg" onerror="this.onerror=null; this.src='src/6.jpeg';" class="w-full h-full object-cover" alt="Corporativo">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-industrial text-2xl font-extrabold uppercase text-saeNavy">Corporativo</h3>
+                            <i class="fa-solid fa-building text-saeBlue text-xl"></i>
+                        </div>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4">Soluciones de transporte y distribución exclusivas a medida para grandes clientes corporativos.</p>
+                        <span class="text-xs text-slate-400 font-bold uppercase">Furgones • Siders • Logística Dedicada</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =====================================================================
+         4. TECNOLOGÍAS APLICADAS (8 Items)
+    ====================================================================== -->
+    <section id="tecnologia" class="py-24 bg-white border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-saeBlue font-industrial font-bold uppercase tracking-widest text-base">Innovación y Monitoreo</span>
+                <h2 class="font-industrial text-4xl sm:text-5xl font-black text-saeNavy uppercase leading-none mt-2">
+                    TECNOLOGÍAS <span class="text-saeBlue">APLICADAS</span>
+                </h2>
+                <p class="text-slate-600 mt-4 text-lg">
+                    Soluciones integrales de monitoreo, inteligencia de flotas y seguridad operativa en tiempo real.
+                </p>
+            </div>
+
+            <!-- Grid de 8 items -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- 1. Torre de control -->
+                <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-saeBlue transition text-left flex flex-col group">
+                    <div class="w-12 h-12 rounded-lg bg-slate-100 text-saeBlue flex items-center justify-center text-xl mb-4 group-hover:bg-saeBlue group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-tower-observation"></i>
+                    </div>
+                    <h3 class="font-industrial text-xl font-extrabold uppercase text-saeNavy">Torre de control</h3>
+                    <p class="text-xs font-bold text-saeCyan mb-2 uppercase">CIF: Centro De Inteligencia De Flotas</p>
+                    <p class="text-sm text-slate-600">Es un centro de supervisión centralizada que monitorea los viajes en tiempo real para detectar eventos y registrar alertas.</p>
+                </div>
+
+                <!-- 2. GPS -->
+                <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-saeBlue transition text-left flex flex-col group">
+                    <div class="w-12 h-12 rounded-lg bg-slate-100 text-saeBlue flex items-center justify-center text-xl mb-4 group-hover:bg-saeBlue group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-location-crosshairs"></i>
+                    </div>
+                    <h3 class="font-industrial text-xl font-extrabold uppercase text-saeNavy">GPS</h3>
+                    <p class="text-sm text-slate-600 mt-2">Solución diseñada para procesar datos de ubicación y estado de unidades en tiempo real. Su objetivo es centralizar información para optimizar toma de decisiones.</p>
+                </div>
+
+                <!-- 3. Telemetría -->
+                <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-saeBlue transition text-left flex flex-col group">
+                    <div class="w-12 h-12 rounded-lg bg-slate-100 text-saeBlue flex items-center justify-center text-xl mb-4 group-hover:bg-saeBlue group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-gauge-high"></i>
+                    </div>
+                    <h3 class="font-industrial text-xl font-extrabold uppercase text-saeNavy">Telemetría</h3>
+                    <p class="text-sm text-slate-600 mt-2">Sistema avanzado de medición remota que permite recopilar datos técnicos detallados sobre el funcionamiento del motor, cabina y estado de un vehículo hacia la plataforma de control.</p>
+                </div>
+
+                <!-- 4. Plataforma TMS -->
+                <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-saeBlue transition text-left flex flex-col group">
+                    <div class="w-12 h-12 rounded-lg bg-slate-100 text-saeBlue flex items-center justify-center text-xl mb-4 group-hover:bg-saeBlue group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-network-wired"></i>
+                    </div>
+                    <h3 class="font-industrial text-xl font-extrabold uppercase text-saeNavy">Plataforma TMS</h3>
+                    <p class="text-sm text-slate-600 mt-2">Es un sistema de software diseñado para optimizar, gestionar y automatizar las operaciones de transporte. Centraliza planificación de rutas, seguimiento en tiempo real y gestión de flotas.</p>
+                </div>
+
+                <!-- 5. Integraciones -->
+                <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-saeBlue transition text-left flex flex-col group">
+                    <div class="w-12 h-12 rounded-lg bg-slate-100 text-saeBlue flex items-center justify-center text-xl mb-4 group-hover:bg-saeBlue group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-link"></i>
+                    </div>
+                    <h3 class="font-industrial text-xl font-extrabold uppercase text-saeNavy">Integraciones</h3>
+                    <p class="text-sm text-slate-600 mt-2">Proceso tecnológico que permite que diferentes sistemas (GPS, Torre de control y ERP) se "hablen" entre sí y compartan información automáticamente, eliminando carga manual de datos.</p>
+                </div>
+
+                <!-- 6. DASHCAM con IA -->
+                <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-saeBlue transition text-left flex flex-col group">
+                    <div class="w-12 h-12 rounded-lg bg-slate-100 text-saeBlue flex items-center justify-center text-xl mb-4 group-hover:bg-saeBlue group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-camera"></i>
+                    </div>
+                    <h3 class="font-industrial text-xl font-extrabold uppercase text-saeNavy">DASHCAM con IA</h3>
+                    <p class="text-sm text-slate-600 mt-2">Cámara inteligente con visión que monitorea el comportamiento en cabina. Detecta conductas de riesgo (fatiga, distracciones, uso del celular) cumpliendo acreditaciones de mandantes.</p>
+                </div>
+
+                <!-- 7. Control Presión Neumáticos -->
+                <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-saeBlue transition text-left flex flex-col group">
+                    <div class="w-12 h-12 rounded-lg bg-slate-100 text-saeBlue flex items-center justify-center text-xl mb-4 group-hover:bg-saeBlue group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-truck-moving"></i>
+                    </div>
+                    <h3 class="font-industrial text-xl font-extrabold uppercase text-saeNavy leading-tight">Control de Presión de Neumáticos</h3>
+                    <p class="text-sm text-slate-600 mt-2">Sistema de sensores inteligentes que monitorea en tiempo real la presión y temperatura. Detecta fugas lentas o sobrecalentamientos enviando alertas preventivas.</p>
+                </div>
+
+                <!-- 8. Reportes Automatizados -->
+                <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-saeBlue transition text-left flex flex-col group">
+                    <div class="w-12 h-12 rounded-lg bg-slate-100 text-saeBlue flex items-center justify-center text-xl mb-4 group-hover:bg-saeBlue group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <h3 class="font-industrial text-xl font-extrabold uppercase text-saeNavy">Reportes Automatizados</h3>
+                    <p class="text-sm text-slate-600 mt-2">Solución que centraliza datos operativos para generar tableros dinámicos. Permite visualizar KPIs críticos y eficiencia de flota para decisiones estratégicas.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- =====================================================================
+         5. CLIENTES: CONFIARON EN NOSOTROS (Marquee)
+    ====================================================================== -->
+    <section id="clientes" class="py-20 bg-slate-50 border-y border-slate-200 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10 text-center">
+            <span class="text-saeBlue font-industrial font-bold uppercase tracking-widest text-base">Alianzas Estratégicas</span>
+            <h2 class="font-industrial text-4xl sm:text-5xl font-black text-saeNavy uppercase leading-none mt-2">
+                CONFIARON EN <span class="text-saeBlue">NOSOTROS</span>
+            </h2>
+        </div>
+        
+        <div class="relative w-full flex overflow-hidden">
+            <!-- Fade Overlay (Izquierda y Derecha) para efecto de entrada suave -->
+            <div class="absolute top-0 left-0 h-full w-24 bg-gradient-to-r from-slate-50 to-transparent z-10"></div>
+            <div class="absolute top-0 right-0 h-full w-24 bg-gradient-to-l from-slate-50 to-transparent z-10"></div>
+            
+            <div class="animate-marquee flex gap-12 sm:gap-20 items-center px-6">
+                <!-- Set original de 13 clientes -->
+                <img src="src/cliente1.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/f8fafc/94a3b8?text=CLIENTE+1';" alt="Cliente 1" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+                <img src="src/cliente2.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/f8fafc/94a3b8?text=CLIENTE+2';" alt="Cliente 2" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+                <img src="src/cliente3.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/f8fafc/94a3b8?text=CLIENTE+3';" alt="Cliente 3" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+                <img src="src/cliente4.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/f8fafc/94a3b8?text=CLIENTE+4';" alt="Cliente 4" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+                <img src="src/cliente5.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/f8fafc/94a3b8?text=CLIENTE+5';" alt="Cliente 5" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+                <img src="src/cliente6.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/f8fafc/94a3b8?text=CLIENTE+6';" alt="Cliente 6" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+                <img src="src/cliente7.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/f8fafc/94a3b8?text=CLIENTE+7';" alt="Cliente 7" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+                <img src="src/cliente8.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/f8fafc/94a3b8?text=CLIENTE+8';" alt="Cliente 8" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+                <img src="src/cliente9.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/f8fafc/94a3b8?text=CLIENTE+9';" alt="Cliente 9" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+                <img src="src/cliente10.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/f8fafc/94a3b8?text=CLIENTE+10';" alt="Cliente 10" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+                <img src="src/cliente11.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/f8fafc/94a3b8?text=CLIENTE+11';" alt="Cliente 11" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+                <img src="src/cliente12.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/f8fafc/94a3b8?text=CLIENTE+12';" alt="Cliente 12" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+                <img src="src/cliente13.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/f8fafc/94a3b8?text=CLIENTE+13';" alt="Cliente 13" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+
+                <!-- Duplicado para efecto seamless infinito -->
+                <img src="src/cliente1.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/f8fafc/94a3b8?text=CLIENTE+1';" alt="Cliente 1" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+                <img src="src/cliente2.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/f8fafc/94a3b8?text=CLIENTE+2';" alt="Cliente 2" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+                <img src="src/cliente3.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/f8fafc/94a3b8?text=CLIENTE+3';" alt="Cliente 3" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+                <img src="src/cliente4.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/f8fafc/94a3b8?text=CLIENTE+4';" alt="Cliente 4" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+                <img src="src/cliente5.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/f8fafc/94a3b8?text=CLIENTE+5';" alt="Cliente 5" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+                <img src="src/cliente6.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/f8fafc/94a3b8?text=CLIENTE+6';" alt="Cliente 6" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+                <img src="src/cliente7.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/f8fafc/94a3b8?text=CLIENTE+7';" alt="Cliente 7" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+                <img src="src/cliente8.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/f8fafc/94a3b8?text=CLIENTE+8';" alt="Cliente 8" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+                <img src="src/cliente9.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/f8fafc/94a3b8?text=CLIENTE+9';" alt="Cliente 9" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+                <img src="src/cliente10.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/f8fafc/94a3b8?text=CLIENTE+10';" alt="Cliente 10" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+                <img src="src/cliente11.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/f8fafc/94a3b8?text=CLIENTE+11';" alt="Cliente 11" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+                <img src="src/cliente12.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/f8fafc/94a3b8?text=CLIENTE+12';" alt="Cliente 12" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+                <img src="src/cliente13.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x60/f8fafc/94a3b8?text=CLIENTE+13';" alt="Cliente 13" class="h-16 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+            </div>
+        </div>
+    </section>
+
+    <!-- =====================================================================
+         6. COBERTURA (Fondo Blanco / Mapa Interactivo)
+    ====================================================================== -->
+    <section id="cobertura" class="py-24 bg-white border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <h2 class="font-industrial text-4xl sm:text-5xl font-black text-saeNavy uppercase leading-none">
+                    MAPA DE COBERTURA <span class="text-saeBlue">NACIONAL</span>
+                </h2>
+                <p class="text-slate-600 mt-4">Red estratégica de sucursales en el Norte y Centro de Chile.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                <!-- Mapa SVG -->
+                <div class="lg:col-span-7 bg-white border border-slate-200 rounded-3xl p-6 shadow-md relative">
+                    <div class="flex justify-between items-center mb-4 pb-4 border-b border-slate-100 text-sm">
+                        <span class="font-industrial font-bold uppercase text-saeNavy"><span class="text-amber-500">★</span> Casa Matriz Coquimbo</span>
+                        <span class="font-industrial font-bold uppercase text-saeBlue"><span class="text-saeBlue">●</span> Sucursales Activas</span>
+                    </div>
+
+                    <div class="relative w-full flex justify-center bg-slate-50 rounded-xl p-4 border border-slate-100">
+                        <svg id="chile-svg-map" viewBox="80 15 260 540" class="w-full h-[500px] select-none">
+                            <!-- Tarapacá -->
+                            <path id="reg-tarapaca" data-name="Región de Tarapacá" class="chile-region active-region" d="M191,68 L229,68 L238,105 L230,132 L186,132 L188,96 Z" />
+                            <!-- Antofagasta -->
+                            <path id="reg-antofagasta" data-name="Región de Antofagasta" class="chile-region active-region" d="M185,136 L232,136 L252,168 L246,215 L224,242 L176,242 L172,195 L182,165 Z" />
+                            <!-- Atacama -->
+                            <path id="reg-atacama" data-name="Región de Atacama" class="chile-region active-region" d="M175,246 L224,246 L230,285 L218,332 L168,332 L165,288 Z" />
+                            <!-- Coquimbo HQ -->
+                            <path id="reg-coquimbo" data-name="Región de Coquimbo" class="chile-region hq-region" d="M167,336 L217,336 L214,378 L204,412 L158,412 L154,372 Z" />
+                            <!-- RM -->
+                            <path id="reg-rm" data-name="Región Metropolitana" class="chile-region active-region" d="M174,452 L208,446 L212,480 L176,486 L166,468 Z" />
+                            
+                            <!-- Otras Regiones (Simplificadas para el ejemplo) -->
+                            <path class="chile-region inactive-region" d="M195,25 L230,25 L236,48 L228,64 L192,64 Z" />
+                            <path class="chile-region inactive-region" d="M156,416 L203,416 L198,448 L172,462 L148,454 L150,432 Z" />
+                            <path class="chile-region inactive-region" d="M148,460 L172,470 L198,488 L194,512 L144,512 Z" />
+
+                            <!-- Marcadores -->
+                            <circle cx="196" cy="95" r="5" fill="#004b93" /> <text x="210" y="99" fill="#06152d" font-size="10" font-family="sans-serif" font-weight="bold">Alto Hospicio</text>
+                            <circle cx="215" cy="168" r="5" fill="#004b93" /> <text x="225" y="172" fill="#06152d" font-size="10" font-family="sans-serif" font-weight="bold">Calama</text>
+                            <circle cx="188" cy="285" r="5" fill="#004b93" /> <text x="200" y="289" fill="#06152d" font-size="10" font-family="sans-serif" font-weight="bold">Copiapó</text>
+                            <circle cx="168" cy="368" r="7" fill="#f59e0b" /> <text x="180" y="372" fill="#d97706" font-size="12" font-family="sans-serif" font-weight="bold">COQUIMBO</text>
+                            <circle cx="188" cy="468" r="5" fill="#004b93" /> <text x="200" y="472" fill="#06152d" font-size="10" font-family="sans-serif" font-weight="bold">Santiago</text>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Lista de Sucursales -->
+                <div class="lg:col-span-5 flex flex-col justify-center space-y-4">
+                    <div class="bg-white border border-amber-200 rounded-xl p-5 shadow-sm border-l-4 border-l-amber-500">
+                        <h3 class="font-industrial text-xl font-bold uppercase text-saeNavy">IV Región de Coquimbo</h3>
+                        <p class="text-sm text-slate-600 mt-1"><strong class="text-amber-600">Casa Matriz</strong> y Centro Neurálgico de Operaciones.</p>
+                    </div>
+                    <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm border-l-4 border-l-saeBlue">
+                        <h3 class="font-industrial text-xl font-bold uppercase text-saeNavy">II Región de Antofagasta</h3>
+                        <p class="text-sm text-slate-600 mt-1">3 Bases Estratégicas: <strong>Calama, La Portada, La Negra.</strong></p>
+                    </div>
+                    <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm border-l-4 border-l-saeBlue">
+                        <h3 class="font-industrial text-xl font-bold uppercase text-saeNavy">I Región de Tarapacá</h3>
+                        <p class="text-sm text-slate-600 mt-1">Sucursal <strong>Alto Hospicio</strong> para logística portuaria.</p>
+                    </div>
+                    <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm border-l-4 border-l-saeBlue">
+                        <h3 class="font-industrial text-xl font-bold uppercase text-saeNavy">Región Metropolitana</h3>
+                        <p class="text-sm text-slate-600 mt-1">Sucursal <strong>Lampa</strong> para consolidación y despachos troncales.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =====================================================================
+         7. CONTACTO Y FOOTER
+    ====================================================================== -->
+    <section id="contacto" class="py-24 bg-slate-50 border-t border-slate-200">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="font-industrial text-4xl sm:text-5xl font-black text-saeNavy uppercase leading-none mb-6">
+                ¿LISTO PARA OPTIMIZAR TU <span class="text-saeBlue">CADENA DE SUMINISTRO?</span>
+            </h2>
+            <p class="text-slate-600 mb-10 text-lg">Contacta a nuestro equipo comercial para diseñar una solución logística a medida.</p>
+            
+            <form class="bg-white border border-slate-200 p-8 rounded-2xl shadow-lg max-w-2xl mx-auto text-left">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+                    <input type="text" placeholder="Nombre / Empresa" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
+                    <input type="email" placeholder="Correo Corporativo" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
+                </div>
+                <textarea rows="3" placeholder="Requerimientos logísticos..." class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue mb-5"></textarea>
+                <button type="button" class="w-full bg-saeNavy hover:bg-saeBlue text-white font-industrial text-xl font-black uppercase tracking-wider py-4 rounded-xl transition shadow-md">
+                    Enviar Cotización
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="bg-slate-100 text-slate-600 py-10 border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="font-industrial font-bold uppercase tracking-wider mb-2 text-saeNavy text-xl">Transportes SAE Ltda.</p>
+            <p class="text-sm">&copy; 2026. Todos los derechos reservados. Casa Matriz: Coquimbo, Chile.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Hero Slider
+        let currentHeroSlide = 0;
+        const heroSlides = document.querySelectorAll('.hero-slide');
+        const heroDots = document.querySelectorAll('.hero-dot');
+
+        function setHeroSlide(index) {
+            currentHeroSlide = index;
+            heroSlides.forEach((slide, i) => {
+                if (i === index) {
+                    slide.classList.remove('opacity-0', 'scale-100');
+                    slide.classList.add('opacity-100', 'scale-105');
+                } else {
+                    slide.classList.remove('opacity-100', 'scale-105');
+                    slide.classList.add('opacity-0', 'scale-100');
+                }
+            });
+            heroDots.forEach((dot, i) => {
+                if (i === index) {
+                    dot.className = 'hero-dot px-3 py-1 rounded text-xs font-industrial font-bold uppercase tracking-wider bg-saeNavy text-white transition shadow-sm';
+                } else {
+                    dot.className = 'hero-dot px-3 py-1 rounded text-xs font-industrial font-bold uppercase tracking-wider bg-white text-slate-700 border border-slate-300 hover:bg-slate-100 transition shadow-sm';
+                }
+            });
+        }
+        setInterval(() => setHeroSlide((currentHeroSlide + 1) % heroSlides.length), 5500);
+
+        // Contadores Animados
+        const counters = document.querySelectorAll('.counter');
+        const counterObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const target = parseInt(el.getAttribute('data-target'), 10);
+                    let count = 0;
+                    const step = Math.max(1, Math.ceil(target / 45));
+                    const timer = setInterval(() => {
+                        count += step;
+                        if (count >= target) {
+                            el.textContent = target;
+                            clearInterval(timer);
+                        } else {
+                            el.textContent = count;
+                        }
+                    }, 25);
+                    observer.unobserve(el);
+                }
+            });
+        }, { threshold: 0.3 });
+        counters.forEach(counter => counterObserver.observe(counter));
+
+        // Menú móvil
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>
