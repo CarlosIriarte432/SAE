@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Transportes SAE Ltda. | Especialistas en Transporte de Carga y Logística</title>
     
-    <!-- Google Fonts: Barlow Condensed (Industrial/Títulos) + Plus Jakarta Sans (Cuerpo) -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;0,800;0,900;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;0,800;0,900;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -16,7 +16,11 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Configuración de Tailwind: Tipografía Industrial y Paleta Corporativa SAE -->
+    <!-- D3.js y TopoJSON para Mapa Interactivo Realista -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://unpkg.com/topojson-client@3"></script>
+
+    <!-- Configuración de Tailwind -->
     <script>
         tailwind.config = {
             theme: {
@@ -26,12 +30,12 @@
                         display: ['"Barlow Condensed"', 'sans-serif'],
                     },
                     colors: {
-                        saeNavy: '#06152d',      // Azul marino profundo
-                        saeBlue: '#004b93',      // Azul corporativo SAE
-                        saeCyan: '#00b4d8',      // Cian vibrante
-                        saeSky: '#48cae4',       // Cian claro
-                        saeGold: '#f59e0b',      // Acento
-                        mapRoyal: '#1d18a8',     // Azul intenso estilo referencia mapa
+                        saeNavy: '#06152d',
+                        saeBlue: '#004b93',
+                        saeCyan: '#00b4d8',
+                        saeSky: '#48cae4',
+                        saeGold: '#f59e0b',
+                        mapRoyal: '#171380',
                     }
                 }
             }
@@ -44,57 +48,121 @@
             letter-spacing: 0.02em;
         }
 
-        /* Estilos del Mapa de Chile Completo (Estilo Referencia) */
-        .map-bg-pattern {
-            background-color: #eef0f9;
-            background-image: 
-                linear-gradient(125deg, transparent 48%, rgba(215, 220, 240, 0.5) 49%, rgba(215, 220, 240, 0.5) 51%, transparent 52%),
-                linear-gradient(35deg, transparent 48%, rgba(215, 220, 240, 0.45) 49%, rgba(215, 220, 240, 0.45) 51%, transparent 52%),
-                radial-gradient(circle at 20% 35%, rgba(255, 255, 255, 0.6) 0%, transparent 45%);
-            background-size: 260px 260px, 340px 340px, 100% 100%;
+        /* Ocultar scrollbars */
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Estilos Slider Clientes */
+        .client-logo-box {
+            width: 180px; height: 90px; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+            padding: 12px 16px; background-color: #ffffff; border: 1px solid #f1f5f9; border-radius: 12px; transition: all 0.3s ease;
+        }
+        .client-logo-box:hover { border-color: #cbd5e1; box-shadow: 0 4px 12px rgba(6, 21, 45, 0.06); }
+        .client-logo-img { width: 100%; height: 100%; object-fit: contain; filter: grayscale(100%); opacity: 0.65; transition: all 0.3s ease; user-select: none; }
+        .client-logo-box:hover .client-logo-img { filter: grayscale(0%); opacity: 1; }
+
+        /* ==========================================================================
+           ESTILOS MAPA INTERACTIVO REALISTA D3 (Estilo Corporativo/Fijo)
+           ========================================================================== */
+        
+        /* Contenedor principal con textura y gradiente */
+        .map-interactive-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            min-height: 600px;
+            background-image: linear-gradient(135deg, rgba(23, 19, 128, 0.95) 0%, rgba(13, 10, 94, 0.98) 100%), url('https://images.unsplash.com/photo-1586528116311-ad8ed745eb33?q=80&w=1920&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: multiply;
+            border-radius: 1.5rem;
+            overflow: hidden;
         }
 
-        .chile-reg {
-            fill: #5f6b7c;
-            stroke: #738092;
-            stroke-width: 0.8px;
-            stroke-linejoin: round;
-            transition: fill 0.3s ease, filter 0.3s ease;
-        }
-        .chile-reg.region-clickable {
-            cursor: pointer;
-        }
-        .chile-reg.region-clickable:hover {
-            fill: #4b5666;
-        }
-        .chile-reg.region-active {
-            fill: #1d18a8 !important;
-            stroke: #1d18a8 !important;
-            filter: drop-shadow(0px 3px 8px rgba(29, 24, 168, 0.35));
+        /* Lienzo interactivo (sin cursor de arrastre porque es fijo) */
+        #d3-map-canvas {
+            width: 100%;
+            height: 100%;
+            position: relative;
         }
 
-        .branch-dot {
-            fill: #d8dadf;
-            stroke: #5f6b7c;
-            stroke-width: 1px;
-            cursor: pointer;
-            transition: all 0.25s ease;
+        /* Trazado cartográfico de Chile */
+        .d3-map-path {
+            fill: #ffffff;
+            stroke: #cbd5e1;
+            stroke-width: 0.5px;
+            filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.7));
+            transition: fill 0.3s ease;
         }
-        .branch-dot:hover {
-            fill: #38bdf8;
-            transform: scale(1.2);
-            transform-box: fill-box;
-            transform-origin: center;
+        .d3-map-path:hover {
+            fill: #f8fafc; 
         }
-        .branch-dot.dot-active {
-            fill: #29b6f6 !important;
-            stroke: #1d18a8 !important;
+
+        /* Pines/Marcadores de sucursales */
+        .d3-marker {
+            fill: #00b4d8; /* Cian corporativo */
+            stroke: #171380;
             stroke-width: 1.5px;
-            filter: drop-shadow(0px 0px 6px rgba(41, 182, 246, 0.9));
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .d3-marker:hover, .d3-marker.active {
+            fill: #ffffff; 
+            stroke: #00b4d8;
+            stroke-width: 2.5px;
+            filter: drop-shadow(0 0 8px rgba(0, 180, 216, 0.9));
         }
 
-        #map-floating-card {
-            transition: top 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
+        /* Animación de pulso detrás del marcador */
+        .d3-marker-pulse {
+            fill: #00b4d8;
+            opacity: 0.5;
+            pointer-events: none;
+            animation: pulse-ring-d3 2s infinite;
+        }
+        @keyframes pulse-ring-d3 {
+            0% { transform: scale(1); opacity: 0.7; }
+            100% { transform: scale(4); opacity: 0; }
+        }
+
+        /* Cuadro flotante D3 (Tooltip posicionado de manera absoluta en el documento) */
+        #d3-tooltip-box {
+            position: absolute;
+            background: linear-gradient(135deg, #171380 0%, #0d0a5e 100%);
+            border: 2px solid #00b4d8;
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 180, 216, 0.3);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            width: 240px;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transform: translate(-50%, calc(-100% - 10px)); 
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            padding: 16px;
+        }
+        #d3-tooltip-box.show {
+            opacity: 1;
+            transform: translate(-50%, calc(-100% - 15px));
+        }
+        /* Flecha inferior del tooltip */
+        #d3-tooltip-box::after {
+            content: ''; 
+            position: absolute; 
+            bottom: -8px; 
+            left: 50%; 
+            transform: translateX(-50%) rotate(45deg);
+            width: 14px; 
+            height: 14px; 
+            background: #0d0a5e;
+            border-right: 2px solid #00b4d8;
+            border-bottom: 2px solid #00b4d8;
+        }
+        
+        /* Pantalla de carga del mapa */
+        #d3-loading-screen {
+            position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            background-color: rgba(23, 19, 128, 0.85); z-index: 20; backdrop-filter: blur(5px); transition: opacity 0.5s ease;
         }
 
         /* Hero Slider optimizado por GPU (Sin lag) */
@@ -104,54 +172,11 @@
             transform: translateZ(0);
             backface-visibility: hidden;
         }
-
-        /* Ocultar barra de desplazamiento para Timeline y Slider Clientes */
-        .scrollbar-hide::-webkit-scrollbar {
-            display: none;
-        }
-        .scrollbar-hide {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-
-        /* Contenedor estandarizado para logos de clientes del mismo tamaño */
-        .client-logo-box {
-            width: 180px;
-            height: 90px;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 12px 16px;
-            background-color: #ffffff;
-            border: 1px solid #f1f5f9;
-            border-radius: 12px;
-            transition: all 0.3s ease;
-        }
-        .client-logo-box:hover {
-            border-color: #cbd5e1;
-            box-shadow: 0 4px 12px rgba(6, 21, 45, 0.06);
-        }
-        .client-logo-img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            filter: grayscale(100%);
-            opacity: 0.65;
-            transition: all 0.3s ease;
-            user-select: none;
-        }
-        .client-logo-box:hover .client-logo-img {
-            filter: grayscale(0%);
-            opacity: 1;
-        }
     </style>
 </head>
 <body class="font-sans text-slate-800 antialiased bg-white selection:bg-saeCyan selection:text-saeNavy">
 
-    <!-- =====================================================================
-         BARRA SUPERIOR (Tema Claro)
-    ====================================================================== -->
+    <!-- BARRA SUPERIOR -->
     <div class="bg-slate-100 text-slate-600 text-xs border-b border-slate-200 hidden lg:block">
         <div class="max-w-7xl mx-auto px-6 h-10 flex justify-between items-center">
             <div class="flex items-center space-x-6">
@@ -173,15 +198,11 @@
                 <span class="flex items-center gap-1.5 text-amber-600 font-semibold">
                     <i class="fa-solid fa-trophy"></i> Premio Flota Más Segura 2026
                 </span>
-                <span class="text-slate-300">|</span>
-                <a href="https://www.sae.cl" target="_blank" class="text-saeNavy hover:text-saeBlue transition font-semibold">www.sae.cl</a>
             </div>
         </div>
     </div>
 
-    <!-- =====================================================================
-         NAVBAR PRINCIPAL (Fondo Blanco + Logo Real src/logo.png)
-    ====================================================================== -->
+    <!-- NAVBAR PRINCIPAL -->
     <nav class="sticky top-0 w-full z-50 bg-white/95 border-b border-slate-200 shadow-sm transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
@@ -213,7 +234,7 @@
                 <!-- Botón CTA Desktop -->
                 <div class="hidden lg:flex items-center gap-3">
                     <a href="#contacto" class="bg-saeNavy hover:bg-saeBlue text-white font-industrial text-lg font-extrabold uppercase tracking-wider px-6 py-2.5 rounded-lg transition-all shadow-md flex items-center gap-2">
-                        <span>Cotizar Carga</span>
+                        <span>Cotizar Servicio</span>
                         <i class="fa-solid fa-arrow-right text-sm"></i>
                     </a>
                 </div>
@@ -238,13 +259,11 @@
         </div>
     </nav>
 
-    <!-- =====================================================================
-         1. HERO SECTION 
-    ====================================================================== -->
+    <!-- HERO SECTION -->
     <header id="inicio" class="relative bg-white min-h-[88vh] flex items-center overflow-hidden">
         <div class="absolute inset-0 z-0">
             <div class="hero-slide absolute inset-0 opacity-100" data-slide="0">
-                <img id="hero-img-0" src="src/2.png" onerror="this.onerror=null; this.src='src/2.png';" decoding="async" fetchpriority="high" alt="Hero SAE 1" class="w-full h-full object-cover object-center">
+                <img id="hero-img-0" src="src/2.png" onerror="this.onerror=null; this.src='src/2.jpeg';" decoding="async" fetchpriority="high" alt="Hero SAE 1" class="w-full h-full object-cover object-center">
             </div>
             <div class="hero-slide absolute inset-0 opacity-0 pointer-events-none" data-slide="1">
                 <img id="hero-img-1" src="src/1.jpeg" onerror="this.onerror=null; this.src='src/1.jpeg';" decoding="async" alt="Hero SAE 2" class="w-full h-full object-cover object-center">
@@ -277,7 +296,7 @@
                         <span>Cotizar Servicio</span>
                         <i class="fa-solid fa-chevron-right text-base"></i>
                     </a>
-
+                   
                 </div>
 
                 <div class="flex items-center gap-4 pt-4 border-t border-saeNavy/20">
@@ -322,9 +341,7 @@
         </div>
     </div>
 
-    <!-- =====================================================================
-         2. HISTORIA / TIMELINE (Fondo Gris)
-    ====================================================================== -->
+    <!-- HISTORIA / TIMELINE -->
     <section id="historia" class="py-24 bg-slate-50 relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
@@ -348,7 +365,6 @@
                             <p class="text-[12px] text-slate-600 bg-white p-3 rounded border border-slate-200 shadow-sm mx-auto w-max max-w-[140px]">Nace ante la necesidad interna del rubro avícola.</p>
                         </div>
                     </div>
-
                     <div class="flex-1 relative flex flex-col items-center">
                         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-saeCyan border-2 border-white shadow-sm z-10"></div>
                         <div class="absolute top-[calc(50%+1.5rem)] w-full text-center px-2">
@@ -356,7 +372,6 @@
                             <p class="text-[12px] text-slate-600 bg-white p-3 rounded border border-slate-200 shadow-sm mx-auto w-max max-w-[140px]">Consolidación gracias al rubro frutícola.</p>
                         </div>
                     </div>
-
                     <div class="flex-1 relative flex flex-col items-center">
                         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-saeNavy border-2 border-white shadow-sm z-10"></div>
                         <div class="absolute bottom-[calc(50%+1.5rem)] w-full text-center px-2">
@@ -364,7 +379,6 @@
                             <p class="text-[12px] text-slate-600 bg-white p-3 rounded border border-slate-200 shadow-sm mx-auto w-max max-w-[140px]">Adjudicación primer contrato corporativo rubro minería.</p>
                         </div>
                     </div>
-
                     <div class="flex-1 relative flex flex-col items-center">
                         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-saeCyan border-2 border-white shadow-sm z-10"></div>
                         <div class="absolute top-[calc(50%+1.5rem)] w-full text-center px-2">
@@ -372,7 +386,6 @@
                             <p class="text-[12px] text-slate-600 bg-white p-3 rounded border border-slate-200 shadow-sm mx-auto w-max max-w-[140px]">Importante crecimiento en el norte de Chile bajo el alero del impulso minero.</p>
                         </div>
                     </div>
-
                     <div class="flex-1 relative flex flex-col items-center">
                         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-saeNavy border-2 border-white shadow-sm z-10"></div>
                         <div class="absolute bottom-[calc(50%+1.5rem)] w-full text-center px-2">
@@ -380,7 +393,6 @@
                             <p class="text-[12px] text-slate-600 bg-white p-3 rounded border border-slate-200 shadow-sm mx-auto w-max max-w-[140px]">Adjudicación de contrato transporte de combustible carga peligrosa.</p>
                         </div>
                     </div>
-
                     <div class="flex-1 relative flex flex-col items-center">
                         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-saeCyan border-2 border-white shadow-sm z-10"></div>
                         <div class="absolute top-[calc(50%+1.5rem)] w-full text-center px-2">
@@ -388,7 +400,6 @@
                             <p class="text-[12px] text-slate-600 bg-white p-3 rounded border border-slate-200 shadow-sm mx-auto w-max max-w-[140px]">Adjudicación de contratos de servicio de operador logístico rubro minería.</p>
                         </div>
                     </div>
-
                     <div class="flex-1 relative flex flex-col items-center">
                         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-saeBlue border-4 border-white shadow-md z-10"></div>
                         <div class="absolute bottom-[calc(50%+1.5rem)] w-full text-center px-2">
@@ -399,13 +410,10 @@
                 </div>
             </div>
 
-            
-
+        </div>
     </section>
 
-    <!-- =====================================================================
-         3. NUESTROS SERVICIOS (Fondo Blanco)
-    ====================================================================== -->
+    <!-- NUESTROS SERVICIOS -->
     <section id="servicios" class="py-24 bg-white relative border-t border-slate-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16">
@@ -414,78 +422,43 @@
                     NUESTROS SERVICIOS DE <span class="text-saeBlue">CARGA POR CARRETERA</span>
                 </h2>
             </div>
-
             <div class="flex flex-wrap justify-center gap-6">
-                <!-- 1. Minería -->
                 <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-xl hover:border-saeBlue transition-all duration-300 flex flex-col w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] max-w-sm">
-                    <div class="relative h-56 overflow-hidden bg-slate-100">
-                        <img src="src/8.jpeg" onerror="this.onerror=null; this.src='src/8.jpeg';" loading="lazy" class="w-full h-full object-cover" alt="Minería">
-                    </div>
+                    <div class="relative h-56 overflow-hidden bg-slate-100"><img src="src/8.jpeg" onerror="this.onerror=null; this.src='src/8.jpeg';" loading="lazy" class="w-full h-full object-cover" alt="Minería"></div>
                     <div class="p-6">
-                        <div class="flex items-center justify-between mb-2">
-                            <h3 class="font-industrial text-2xl font-extrabold uppercase text-saeNavy">Minería</h3>
-                            <i class="fa-solid fa-helmet-safety text-saeBlue text-xl"></i>
-                        </div>
+                        <div class="flex items-center justify-between mb-2"><h3 class="font-industrial text-2xl font-extrabold uppercase text-saeNavy">Minería</h3><i class="fa-solid fa-helmet-safety text-saeBlue text-xl"></i></div>
                         <p class="text-slate-600 text-sm leading-relaxed mb-4">Transporte de insumos y productos mineros cumpliendo exigentes estándares de seguridad en faena.</p>
                         <span class="text-xs text-slate-400 font-bold uppercase">Ramplas Planas • Camas Bajas</span>
                     </div>
                 </div>
-
-                <!-- 2. Frutícola -->
                 <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-xl hover:border-saeBlue transition-all duration-300 flex flex-col w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] max-w-sm">
-                    <div class="relative h-56 overflow-hidden bg-slate-100">
-                        <img src="src/5.jpeg" onerror="this.onerror=null; this.src='src/5.jpg';" loading="lazy" class="w-full h-full object-cover" alt="Frutícola">
-                    </div>
+                    <div class="relative h-56 overflow-hidden bg-slate-100"><img src="src/5.jpeg" onerror="this.onerror=null; this.src='src/5.jpg';" loading="lazy" class="w-full h-full object-cover" alt="Frutícola"></div>
                     <div class="p-6">
-                        <div class="flex items-center justify-between mb-2">
-                            <h3 class="font-industrial text-2xl font-extrabold uppercase text-saeNavy">Frutícola</h3>
-                            <i class="fa-solid fa-snowflake text-saeBlue text-xl"></i>
-                        </div>
+                        <div class="flex items-center justify-between mb-2"><h3 class="font-industrial text-2xl font-extrabold uppercase text-saeNavy">Frutícola</h3><i class="fa-solid fa-snowflake text-saeBlue text-xl"></i></div>
                         <p class="text-slate-600 text-sm leading-relaxed mb-4">Mantenemos la cadena de frío asegurando que los productos lleguen frescos a su destino de exportación.</p>
                         <span class="text-xs text-slate-400 font-bold uppercase">Termos Frigoríficos</span>
                     </div>
                 </div>
-
-                <!-- 3. Granos -->
                 <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-xl hover:border-saeBlue transition-all duration-300 flex flex-col w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] max-w-sm">
-                    <div class="relative h-56 overflow-hidden bg-slate-100">
-                        <img src="src/4.jpeg" onerror="this.onerror=null; this.src='src/4.jpeg';" loading="lazy" class="w-full h-full object-cover" alt="Granos">
-                    </div>
+                    <div class="relative h-56 overflow-hidden bg-slate-100"><img src="src/4.jpeg" onerror="this.onerror=null; this.src='src/4.jpg';" loading="lazy" class="w-full h-full object-cover" alt="Granos"></div>
                     <div class="p-6">
-                        <div class="flex items-center justify-between mb-2">
-                            <h3 class="font-industrial text-2xl font-extrabold uppercase text-saeNavy">Granos</h3>
-                            <i class="fa-solid fa-wheat-awn text-saeBlue text-xl"></i>
-                        </div>
+                        <div class="flex items-center justify-between mb-2"><h3 class="font-industrial text-2xl font-extrabold uppercase text-saeNavy">Granos</h3><i class="fa-solid fa-wheat-awn text-saeBlue text-xl"></i></div>
                         <p class="text-slate-600 text-sm leading-relaxed mb-4">Logística especializada de alto tonelaje para el traslado eficiente de granos hacia plantas de silos.</p>
                         <span class="text-xs text-slate-400 font-bold uppercase">Tolvas y Etelvinas</span>
                     </div>
                 </div>
-
-                <!-- 4. Carga Peligrosa -->
                 <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-xl hover:border-saeBlue transition-all duration-300 flex flex-col w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] max-w-sm">
-                    <div class="relative h-56 overflow-hidden bg-slate-100">
-                        <img src="src/7.jpeg" onerror="this.onerror=null; this.src='src/7.jpeg';" loading="lazy" class="w-full h-full object-cover" alt="Carga Peligrosa">
-                    </div>
+                    <div class="relative h-56 overflow-hidden bg-slate-100"><img src="src/7.jpeg" onerror="this.onerror=null; this.src='src/7.jpeg';" loading="lazy" class="w-full h-full object-cover" alt="Carga Peligrosa"></div>
                     <div class="p-6">
-                        <div class="flex items-center justify-between mb-2">
-                            <h3 class="font-industrial text-2xl font-extrabold uppercase text-saeNavy">Carga Peligrosa</h3>
-                            <i class="fa-solid fa-fire-flame-curved text-saeBlue text-xl"></i>
-                        </div>
+                        <div class="flex items-center justify-between mb-2"><h3 class="font-industrial text-2xl font-extrabold uppercase text-saeNavy">Carga Peligrosa</h3><i class="fa-solid fa-fire-flame-curved text-saeBlue text-xl"></i></div>
                         <p class="text-slate-600 text-sm leading-relaxed mb-4">Transporte seguro de combustibles y sustancias peligrosas bajo estricta normativa vigente.</p>
                         <span class="text-xs text-slate-400 font-bold uppercase">Estanques • Certificaciones Especiales</span>
                     </div>
                 </div>
-
-                <!-- 5. Corporativo -->
                 <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-xl hover:border-saeBlue transition-all duration-300 flex flex-col w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] max-w-sm">
-                    <div class="relative h-56 overflow-hidden bg-slate-100">
-                        <img src="src/6.jpeg" onerror="this.onerror=null; this.src='src/6.jpeg';" loading="lazy" class="w-full h-full object-cover" alt="Corporativo">
-                    </div>
+                    <div class="relative h-56 overflow-hidden bg-slate-100"><img src="src/6.jpeg" onerror="this.onerror=null; this.src='src/6.jpg';" loading="lazy" class="w-full h-full object-cover" alt="Corporativo"></div>
                     <div class="p-6">
-                        <div class="flex items-center justify-between mb-2">
-                            <h3 class="font-industrial text-2xl font-extrabold uppercase text-saeNavy">Corporativo</h3>
-                            <i class="fa-solid fa-building text-saeBlue text-xl"></i>
-                        </div>
+                        <div class="flex items-center justify-between mb-2"><h3 class="font-industrial text-2xl font-extrabold uppercase text-saeNavy">Corporativo</h3><i class="fa-solid fa-building text-saeBlue text-xl"></i></div>
                         <p class="text-slate-600 text-sm leading-relaxed mb-4">Soluciones de transporte y distribución exclusivas a medida para grandes clientes corporativos.</p>
                         <span class="text-xs text-slate-400 font-bold uppercase">Furgones • Siders • Logística Dedicada</span>
                     </div>
@@ -494,9 +467,7 @@
         </div>
     </section>
 
-    <!-- =====================================================================
-         4. TECNOLOGÍAS APLICADAS (Fondo Gris)
-    ====================================================================== -->
+    <!-- TECNOLOGÍAS APLICADAS -->
     <section id="tecnologia" class="py-24 bg-slate-50 border-t border-slate-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16">
@@ -508,80 +479,53 @@
                     Soluciones integrales de monitoreo, inteligencia de flotas y seguridad operativa en tiempo real.
                 </p>
             </div>
-
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-saeBlue transition text-left flex flex-col group">
-                    <div class="w-12 h-12 rounded-lg bg-slate-100 text-saeBlue flex items-center justify-center text-xl mb-4 group-hover:bg-saeBlue group-hover:text-white transition-colors">
-                        <i class="fa-solid fa-tower-observation"></i>
-                    </div>
+                    <div class="w-12 h-12 rounded-lg bg-slate-100 text-saeBlue flex items-center justify-center text-xl mb-4 group-hover:bg-saeBlue group-hover:text-white transition-colors"><i class="fa-solid fa-tower-observation"></i></div>
                     <h3 class="font-industrial text-xl font-extrabold uppercase text-saeNavy">Torre de control</h3>
                     <p class="text-xs font-bold text-saeCyan mb-2 uppercase">CIF: Centro De Inteligencia De Flotas</p>
                     <p class="text-sm text-slate-600">Es un centro de supervisión centralizada que monitorea los viajes en tiempo real para detectar eventos y registrar alertas.</p>
                 </div>
-
                 <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-saeBlue transition text-left flex flex-col group">
-                    <div class="w-12 h-12 rounded-lg bg-slate-100 text-saeBlue flex items-center justify-center text-xl mb-4 group-hover:bg-saeBlue group-hover:text-white transition-colors">
-                        <i class="fa-solid fa-location-crosshairs"></i>
-                    </div>
+                    <div class="w-12 h-12 rounded-lg bg-slate-100 text-saeBlue flex items-center justify-center text-xl mb-4 group-hover:bg-saeBlue group-hover:text-white transition-colors"><i class="fa-solid fa-location-crosshairs"></i></div>
                     <h3 class="font-industrial text-xl font-extrabold uppercase text-saeNavy">GPS</h3>
                     <p class="text-sm text-slate-600 mt-2">Solución diseñada para procesar datos de ubicación y estado de unidades en tiempo real. Su objetivo es centralizar información para optimizar toma de decisiones.</p>
                 </div>
-
                 <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-saeBlue transition text-left flex flex-col group">
-                    <div class="w-12 h-12 rounded-lg bg-slate-100 text-saeBlue flex items-center justify-center text-xl mb-4 group-hover:bg-saeBlue group-hover:text-white transition-colors">
-                        <i class="fa-solid fa-gauge-high"></i>
-                    </div>
+                    <div class="w-12 h-12 rounded-lg bg-slate-100 text-saeBlue flex items-center justify-center text-xl mb-4 group-hover:bg-saeBlue group-hover:text-white transition-colors"><i class="fa-solid fa-gauge-high"></i></div>
                     <h3 class="font-industrial text-xl font-extrabold uppercase text-saeNavy">Telemetría</h3>
                     <p class="text-sm text-slate-600 mt-2">Sistema avanzado de medición remota que permite recopilar datos técnicos detallados sobre el funcionamiento del motor, cabina y estado de un vehículo hacia la plataforma de control.</p>
                 </div>
-
                 <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-saeBlue transition text-left flex flex-col group">
-                    <div class="w-12 h-12 rounded-lg bg-slate-100 text-saeBlue flex items-center justify-center text-xl mb-4 group-hover:bg-saeBlue group-hover:text-white transition-colors">
-                        <i class="fa-solid fa-network-wired"></i>
-                    </div>
+                    <div class="w-12 h-12 rounded-lg bg-slate-100 text-saeBlue flex items-center justify-center text-xl mb-4 group-hover:bg-saeBlue group-hover:text-white transition-colors"><i class="fa-solid fa-network-wired"></i></div>
                     <h3 class="font-industrial text-xl font-extrabold uppercase text-saeNavy">Plataforma TMS</h3>
                     <p class="text-sm text-slate-600 mt-2">Es un sistema de software diseñado para optimizar, gestionar y automatizar las operaciones de transporte. Centraliza planificación de rutas, seguimiento en tiempo real y gestión de flotas.</p>
                 </div>
-
                 <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-saeBlue transition text-left flex flex-col group">
-                    <div class="w-12 h-12 rounded-lg bg-slate-100 text-saeBlue flex items-center justify-center text-xl mb-4 group-hover:bg-saeBlue group-hover:text-white transition-colors">
-                        <i class="fa-solid fa-link"></i>
-                    </div>
+                    <div class="w-12 h-12 rounded-lg bg-slate-100 text-saeBlue flex items-center justify-center text-xl mb-4 group-hover:bg-saeBlue group-hover:text-white transition-colors"><i class="fa-solid fa-link"></i></div>
                     <h3 class="font-industrial text-xl font-extrabold uppercase text-saeNavy">Integraciones</h3>
                     <p class="text-sm text-slate-600 mt-2">Proceso tecnológico que permite que diferentes sistemas (GPS, Torre de control y ERP) se "hablen" entre sí y compartan información automáticamente, eliminando carga manual de datos.</p>
                 </div>
-
                 <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-saeBlue transition text-left flex flex-col group">
-                    <div class="w-12 h-12 rounded-lg bg-slate-100 text-saeBlue flex items-center justify-center text-xl mb-4 group-hover:bg-saeBlue group-hover:text-white transition-colors">
-                        <i class="fa-solid fa-camera"></i>
-                    </div>
+                    <div class="w-12 h-12 rounded-lg bg-slate-100 text-saeBlue flex items-center justify-center text-xl mb-4 group-hover:bg-saeBlue group-hover:text-white transition-colors"><i class="fa-solid fa-camera"></i></div>
                     <h3 class="font-industrial text-xl font-extrabold uppercase text-saeNavy">DASHCAM con IA</h3>
                     <p class="text-sm text-slate-600 mt-2">Cámara inteligente con visión que monitorea el comportamiento en cabina. Detecta conductas de riesgo (fatiga, distracciones, uso del celular) cumpliendo acreditaciones de mandantes.</p>
                 </div>
-
                 <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-saeBlue transition text-left flex flex-col group">
-                    <div class="w-12 h-12 rounded-lg bg-slate-100 text-saeBlue flex items-center justify-center text-xl mb-4 group-hover:bg-saeBlue group-hover:text-white transition-colors">
-                        <i class="fa-solid fa-truck-moving"></i>
-                    </div>
+                    <div class="w-12 h-12 rounded-lg bg-slate-100 text-saeBlue flex items-center justify-center text-xl mb-4 group-hover:bg-saeBlue group-hover:text-white transition-colors"><i class="fa-solid fa-truck-moving"></i></div>
                     <h3 class="font-industrial text-xl font-extrabold uppercase text-saeNavy leading-tight">Control de Presión de Neumáticos</h3>
                     <p class="text-sm text-slate-600 mt-2">Sistema de sensores inteligentes que monitorea en tiempo real la presión y temperatura. Detecta fugas lentas o sobrecalentamientos enviando alertas preventivas.</p>
                 </div>
-
                 <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-saeBlue transition text-left flex flex-col group">
-                    <div class="w-12 h-12 rounded-lg bg-slate-100 text-saeBlue flex items-center justify-center text-xl mb-4 group-hover:bg-saeBlue group-hover:text-white transition-colors">
-                        <i class="fa-solid fa-chart-line"></i>
-                    </div>
+                    <div class="w-12 h-12 rounded-lg bg-slate-100 text-saeBlue flex items-center justify-center text-xl mb-4 group-hover:bg-saeBlue group-hover:text-white transition-colors"><i class="fa-solid fa-chart-line"></i></div>
                     <h3 class="font-industrial text-xl font-extrabold uppercase text-saeNavy">Reportes Automatizados</h3>
                     <p class="text-sm text-slate-600 mt-2">Solución que centraliza datos operativos para generar tableros dinámicos. Permite visualizar KPIs críticos y eficiencia de flota para decisiones estratégicas.</p>
                 </div>
-
             </div>
         </div>
     </section>
 
-    <!-- =====================================================================
-         5. ALIANZAS ESTRATÉGICAS / CLIENTES (Fondo Blanco)
-    ====================================================================== -->
+    <!-- ALIANZAS ESTRATÉGICAS / CLIENTES -->
     <section id="clientes" class="py-20 bg-white border-t border-slate-200 overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10 text-center">
             <span class="text-saeBlue font-industrial font-bold uppercase tracking-widest text-base">Alianzas Estratégicas</span>
@@ -589,14 +533,11 @@
                 CONFIARON EN <span class="text-saeBlue">NOSOTROS</span>
             </h2>
             <p class="text-xs text-slate-400 mt-2 uppercase tracking-wider font-semibold">
-                <i class="fa-solid fa-hand-pointer mr-1"></i> Haz clic y arrastra para deslizar los clientes
             </p>
         </div>
-        
         <div class="relative w-full">
             <div class="pointer-events-none absolute top-0 left-0 h-full w-24 bg-gradient-to-r from-white to-transparent z-10"></div>
             <div class="pointer-events-none absolute top-0 right-0 h-full w-24 bg-gradient-to-l from-white to-transparent z-10"></div>
-            
             <div id="clients-slider" class="flex overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing select-none py-4">
                 <div class="flex gap-6 sm:gap-8 items-center px-6 min-w-max">
                     <div class="client-logo-box"><img draggable="false" src="src/cliente1.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+1';" alt="Cliente 1" class="client-logo-img"></div>
@@ -612,7 +553,6 @@
                     <div class="client-logo-box"><img draggable="false" src="src/cliente11.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+11';" alt="Cliente 11" class="client-logo-img"></div>
                     <div class="client-logo-box"><img draggable="false" src="src/cliente12.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+12';" alt="Cliente 12" class="client-logo-img"></div>
                     <div class="client-logo-box"><img draggable="false" src="src/cliente13.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+13';" alt="Cliente 13" class="client-logo-img"></div>
-
                     <!-- Duplicado -->
                     <div class="client-logo-box"><img draggable="false" src="src/cliente1.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+1';" alt="Cliente 1" class="client-logo-img"></div>
                     <div class="client-logo-box"><img draggable="false" src="src/cliente2.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+2';" alt="Cliente 2" class="client-logo-img"></div>
@@ -633,23 +573,23 @@
     </section>
 
     <!-- =====================================================================
-         6. RED DE SUCURSALES / COBERTURA (Fondo Gris)
-         Optimizado para Mobile: Selector desplegable + Solo Google Maps visible limpio
+         6. RED DE SUCURSALES / COBERTURA (MAPA REALISTA D3)
     ====================================================================== -->
     <section id="cobertura" class="py-24 bg-slate-50 border-t border-slate-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            
             <div class="text-center max-w-3xl mx-auto mb-10">
                 <span class="text-saeBlue font-industrial font-bold uppercase tracking-widest text-base">Red de Sucursales</span>
                 <h2 class="font-industrial text-4xl sm:text-5xl font-black text-saeNavy uppercase leading-none mt-2">
                     MAPA DE COBERTURA <span class="text-saeBlue">NACIONAL</span>
                 </h2>
-                <p class="text-slate-600 mt-4">Selecciona una sucursal para ver su ubicación exacta.</p>
+                <p class="text-slate-600 mt-4">Selecciona una sucursal para visualizar su ubicación exacta.</p>
             </div>
 
-            <!-- SELECTOR DESPLEGABLE SOLO PARA MÓVIL (En pantallas grandes se oculta y usa la barra lateral) -->
+            <!-- SELECTOR DESPLEGABLE MÓVIL -->
             <div class="lg:hidden mb-6">
                 <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-2">Seleccionar Sucursal:</label>
-                <select id="mobile-branch-select" onchange="selectBranch(this.value)" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3.5 font-industrial text-xl font-bold uppercase text-saeNavy shadow-sm focus:outline-none focus:border-saeBlue">
+                <select id="mobile-branch-select" onchange="handleBranchSelection(this.value)" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3.5 font-industrial text-xl font-bold uppercase text-saeNavy shadow-sm focus:outline-none focus:border-saeBlue">
                     <option value="alto-hospicio">SAE Alto Hospicio</option>
                     <option value="calama">SAE Calama</option>
                     <option value="la-portada">SAE La Portada</option>
@@ -660,135 +600,61 @@
                 </select>
             </div>
 
-            <!-- Estructura de 3 Columnas adaptada -->
+            <!-- Estructura de 3 Columnas -->
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
                 
-                <!-- COLUMNA 1: Botones Compactos de Sucursales (Solo visible en Desktop lg+) -->
-                <div class="hidden lg:flex lg:col-span-3 flex-col justify-center space-y-2.5">
-                    <span class="font-industrial text-sm font-bold uppercase tracking-widest text-slate-400 px-1 mb-1 block">
-                        Seleccionar Sucursal:
-                    </span>
-
-                    <button onclick="selectBranch('alto-hospicio')" id="btn-alto-hospicio" class="branch-item w-full text-left bg-white border border-slate-200 rounded-xl px-4 py-3.5 shadow-sm border-l-4 border-l-saeBlue hover:shadow-md transition flex items-center justify-between group">
-                        <span class="font-industrial text-xl font-bold uppercase text-saeNavy group-hover:text-saeBlue transition">SAE Alto Hospicio</span>
-                        <i class="fa-solid fa-location-dot text-slate-300 group-hover:text-saeBlue text-base transition"></i>
+                <!-- COL 1: Botones Laterales -->
+                <div class="hidden lg:flex lg:col-span-3 flex-col justify-center space-y-2.5 relative z-10">
+                    <span class="font-industrial text-sm font-bold uppercase tracking-widest text-slate-400 px-1 mb-1 block">Seleccionar Sucursal:</span>
+                    <button onclick="handleBranchSelection('alto-hospicio')" id="btn-alto-hospicio" class="branch-item w-full text-left bg-white border border-slate-200 rounded-xl px-4 py-3.5 shadow-sm border-l-4 border-l-saeBlue hover:shadow-md transition flex items-center justify-between group">
+                        <span class="font-industrial text-xl font-bold uppercase text-saeNavy group-hover:text-saeBlue transition">SAE Alto Hospicio</span><i class="fa-solid fa-location-dot text-slate-300 group-hover:text-saeBlue text-base transition"></i>
                     </button>
-
-                    <button onclick="selectBranch('calama')" id="btn-calama" class="branch-item w-full text-left bg-white border border-slate-200 rounded-xl px-4 py-3.5 shadow-sm border-l-4 border-l-saeBlue hover:shadow-md transition flex items-center justify-between group">
-                        <span class="font-industrial text-xl font-bold uppercase text-saeNavy group-hover:text-saeBlue transition">SAE Calama</span>
-                        <i class="fa-solid fa-location-dot text-slate-300 group-hover:text-saeBlue text-base transition"></i>
+                    <button onclick="handleBranchSelection('calama')" id="btn-calama" class="branch-item w-full text-left bg-white border border-slate-200 rounded-xl px-4 py-3.5 shadow-sm border-l-4 border-l-saeBlue hover:shadow-md transition flex items-center justify-between group">
+                        <span class="font-industrial text-xl font-bold uppercase text-saeNavy group-hover:text-saeBlue transition">SAE Calama</span><i class="fa-solid fa-location-dot text-slate-300 group-hover:text-saeBlue text-base transition"></i>
                     </button>
-
-                    <button onclick="selectBranch('la-portada')" id="btn-la-portada" class="branch-item w-full text-left bg-white border border-slate-200 rounded-xl px-4 py-3.5 shadow-sm border-l-4 border-l-saeBlue hover:shadow-md transition flex items-center justify-between group">
-                        <span class="font-industrial text-xl font-bold uppercase text-saeNavy group-hover:text-saeBlue transition">SAE La Portada</span>
-                        <i class="fa-solid fa-location-dot text-slate-300 group-hover:text-saeBlue text-base transition"></i>
+                    <button onclick="handleBranchSelection('la-portada')" id="btn-la-portada" class="branch-item w-full text-left bg-white border border-slate-200 rounded-xl px-4 py-3.5 shadow-sm border-l-4 border-l-saeBlue hover:shadow-md transition flex items-center justify-between group">
+                        <span class="font-industrial text-xl font-bold uppercase text-saeNavy group-hover:text-saeBlue transition">SAE La Portada</span><i class="fa-solid fa-location-dot text-slate-300 group-hover:text-saeBlue text-base transition"></i>
                     </button>
-
-                    <button onclick="selectBranch('la-negra')" id="btn-la-negra" class="branch-item w-full text-left bg-white border border-slate-200 rounded-xl px-4 py-3.5 shadow-sm border-l-4 border-l-saeBlue hover:shadow-md transition flex items-center justify-between group">
-                        <span class="font-industrial text-xl font-bold uppercase text-saeNavy group-hover:text-saeBlue transition">SAE La Negra</span>
-                        <i class="fa-solid fa-location-dot text-slate-300 group-hover:text-saeBlue text-base transition"></i>
+                    <button onclick="handleBranchSelection('la-negra')" id="btn-la-negra" class="branch-item w-full text-left bg-white border border-slate-200 rounded-xl px-4 py-3.5 shadow-sm border-l-4 border-l-saeBlue hover:shadow-md transition flex items-center justify-between group">
+                        <span class="font-industrial text-xl font-bold uppercase text-saeNavy group-hover:text-saeBlue transition">SAE La Negra</span><i class="fa-solid fa-location-dot text-slate-300 group-hover:text-saeBlue text-base transition"></i>
                     </button>
-
-                    <button onclick="selectBranch('copiapo')" id="btn-copiapo" class="branch-item w-full text-left bg-white border border-slate-200 rounded-xl px-4 py-3.5 shadow-sm border-l-4 border-l-saeBlue hover:shadow-md transition flex items-center justify-between group">
-                        <span class="font-industrial text-xl font-bold uppercase text-saeNavy group-hover:text-saeBlue transition">SAE Copiapó</span>
-                        <i class="fa-solid fa-location-dot text-slate-300 group-hover:text-saeBlue text-base transition"></i>
+                    <button onclick="handleBranchSelection('copiapo')" id="btn-copiapo" class="branch-item w-full text-left bg-white border border-slate-200 rounded-xl px-4 py-3.5 shadow-sm border-l-4 border-l-saeBlue hover:shadow-md transition flex items-center justify-between group">
+                        <span class="font-industrial text-xl font-bold uppercase text-saeNavy group-hover:text-saeBlue transition">SAE Copiapó</span><i class="fa-solid fa-location-dot text-slate-300 group-hover:text-saeBlue text-base transition"></i>
                     </button>
-
-                    <button onclick="selectBranch('coquimbo')" id="btn-coquimbo" class="branch-item w-full text-left bg-white border border-slate-200 rounded-xl px-4 py-3.5 shadow-sm border-l-4 border-l-amber-500 hover:shadow-md transition flex items-center justify-between group">
-                        <span class="font-industrial text-xl font-bold uppercase text-saeNavy group-hover:text-amber-600 transition">SAE Coquimbo (Matriz)</span>
-                        <i class="fa-solid fa-star text-amber-500 text-base"></i>
+                    <button onclick="handleBranchSelection('coquimbo')" id="btn-coquimbo" class="branch-item w-full text-left bg-white border border-slate-200 rounded-xl px-4 py-3.5 shadow-sm border-l-4 border-l-amber-500 hover:shadow-md transition flex items-center justify-between group">
+                        <span class="font-industrial text-xl font-bold uppercase text-saeNavy group-hover:text-amber-600 transition">SAE Coquimbo (Matriz)</span><i class="fa-solid fa-star text-amber-500 text-base"></i>
                     </button>
-
-                    <button onclick="selectBranch('lampa')" id="btn-lampa" class="branch-item w-full text-left bg-white border border-slate-200 rounded-xl px-4 py-3.5 shadow-sm border-l-4 border-l-saeBlue hover:shadow-md transition flex items-center justify-between group">
-                        <span class="font-industrial text-xl font-bold uppercase text-saeNavy group-hover:text-saeBlue transition">SAE Lampa (Santiago)</span>
-                        <i class="fa-solid fa-location-dot text-slate-300 group-hover:text-saeBlue text-base transition"></i>
+                    <button onclick="handleBranchSelection('lampa')" id="btn-lampa" class="branch-item w-full text-left bg-white border border-slate-200 rounded-xl px-4 py-3.5 shadow-sm border-l-4 border-l-saeBlue hover:shadow-md transition flex items-center justify-between group">
+                        <span class="font-industrial text-xl font-bold uppercase text-saeNavy group-hover:text-saeBlue transition">SAE Lampa (Santiago)</span><i class="fa-solid fa-location-dot text-slate-300 group-hover:text-saeBlue text-base transition"></i>
                     </button>
                 </div>
 
-                <!-- COLUMNA 2: Mapa de Chile Interactivo (Oculto en Mobile para priorizar Google Maps limpio) -->
-                <div class="hidden lg:flex lg:col-span-4 map-bg-pattern rounded-3xl border border-slate-200 shadow-lg relative overflow-hidden min-h-[640px] items-center justify-center p-3 sm:p-5">
-                    
-                    <svg class="absolute inset-0 w-full h-full pointer-events-none opacity-35" viewBox="0 0 500 800" preserveAspectRatio="none">
-                        <path d="M-50,120 Q180,150 320,80 T550,140" fill="none" stroke="#cbd5e1" stroke-width="2"/>
-                        <path d="M80,-20 Q120,280 60,520 T140,850" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
-                        <path d="M340,-20 Q280,300 390,560 T310,850" fill="none" stroke="#cbd5e1" stroke-width="2"/>
-                        <path d="M-30,450 Q220,410 530,490" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
-                        <path d="M-30,660 Q240,620 530,700" fill="none" stroke="#cbd5e1" stroke-width="2"/>
-                    </svg>
-
-                    <div class="relative w-full h-[600px] flex items-center">
-                        <svg id="chile-full-map" viewBox="40 15 240 915" class="w-full h-full select-none overflow-visible">
-                            <path id="reg-arica" class="chile-reg" d="M 118,28 L 125,30 L 129,39 L 133,48 L 131,58 L 129,67 L 114,68 L 112,57 L 115,44 Z" />
-                            <path id="reg-tarapaca" onclick="selectBranch('alto-hospicio')" class="chile-reg region-clickable" d="M 114,68 L 129,67 L 134,76 L 139,86 L 137,100 L 135,116 L 112,117 L 111,100 L 113,84 Z" />
-                            <path id="reg-antofagasta" onclick="selectBranch('la-negra')" class="chile-reg region-clickable region-active" d="M 112,117 L 135,116 L 139,127 L 144,143 L 145,157 L 162,161 L 159,176 L 151,186 L 141,194 L 141,217 L 133,215 L 125,219 L 109,221 L 111,203 L 112,187 L 107,176 L 107,166 L 112,164 L 112,143 Z" />
-                            <path id="reg-atacama" onclick="selectBranch('copiapo')" class="chile-reg region-clickable" d="M 109,221 L 125,219 L 133,215 L 141,217 L 143,233 L 139,252 L 135,272 L 131,293 L 128,313 L 105,311 L 104,291 L 107,269 L 106,246 Z" />
-                            <path id="reg-coquimbo" onclick="selectBranch('coquimbo')" class="chile-reg region-clickable" d="M 105,311 L 128,313 L 127,331 L 124,351 L 122,369 L 120,385 L 100,383 L 99,366 L 102,349 L 100,336 L 104,323 Z" />
-                            <path id="reg-valparaiso" class="chile-reg" d="M 100,383 L 120,385 L 123,399 L 121,415 L 113,417 L 108,427 L 96,426 L 95,409 L 98,396 Z" />
-                            <path id="reg-rm" onclick="selectBranch('lampa')" class="chile-reg region-clickable" d="M 108,427 L 113,417 L 121,415 L 123,429 L 121,445 L 107,446 L 104,436 Z" />
-                            <path id="reg-ohiggins" class="chile-reg" d="M 96,426 L 108,427 L 104,436 L 107,446 L 121,445 L 119,465 L 94,464 L 93,445 Z" />
-                            <path id="reg-maule" class="chile-reg" d="M 94,464 L 119,465 L 117,486 L 115,507 L 90,505 L 91,483 Z" />
-                            <path id="reg-biobio" class="chile-reg" d="M 90,505 L 115,507 L 114,529 L 112,556 L 86,555 L 83,539 L 88,526 Z" />
-                            <path id="reg-araucania" class="chile-reg" d="M 86,555 L 112,556 L 114,577 L 111,597 L 85,596 L 84,576 Z" />
-                            <path id="reg-losrios" class="chile-reg" d="M 85,596 L 111,597 L 109,623 L 84,622 L 83,609 Z" />
-                            <path id="reg-loslagos" class="chile-reg" d="M 84,622 L 109,623 L 111,649 L 113,676 L 110,703 L 98,701 L 96,673 L 94,651 L 85,647 Z M 79,653 L 91,653 L 90,690 L 78,687 Z" />
-                            <path id="reg-aysen" class="chile-reg" d="M 98,701 L 110,703 L 115,731 L 112,761 L 109,791 L 105,807 L 91,805 L 88,783 L 79,769 L 90,753 L 92,726 Z M 78,706 L 88,707 L 86,723 L 77,721 Z M 75,729 L 87,731 L 85,749 L 74,745 Z M 73,753 L 84,755 L 81,766 L 72,763 Z" />
-                            <path id="reg-magallanes" class="chile-reg" d="M 91,805 L 105,807 L 103,833 L 109,856 L 125,857 L 139,863 L 127,873 L 113,883 L 109,896 L 96,889 L 88,866 L 84,836 Z M 119,877 L 143,869 L 143,914 L 129,912 L 117,897 Z M 77,813 L 86,816 L 84,843 L 75,839 Z M 81,863 L 92,869 L 90,893 L 80,886 Z M 98,899 L 115,903 L 111,916 L 94,911 Z M 119,916 L 146,918 L 140,926 L 117,922 Z" />
-
-                            <circle cx="121" cy="50" r="6" class="branch-dot opacity-60 pointer-events-none" />
-                            <circle id="dot-alto-hospicio" onclick="selectBranch('alto-hospicio')" cx="123" cy="96" r="6.5" class="branch-dot" />
-                            <circle id="dot-la-portada" onclick="selectBranch('la-portada')" cx="117" cy="148" r="6.5" class="branch-dot" />
-                            <circle id="dot-calama" onclick="selectBranch('calama')" cx="139" cy="152" r="6.5" class="branch-dot" />
-                            <circle id="dot-la-negra" onclick="selectBranch('la-negra')" cx="131" cy="208" r="7" class="branch-dot" />
-                            <circle id="dot-copiapo" onclick="selectBranch('copiapo')" cx="117" cy="296" r="6.5" class="branch-dot" />
-                            <circle id="dot-coquimbo" onclick="selectBranch('coquimbo')" cx="116" cy="370" r="6.5" class="branch-dot" />
-                            <circle id="dot-lampa" onclick="selectBranch('lampa')" cx="111" cy="431" r="6.5" class="branch-dot" />
-                            <circle cx="94" cy="835" r="6" class="branch-dot opacity-60 pointer-events-none" />
-                        </svg>
-
-                        <div id="map-floating-card" style="top: 20%;" class="absolute right-0 w-[185px] sm:w-[200px] bg-mapRoyal text-white rounded-2xl p-4 shadow-2xl z-20 pointer-events-auto">
-                            <span id="card-badge" class="inline-block text-[9px] font-bold uppercase tracking-widest text-saeSky mb-1">I Región de Tarapacá</span>
-                            <h4 id="card-title" class="font-sans text-base font-extrabold uppercase tracking-wide text-white mb-1.5 leading-tight">
-                                SAE ALTO HOSPICIO
-                            </h4>
-                            <p id="card-desc" class="font-sans text-xs text-white/90 leading-relaxed font-normal">
-                                Base operativa para logística portuaria y minera del Norte Grande.
-                            </p>
+                <!-- COL 2: MAPA INTERACTIVO REALISTA D3.JS -->
+                <div class="hidden lg:block lg:col-span-4 map-interactive-container shadow-xl">
+                    <div id="d3-map-canvas">
+                        <div id="d3-loading-screen">
+                            <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-[#00b4d8] mb-3"></div>
+                            <span class="text-[#00b4d8] font-sans font-bold tracking-widest text-xs uppercase">Cargando Topografía...</span>
                         </div>
-
                     </div>
                 </div>
 
-                <!-- COLUMNA 3: Mapa Embebido de Google Maps (En mobile ocupa todo el ancho de forma limpia) -->
-                <div class="lg:col-span-5 bg-white border border-slate-200 rounded-3xl p-4 sm:p-5 shadow-lg flex flex-col justify-between min-h-[520px] sm:min-h-[640px] order-3 lg:order-3 lg:col-start-8">
+                <!-- COL 3: GOOGLE MAPS EMBED -->
+                <div class="lg:col-span-5 bg-white border border-slate-200 rounded-3xl p-4 sm:p-5 shadow-lg flex flex-col justify-between min-h-[520px] sm:min-h-[640px] relative z-10">
                     <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-100">
                         <div>
                             <span class="text-[11px] font-bold uppercase tracking-wider text-saeBlue block">Ubicación Georreferenciada</span>
-                            <h3 id="gmap-branch-title" class="font-industrial text-xl sm:text-2xl font-black uppercase text-saeNavy leading-none mt-0.5">
-                                SAE Alto Hospicio — Tarapacá
-                            </h3>
+                            <h3 id="gmap-branch-title" class="font-industrial text-xl sm:text-2xl font-black uppercase text-saeNavy leading-none mt-0.5">SAE Alto Hospicio</h3>
                         </div>
-                        <a id="gmap-external-link" href="https://maps.app.goo.gl/hq4KGef1yJhXZFL27?g_st=ic" target="_blank" rel="noopener noreferrer" class="bg-saeNavy hover:bg-saeBlue text-white text-xs font-industrial font-bold uppercase tracking-wider px-3.5 py-2 rounded-lg transition flex items-center gap-1.5 shadow-sm shrink-0">
-                            <span>Abrir en Maps</span>
-                            <i class="fa-solid fa-up-right-from-square text-[10px]"></i>
+                        <a id="gmap-external-link" href="#" target="_blank" class="bg-saeNavy hover:bg-saeBlue text-white text-xs font-industrial font-bold uppercase tracking-wider px-3.5 py-2 rounded-lg transition flex items-center gap-1.5 shadow-sm shrink-0">
+                            <span>Abrir</span><i class="fa-solid fa-up-right-from-square text-[10px]"></i>
                         </a>
                     </div>
-
-                    <!-- Iframe Google Maps -->
                     <div class="relative w-full flex-1 rounded-2xl overflow-hidden border border-slate-200 bg-slate-100">
-                        <iframe 
-                            id="gmap-iframe"
-                            src="https://maps.google.com/maps?q=-20.2689,-70.0950+(Transportes+SAE+Alto+Hospicio)&t=&z=14&ie=UTF8&iwloc=&output=embed"
-                            class="w-full h-full min-h-[400px] sm:min-h-[500px] border-0"
-                            allowfullscreen="" 
-                            loading="lazy" 
-                            referrerpolicy="no-referrer-when-downgrade">
-                        </iframe>
+                        <iframe id="gmap-iframe" src="" class="w-full h-full min-h-[400px] sm:min-h-[500px] border-0" allowfullscreen="" loading="lazy"></iframe>
                     </div>
-
                     <div class="pt-3 mt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-                        <span id="gmap-address-footer" class="font-medium truncate">
-                            <i class="fa-solid fa-map-pin text-saeBlue mr-1"></i> Alto Hospicio, Región de Tarapacá
-                        </span>
+                        <span id="gmap-address-footer" class="font-medium truncate"><i class="fa-solid fa-map-pin text-saeBlue mr-1"></i> </span>
                         <span class="font-bold text-saeNavy uppercase font-industrial tracking-wider">Operativo 24/7</span>
                     </div>
                 </div>
@@ -797,16 +663,13 @@
         </div>
     </section>
 
-    <!-- =====================================================================
-         7. CONTACTO (Fondo Blanco)
-    ====================================================================== -->
+    <!-- CONTACTO -->
     <section id="contacto" class="py-24 bg-white border-t border-slate-200">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 class="font-industrial text-4xl sm:text-5xl font-black text-saeNavy uppercase leading-none mb-6">
                 ¿LISTO PARA OPTIMIZAR TU <span class="text-saeBlue">CADENA DE SUMINISTRO?</span>
             </h2>
             <p class="text-slate-600 mb-10 text-lg">Contacta a nuestro equipo comercial para diseñar una solución logística a medida.</p>
-            
             <form class="bg-slate-50 border border-slate-200 p-8 rounded-2xl shadow-lg max-w-2xl mx-auto text-left">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
                     <div>
@@ -818,7 +681,6 @@
                         <input type="text" placeholder="Ej: Minera / Exportadora S.A." class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
                     </div>
                 </div>
-
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
                     <div>
                         <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Correo Corporativo</label>
@@ -837,12 +699,10 @@
                         </select>
                     </div>
                 </div>
-
                 <div class="mb-5">
                     <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Detalles del Requerimiento</label>
                     <textarea rows="3" placeholder="Indíquenos origen, destino, tipo de carga o requerimientos logísticos..." class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue"></textarea>
                 </div>
-
                 <button type="button" class="w-full bg-saeNavy hover:bg-saeBlue text-white font-industrial text-xl font-black uppercase tracking-wider py-4 rounded-xl transition shadow-md">
                     Enviar Cotización
                 </button>
@@ -850,9 +710,7 @@
         </div>
     </section>
 
-    <!-- =====================================================================
-         8. FOOTER (Fondo Gris + Logo Real)
-    ====================================================================== -->
+    <!-- FOOTER -->
     <footer class="bg-slate-100 text-slate-600 py-10 border-t border-slate-200">
         <div class="max-w-7xl mx-auto px-4 text-center flex flex-col items-center">
             <img src="src/logo.png" alt="Transportes SAE" class="h-12 w-auto object-contain mb-3" onerror="this.style.display='none';">
@@ -861,243 +719,278 @@
         </div>
     </footer>
 
+    <!-- CONTENEDOR TOOLTIP ABSOLUTO AL BODY -->
+    <div id="d3-tooltip-box">
+        <span id="d3-card-badge" class="block text-[#00b4d8] text-[9px] font-bold tracking-[0.15em] uppercase mb-1"></span>
+        <h4 id="d3-card-title" class="font-sans text-white text-base font-extrabold uppercase leading-tight mb-1.5"></h4>
+        <p id="d3-card-desc" class="font-sans text-slate-300 text-xs font-light leading-relaxed"></p>
+    </div>
+
+    <!-- LOGICA MAPA REALISTA D3 Y ESTADOS -->
     <script>
-        // Hero Slider (Optimizado sin transform scale en imágenes pesadas)
+        // Hero Slider
         let currentHeroSlide = 0;
         const heroSlides = document.querySelectorAll('.hero-slide');
-        const heroDots = document.querySelectorAll('.hero-dot');
-
         function setHeroSlide(index) {
             currentHeroSlide = index;
             heroSlides.forEach((slide, i) => {
-                if (i === index) {
-                    slide.classList.remove('opacity-0', 'pointer-events-none');
-                    slide.classList.add('opacity-100');
-                } else {
-                    slide.classList.remove('opacity-100');
-                    slide.classList.add('opacity-0', 'pointer-events-none');
-                }
+                if (i === index) { slide.classList.remove('opacity-0', 'pointer-events-none'); slide.classList.add('opacity-100'); } 
+                else { slide.classList.remove('opacity-100'); slide.classList.add('opacity-0', 'pointer-events-none'); }
             });
-            heroDots.forEach((dot, i) => {
-                if (i === index) {
-                    dot.className = 'hero-dot px-3 py-1 rounded text-xs font-industrial font-bold uppercase tracking-wider bg-saeNavy text-white transition shadow-sm';
-                } else {
-                    dot.className = 'hero-dot px-3 py-1 rounded text-xs font-industrial font-bold uppercase tracking-wider bg-white text-slate-700 border border-slate-300 hover:bg-slate-100 transition shadow-sm';
-                }
+            document.querySelectorAll('.hero-dot').forEach((dot, i) => {
+                dot.className = i === index 
+                    ? 'hero-dot px-3 py-1 rounded text-xs font-industrial font-bold uppercase tracking-wider bg-saeNavy text-white transition shadow-sm'
+                    : 'hero-dot px-3 py-1 rounded text-xs font-industrial font-bold uppercase tracking-wider bg-white text-slate-700 border border-slate-300 hover:bg-slate-100 transition shadow-sm';
             });
         }
         setInterval(() => setHeroSlide((currentHeroSlide + 1) % heroSlides.length), 5500);
 
-        // Slider de Clientes: Auto-Scroll Infinito + Click & Drag con el Mouse
+        // Slider Clientes Drag
         const clientsSlider = document.getElementById('clients-slider');
-        let isDraggingClients = false;
-        let isHoveringClients = false;
-        let startXClients = 0;
-        let scrollLeftClients = 0;
-
-        clientsSlider.addEventListener('mousedown', (e) => {
-            isDraggingClients = true;
-            startXClients = e.pageX - clientsSlider.offsetLeft;
-            scrollLeftClients = clientsSlider.scrollLeft;
-        });
-
-        window.addEventListener('mouseup', () => {
-            isDraggingClients = false;
-        });
-
-        clientsSlider.addEventListener('mouseenter', () => {
-            isHoveringClients = true;
-        });
-
-        clientsSlider.addEventListener('mouseleave', () => {
-            isHoveringClients = false;
-            isDraggingClients = false;
-        });
-
+        let isDraggingClients = false, startXClients = 0, scrollLeftClients = 0;
+        clientsSlider.addEventListener('mousedown', (e) => { isDraggingClients = true; startXClients = e.pageX - clientsSlider.offsetLeft; scrollLeftClients = clientsSlider.scrollLeft; });
+        window.addEventListener('mouseup', () => isDraggingClients = false);
+        clientsSlider.addEventListener('mouseleave', () => isDraggingClients = false);
         clientsSlider.addEventListener('mousemove', (e) => {
             if (!isDraggingClients) return;
             e.preventDefault();
-            const x = e.pageX - clientsSlider.offsetLeft;
-            const walk = (x - startXClients) * 1.8;
-            clientsSlider.scrollLeft = scrollLeftClients - walk;
+            clientsSlider.scrollLeft = scrollLeftClients - ((e.pageX - clientsSlider.offsetLeft) - startXClients) * 1.8;
             checkInfiniteLoop();
         });
-
-        // Soporte Touch para móviles
-        clientsSlider.addEventListener('touchstart', () => { isDraggingClients = true; }, { passive: true });
-        clientsSlider.addEventListener('touchend', () => { isDraggingClients = false; }, { passive: true });
+        clientsSlider.addEventListener('touchstart', () => isDraggingClients = true, { passive: true });
+        clientsSlider.addEventListener('touchend', () => isDraggingClients = false, { passive: true });
 
         function checkInfiniteLoop() {
             const halfWidth = clientsSlider.scrollWidth / 2;
-            if (clientsSlider.scrollLeft >= halfWidth) {
-                clientsSlider.scrollLeft -= halfWidth;
-            } else if (clientsSlider.scrollLeft <= 0) {
-                clientsSlider.scrollLeft += halfWidth;
-            }
+            if (clientsSlider.scrollLeft >= halfWidth) clientsSlider.scrollLeft -= halfWidth;
+            else if (clientsSlider.scrollLeft <= 0) clientsSlider.scrollLeft += halfWidth;
         }
-
         function autoScrollClients() {
-            if (!isDraggingClients && !isHoveringClients) {
-                clientsSlider.scrollLeft += 1;
-                checkInfiniteLoop();
-            }
+            if (!isDraggingClients && !clientsSlider.matches(':hover')) { clientsSlider.scrollLeft += 1; checkInfiniteLoop(); }
             requestAnimationFrame(autoScrollClients);
         }
         requestAnimationFrame(autoScrollClients);
 
-        // Datos e Interactividad del Mapa de Sucursales SAE
+        // 1. Datos Unificados D3 y Mapas
         const branchesData = {
             'alto-hospicio': {
-                regionId: 'reg-tarapaca',
-                dotId: 'dot-alto-hospicio',
-                badge: 'I Región de Tarapacá',
-                title: 'SAE ALTO HOSPICIO',
+                id: 'alto-hospicio',
+                badge: 'I Región de Tarapacá', title: 'SAE ALTO HOSPICIO',
                 desc: 'Base operativa para logística portuaria y minera del Norte Grande.',
-                topPos: '6%',
-                gmapTitle: 'SAE Alto Hospicio — Tarapacá',
-                gmapAddress: 'Alto Hospicio, Región de Tarapacá',
+                coords: [-70.0835, -20.2882], 
+                gmapTitle: 'SAE Alto Hospicio — Tarapacá', gmapAddress: 'Alto Hospicio, Región de Tarapacá',
                 gmapLink: 'https://maps.app.goo.gl/hq4KGef1yJhXZFL27?g_st=ic',
                 gmapEmbed: 'https://maps.google.com/maps?q=-20.288293257012675,-70.0835315882763+(Transportes+SAE+Alto+Hospicio)&t=&z=15&ie=UTF8&iwloc=&output=embed'
             },
             'calama': {
-                regionId: 'reg-antofagasta',
-                dotId: 'dot-calama',
-                badge: 'II Región de Antofagasta',
-                title: 'SAE CALAMA',
+                id: 'calama',
+                badge: 'II Región de Antofagasta', title: 'SAE CALAMA',
                 desc: 'Centro de soporte directo a faenas mineras y operaciones de alta montaña.',
-                topPos: '13%',
-                gmapTitle: 'SAE Calama — Antofagasta',
-                gmapAddress: 'Calama, Región de Antofagasta',
+                coords: [-68.9242, -22.4871], 
+                gmapTitle: 'SAE Calama — Antofagasta', gmapAddress: 'Calama, Región de Antofagasta',
                 gmapLink: 'https://maps.app.goo.gl/Mp3m6zgiWgHDJpoL8?g_st=ic',
                 gmapEmbed: 'https://maps.google.com/maps?q=-22.487161957669784, -68.9242879042309+(Transportes+SAE+Calama)&t=&z=15&ie=UTF8&iwloc=&output=embed'
             },
             'la-portada': {
-                regionId: 'reg-antofagasta',
-                dotId: 'dot-la-portada',
-                badge: 'II Región de Antofagasta',
-                title: 'SAE LA PORTADA',
+                id: 'la-portada',
+                badge: 'II Región de Antofagasta', title: 'SAE LA PORTADA',
                 desc: 'Sucursal industrial sector La Portada en Antofagasta, enfocada en distribución regional y suministros.',
-                topPos: '14%',
-                gmapTitle: 'SAE La Portada — Antofagasta',
-                gmapAddress: 'Sector La Portada, Antofagasta',
+                coords: [-70.4158, -23.4977], 
+                gmapTitle: 'SAE La Portada — Antofagasta', gmapAddress: 'Sector La Portada, Antofagasta',
                 gmapLink: 'https://maps.app.goo.gl/pQYVMxQz4D62PWmSA?g_st=ic',
                 gmapEmbed: 'https://maps.google.com/maps?q=-23.49778114977726, -70.4158641741213+(Transportes+SAE+La+Portada)&t=&z=15&ie=UTF8&iwloc=&output=embed'
             },
             'la-negra': {
-                regionId: 'reg-antofagasta',
-                dotId: 'dot-la-negra',
-                badge: 'II Región de Antofagasta',
-                title: 'SAE LA NEGRA',
-                desc: 'Complejo Industrial La Negra, hub estratégico para transporte pesado, ácido y carga minera en Antofagasta.',
-                topPos: '19%',
-                gmapTitle: 'SAE La Negra — Antofagasta',
-                gmapAddress: 'Sector Industrial La Negra, Antofagasta',
+                id: 'la-negra',
+                badge: 'II Región de Antofagasta', title: 'SAE LA NEGRA',
+                desc: 'Complejo Industrial La Negra, hub estratégico para transporte pesado y carga minera.',
+                coords: [-70.3050, -23.7667],
+                gmapTitle: 'SAE La Negra — Antofagasta', gmapAddress: 'Sector Industrial La Negra, Antofagasta',
                 gmapLink: 'https://maps.app.goo.gl/gRZQFQ1moYK7dL9N6?g_st=ic',
                 gmapEmbed: 'https://maps.google.com/maps?q=-23.76678062521054, -70.30504040170415+(Transportes+SAE+La+Negra)&t=&z=14&ie=UTF8&iwloc=&output=embed'
             },
             'copiapo': {
-                regionId: 'reg-atacama',
-                dotId: 'dot-copiapo',
-                badge: 'III Región de Atacama',
-                title: 'SAE COPIAPÓ',
+                id: 'copiapo',
+                badge: 'III Región de Atacama', title: 'SAE COPIAPÓ',
                 desc: 'Base operativa de conexión minera y agroindustrial en la Región de Atacama.',
-                topPos: '27%',
-                gmapTitle: 'SAE Copiapó — Atacama',
-                gmapAddress: 'Copiapó, Región de Atacama',
+                coords: [-70.4019, -27.3140],
+                gmapTitle: 'SAE Copiapó — Atacama', gmapAddress: 'Copiapó, Región de Atacama',
                 gmapLink: 'https://maps.app.goo.gl/qu5jSNEbKRiK4C6Z8?g_st=ic',
                 gmapEmbed: 'https://maps.google.com/maps?q=-27.31401290039537, -70.40198887421765+(Transportes+SAE+Copiapo)&t=&z=15&ie=UTF8&iwloc=&output=embed'
             },
             'coquimbo': {
-                regionId: 'reg-coquimbo',
-                dotId: 'dot-coquimbo',
-                badge: 'IV Región de Coquimbo • Sede Central',
-                title: 'CASA MATRIZ (COQUIMBO)',
-                desc: 'Gerencia General, Torre de Control CIF 24/7 y Centro Logístico Principal en Barrio Industrial, Coquimbo.',
-                topPos: '35%',
-                gmapTitle: 'Casa Matriz SAE — Coquimbo',
-                gmapAddress: 'Barrio Industrial, Coquimbo',
+                id: 'coquimbo',
+                badge: 'IV Región de Coquimbo', title: 'CASA MATRIZ (COQUIMBO)',
+                desc: 'Gerencia General, Torre de Control CIF 24/7 y Centro Logístico Principal.',
+                coords: [-71.2941, -29.9765],
+                gmapTitle: 'Casa Matriz SAE — Coquimbo', gmapAddress: 'Barrio Industrial, Coquimbo',
                 gmapLink: 'https://maps.app.goo.gl/tXTgNYGjikzQHQzv7?g_st=ic',
                 gmapEmbed: 'https://maps.google.com/maps?q=-29.976507442265717, -71.29416244168816+(Casa+Matriz+Transportes+SAE+Coquimbo)&t=&z=15&ie=UTF8&iwloc=&output=embed'
             },
             'lampa': {
-                regionId: 'reg-rm',
-                dotId: 'dot-lampa',
-                badge: 'Región Metropolitana',
-                title: 'SAE LAMPA (SANTIAGO)',
-                desc: 'Centro de consolidación en Lampa para rutas troncales y distribución a clientes corporativos.',
-                topPos: '42%',
-                gmapTitle: 'SAE Lampa — Santiago RM',
-                gmapAddress: 'Lampa, Región Metropolitana, Santiago',
+                id: 'lampa',
+                badge: 'Región Metropolitana', title: 'SAE LAMPA (SANTIAGO)',
+                desc: 'Centro de consolidación para rutas troncales y distribución a corporativos.',
+                coords: [-70.7504, -33.2597],
+                gmapTitle: 'SAE Lampa — Santiago RM', gmapAddress: 'Lampa, Región Metropolitana, Santiago',
                 gmapLink: 'https://maps.app.goo.gl/TAKzGgL58QskpaR5A?g_st=ic',
                 gmapEmbed: 'https://maps.google.com/maps?q=-33.25978485015895, -70.75040882511107+(Transportes+SAE+Lampa)&t=&z=14&ie=UTF8&iwloc=&output=embed'
             }
         };
 
-        function selectBranch(key) {
+        const branchesList = Object.values(branchesData);
+        let d3Svg, d3G, d3Projection;
+
+        // 3. Inicializar Mapa D3 (Chile Completo Oficial)
+        function initD3Map() {
+            const mapContainer = d3.select("#d3-map-canvas");
+            if (!mapContainer.node()) return;
+
+            const vWidth = 400;
+            const vHeight = 600;
+
+            d3Svg = mapContainer.append("svg")
+                .attr("viewBox", `0 0 ${vWidth} ${vHeight}`)
+                .attr("preserveAspectRatio", "xMidYMid meet")
+                .attr("width", "100%")
+                .attr("height", "100%")
+                .style("display", "block");
+
+            d3G = d3Svg.append("g");
+
+            // Paquete oficial TopoJSON 10m (100% estable sin CORS)
+            d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-10m.json").then(function(world) {
+                d3.select("#d3-loading-screen").transition().duration(500).style("opacity", 0).remove();
+                
+                const chile = topojson.feature(world, world.objects.countries).features.find(d => d.id === "152");
+                
+                // Encuadre forzado exclusivo para Chile Continental 
+                // Ignoramos Isla de Pascua que empuja el mapa hacia la derecha
+                const mainlandBounds = {
+                    type: "FeatureCollection",
+                    features: [{
+                        type: "Feature",
+                        geometry: {
+                            type: "LineString",
+                            coordinates: [
+                                [-75.5, -17.5], // Extremo Noroeste
+                                [-66.5, -56.0]  // Extremo Sureste
+                            ]
+                        }
+                    }]
+                };
+
+                const paddingX = 50; 
+                const paddingY = 30; 
+                
+                // Aplicamos el encuadre matemático a los límites de Chile continental
+                d3Projection = d3.geoMercator().fitExtent(
+                    [[paddingX, paddingY], [vWidth - paddingX, vHeight - paddingY]], 
+                    mainlandBounds
+                );
+
+                const path = d3.geoPath().projection(d3Projection);
+
+                // Dibujar Chile
+                d3G.append("path")
+                    .datum(chile)
+                    .attr("d", path)
+                    .attr("class", "d3-map-path");
+
+                // Dibujar pines
+                const markers = d3G.selectAll("g.marker-group")
+                    .data(branchesList)
+                    .enter().append("g")
+                    .attr("class", "marker-group")
+                    .attr("transform", d => {
+                        const [x, y] = d3Projection(d.coords);
+                        return `translate(${x}, ${y})`;
+                    });
+
+                markers.append("circle").attr("r", 4.5).attr("class", "d3-marker-pulse");
+                
+                markers.append("circle")
+                    .attr("r", 4.5)
+                    .attr("class", "d3-marker")
+                    .attr("id", d => `d3-marker-${d.id}`)
+                    .on("click", (event, d) => handleBranchSelection(d.id));
+
+                handleBranchSelection('alto-hospicio');
+
+            }).catch(err => {
+                console.error("Error cargando mapa D3:", err);
+                document.getElementById('d3-loading-screen').innerHTML = "<span class='text-red-500'>Error de conexión al servidor de mapas</span>";
+            });
+        }
+
+        // 4. Controlador Central de Selección
+        function handleBranchSelection(key) {
             const data = branchesData[key];
             if (!data) return;
 
-            // Sincronizar select en mobile si cambió desde otro lado
+            // Sync Mobile Select
             const mobileSelect = document.getElementById('mobile-branch-select');
-            if (mobileSelect && mobileSelect.value !== key) {
-                mobileSelect.value = key;
-            }
+            if (mobileSelect && mobileSelect.value !== key) mobileSelect.value = key;
 
-            // 1. Pintar región activa en el mapa SVG
-            document.querySelectorAll('.chile-reg').forEach(reg => reg.classList.remove('region-active'));
-            const activeReg = document.getElementById(data.regionId);
-            if (activeReg) activeReg.classList.add('region-active');
-
-            // 2. Resaltar punto activo en el mapa SVG
-            document.querySelectorAll('.branch-dot').forEach(dot => dot.classList.remove('dot-active'));
-            const activeDot = document.getElementById(data.dotId);
-            if (activeDot) activeDot.classList.add('dot-active');
-
-            // 3. Mover y actualizar cuadro flotante azul
-            const card = document.getElementById('map-floating-card');
-            document.getElementById('card-badge').textContent = data.badge;
-            document.getElementById('card-title').textContent = data.title;
-            document.getElementById('card-desc').textContent = data.desc;
-            card.style.top = data.topPos;
-
-            // 4. Actualizar estado visual de los botones de la izquierda (Desktop)
+            // Actualizar botones (Desktop)
             document.querySelectorAll('.branch-item').forEach(btn => {
                 btn.classList.remove('bg-blue-50/80', 'border-mapRoyal', 'border-l-mapRoyal', 'shadow-md');
                 btn.classList.add('bg-white', 'border-slate-200');
                 const icon = btn.querySelector('i');
-                if (icon) {
-                    if (btn.id === 'btn-coquimbo') {
-                        icon.className = 'fa-solid fa-star text-amber-500 text-base';
-                    } else {
-                        icon.className = 'fa-solid fa-location-dot text-slate-300 text-base transition';
-                    }
-                }
+                if(icon) icon.className = btn.id === 'btn-coquimbo' ? 'fa-solid fa-star text-amber-500 text-base' : 'fa-solid fa-location-dot text-slate-300 text-base transition';
             });
-
             const activeBtn = document.getElementById('btn-' + key);
             if (activeBtn) {
                 activeBtn.classList.remove('bg-white', 'border-slate-200');
                 activeBtn.classList.add('bg-blue-50/80', 'border-mapRoyal', 'border-l-mapRoyal', 'shadow-md');
                 const activeIcon = activeBtn.querySelector('i');
-                if (activeIcon) {
-                    if (key === 'coquimbo') {
-                        activeIcon.className = 'fa-solid fa-star text-amber-500 text-base';
-                    } else {
-                        activeIcon.className = 'fa-solid fa-location-dot text-mapRoyal text-base';
-                    }
-                }
+                if(activeIcon) activeIcon.className = key === 'coquimbo' ? 'fa-solid fa-star text-amber-500 text-base' : 'fa-solid fa-location-dot text-mapRoyal text-base';
             }
 
-            // 5. Actualizar Google Maps
+            // Actualizar Google Maps
             document.getElementById('gmap-branch-title').textContent = data.gmapTitle;
             document.getElementById('gmap-external-link').href = data.gmapLink;
             document.getElementById('gmap-iframe').src = data.gmapEmbed;
-            document.getElementById('gmap-address-footer').innerHTML = '<i class="fa-solid fa-map-pin text-saeBlue mr-1"></i> ' + data.gmapAddress;
+            document.getElementById('gmap-address-footer').innerHTML = `<i class="fa-solid fa-map-pin text-saeBlue mr-1"></i> ${data.gmapAddress}`;
+
+            // Actualizar Mapa D3 y alinear Tooltip usando posiciones absolutas del documento
+            if (d3G && d3Projection) {
+                d3G.selectAll(".d3-marker").classed("active", false);
+                d3.select(`#d3-marker-${key}`).classed("active", true);
+
+                const tooltip = document.getElementById('d3-tooltip-box');
+                document.getElementById('d3-card-badge').textContent = data.badge;
+                document.getElementById('d3-card-title').textContent = data.title;
+                document.getElementById('d3-card-desc').textContent = data.desc;
+                
+                requestAnimationFrame(() => {
+                    const markerNode = document.getElementById(`d3-marker-${key}`);
+                    if(markerNode) {
+                        const markerRect = markerNode.getBoundingClientRect();
+                        
+                        const absoluteLeft = markerRect.left + window.scrollX + (markerRect.width / 2);
+                        const absoluteTop = markerRect.top + window.scrollY;
+                        
+                        tooltip.style.left = `${absoluteLeft}px`;
+                        tooltip.style.top = `${absoluteTop}px`;
+                        tooltip.classList.add('show');
+                    }
+                });
+            }
         }
 
-        // Seleccionar la primera sucursal por defecto al cargar la página
         window.addEventListener('DOMContentLoaded', () => {
-            selectBranch('alto-hospicio');
+            initD3Map();
+            setTimeout(() => { if(!d3Svg) handleBranchSelection('alto-hospicio'); }, 300);
+        });
+
+        // Reposicionar Tooltip si se cambia el tamaño de la ventana o se hace scroll
+        window.addEventListener('resize', () => {
+            const activeDot = document.querySelector('.d3-marker.active');
+            if (activeDot) {
+                const key = activeDot.id.replace('d3-marker-', '');
+                handleBranchSelection(key);
+            }
         });
 
         // Contadores Animados
@@ -1124,12 +1017,9 @@
         }, { threshold: 0.3 });
         counters.forEach(counter => counterObserver.observe(counter));
 
-        // Menú móvil
         document.getElementById('mobile-menu-btn').addEventListener('click', () => {
             document.getElementById('mobile-menu').classList.toggle('hidden');
         });
     </script>
 </body>
 </html>
-
-
