@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;0,800;0,900;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -665,74 +665,73 @@
     </section>
 
     <!-- CONTACTO -->
-<!-- CONTACTO -->
     <section id="contacto" class="py-24 bg-white border-t border-slate-200">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="font-industrial text-4xl sm:text-5xl font-black text-saeNavy uppercase leading-none mb-6">
-                ¿LISTO PARA OPTIMIZAR TU <span class="text-saeBlue">CADENA DE SUMINISTRO?</span>
-            </h2>
-            <p class="text-slate-600 mb-10 text-lg">Contacta a nuestro equipo comercial para diseñar una solución logística a medida.</p>
-            
-            <form class="bg-slate-50 border border-slate-200 p-8 rounded-2xl shadow-lg max-w-2xl mx-auto text-left">
-                <!-- 1. Nombre y Empresa -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
-                    <div>
-                        <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Nombre de Contacto</label>
-                        <input type="text" placeholder="Ej: Juan Pérez" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
-                    </div>
-                    <div>
-                        <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Nombre Empresa</label>
-                        <input type="text" placeholder="Ej: Minera / Exportadora S.A." class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
-                    </div>
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="font-industrial text-4xl sm:text-5xl font-black text-saeNavy uppercase leading-none mb-6">
+            ¿LISTO PARA OPTIMIZAR TU <span class="text-saeBlue">CADENA DE SUMINISTRO?</span>
+        </h2>
+        <p class="text-slate-600 mb-10 text-lg">Contacta a nuestro equipo comercial para diseñar una solución logística a medida.</p>
+        
+        <form id="form-cotizacion" class="bg-slate-50 border border-slate-200 p-8 rounded-2xl shadow-lg max-w-2xl mx-auto text-left">
+            <!-- 1. Nombre y Empresa -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+                <div>
+                    <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Nombre de Contacto</label>
+                    <input id="input-nombre" type="text" placeholder="Ej: Juan Pérez" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
                 </div>
-
-                <!-- 2. Correo y Teléfono -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
-                    <div>
-                        <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Correo Corporativo</label>
-                        <input type="email" placeholder="contacto@empresa.cl" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
-                    </div>
-                    <div>
-                        <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Número de Teléfono</label>
-                        <input type="tel" placeholder="Ej: +56 9 1234 5678" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
-                    </div>
+                <div>
+                    <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Nombre Empresa</label>
+                    <input id="input-empresa" type="text" placeholder="Ej: Minera / Exportadora S.A." class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
                 </div>
+            </div>
 
-                <!-- 3. Tipo de Servicio (Full width) -->
-                <div class="mb-5">
-                    <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Tipo de Servicio</label>
-                    <select class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
-                        <option value="" disabled selected>Seleccione la frecuencia del servicio...</option>
-                        <option value="spot">Spot (Única vez)</option>
-                        <option value="diario">Diario</option>
-                        <option value="semanal">Semanal</option>
-                        <option value="mensual">Mensual</option>
-                        <option value="permanente">Proyecto Permanente</option>
-                    </select>
+            <!-- 2. Correo y Teléfono -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+                <div>
+                    <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Correo Corporativo</label>
+                    <input id="input-correo" type="email" placeholder="contacto@empresa.cl" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
                 </div>
-
-                <!-- 4. Origen y Destino -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
-                    <div>
-                        <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Origen</label>
-                        <input type="text" placeholder="Ej: Puerto Angamos, Mejillones" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
-                    </div>
-                    <div>
-                        <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Destino</label>
-                        <input type="text" placeholder="Ej: Faena Minera, Calama" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
-                    </div>
+                <div>
+                    <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Número de Teléfono</label>
+                    <input id="input-telefono" type="tel" placeholder="Ej: +56 9 1234 5678" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
                 </div>
+            </div>
 
-                <!-- 5. Detalles -->
-                <div class="mb-5">
-                    <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Detalles del Requerimiento</label>
-                    <textarea rows="3" placeholder="Indíquenos tipo de carga, tonelaje u otros requerimientos logísticos..." class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue"></textarea>
+            <!-- 3. Tipo de Servicio (Full width) -->
+            <div class="mb-5">
+                <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Tipo de Servicio</label>
+                <select id="input-servicio" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
+                    <option value="" disabled selected>Seleccione la frecuencia del servicio...</option>
+                    <option value="spot">Spot (Única vez)</option>
+                    <option value="diario">Diario</option>
+                    <option value="semanal">Semanal</option>
+                    <option value="mensual">Mensual</option>
+                    <option value="permanente">Proyecto Permanente</option>
+                </select>
+            </div>
+
+            <!-- 4. Origen y Destino -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+                <div>
+                    <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Origen</label>
+                    <input id="input-origen" type="text" placeholder="Ej: Puerto Angamos, Mejillones" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
                 </div>
+                <div>
+                    <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Destino</label>
+                    <input id="input-destino" type="text" placeholder="Ej: Faena Minera, Calama" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
+                </div>
+            </div>
 
-                <button type="button" class="w-full bg-saeNavy hover:bg-saeBlue text-white font-industrial text-xl font-black uppercase tracking-wider py-4 rounded-xl transition shadow-md">
-                    Enviar Cotización
-                </button>
-            </form>
+            <!-- 5. Detalles -->
+            <div class="mb-5">
+                <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Detalles del Requerimiento</label>
+                <textarea id="input-detalles" rows="3" placeholder="Indíquenos tipo de carga, tonelaje u otros requerimientos logísticos..." class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue"></textarea>
+            </div>
+
+            <button type="submit" id="btn-submit" class="w-full bg-saeNavy hover:bg-saeBlue text-white font-industrial text-xl font-black uppercase tracking-wider py-4 rounded-xl transition shadow-md">
+                Enviar Cotización
+            </button>
+         </form>
         </div>
     </section>
 
@@ -753,6 +752,77 @@
     </div>
 
     <!-- LOGICA MAPA REALISTA D3 Y ESTADOS -->
+
+    <script>
+    document.getElementById('form-cotizacion').addEventListener('submit', async (e) => {
+        e.preventDefault(); 
+
+        const btnSubmit = document.getElementById('btn-submit');
+        const textoOriginal = btnSubmit.innerText;
+        
+        btnSubmit.innerText = 'Enviando...';
+        btnSubmit.disabled = true;
+        btnSubmit.classList.add('opacity-75', 'cursor-not-allowed');
+
+        const payload = {
+            nombre: document.getElementById('input-nombre').value,
+            empresa: document.getElementById('input-empresa').value,
+            correo: document.getElementById('input-correo').value,
+            telefono: document.getElementById('input-telefono').value,
+            servicio: document.getElementById('input-servicio').value,
+            origen: document.getElementById('input-origen').value,
+            destino: document.getElementById('input-destino').value,
+            detalles: document.getElementById('input-detalles').value
+        };
+
+        try {
+            const response = await fetch('http://localhost:3000/api/cotizar', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                // Alerta de Éxito
+                Swal.fire({
+                    title: '¡Cotización Enviada!',
+                    text: 'Nuestro equipo comercial se pondrá en contacto a la brevedad.',
+                    icon: 'success',
+                    confirmButtonColor: '#004b93', // saeBlue
+                    confirmButtonText: 'Entendido',
+                    customClass: {
+                        popup: 'rounded-2xl',
+                        title: 'font-industrial uppercase text-2xl text-[#06152d]'
+                    }
+                });
+                document.getElementById('form-cotizacion').reset();
+            } else {
+                throw new Error('Error en el servidor');
+            }
+        } catch (error) {
+            console.error('Error al enviar:', error);
+            // Alerta de Error
+            Swal.fire({
+                title: 'Error de Conexión',
+                text: 'Hubo un problema al enviar la cotización. Por favor, intenta nuevamente o contáctanos por teléfono.',
+                icon: 'error',
+                confirmButtonColor: '#06152d', // saeNavy
+                confirmButtonText: 'Cerrar',
+                customClass: {
+                    popup: 'rounded-2xl',
+                    title: 'font-industrial uppercase text-2xl text-[#06152d]'
+                }
+            });
+        } finally {
+            btnSubmit.innerText = textoOriginal;
+            btnSubmit.disabled = false;
+            btnSubmit.classList.remove('opacity-75', 'cursor-not-allowed');
+        }
+    });
+</script>
+
     <script>
         // Hero Slider
         let currentHeroSlide = 0;
