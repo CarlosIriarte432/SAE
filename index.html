@@ -776,7 +776,7 @@
         };
 
         try {
-            const response = await fetch('http://localhost:3000/api/cotizar', {
+            const response = await fetch('https://sae-08mf.onrender.com/api/cotizar', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
