@@ -210,14 +210,6 @@
                 <!-- Logo Real SAE -->
                 <a href="#inicio" class="flex items-center gap-3 group">
                     <img src="./frontend/src/logo.png" alt="Transportes SAE" class="h-12 md:h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-105" onerror="this.style.display='none'; document.getElementById('logo-fallback').classList.remove('hidden');">
-                    <div id="logo-fallback" class="hidden flex-col">
-                        <span class="font-industrial text-4xl font-black text-saeNavy tracking-wider leading-none">
-                            SAE<span class="text-saeCyan text-xl align-top">®</span>
-                        </span>
-                        <span class="font-industrial text-xs font-bold text-saeBlue tracking-[0.28em] uppercase -mt-0.5">
-                            Transportes
-                        </span>
-                    </div>
                 </a>
                 
                 <!-- Navegación Desktop -->
@@ -396,7 +388,7 @@
         </div>
     </section>
 
-    <!-- NUESTROS SERVICIOS -->
+<!-- NUESTROS SERVICIOS -->
     <section id="servicios" class="py-24 bg-white relative border-t border-slate-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16">
@@ -405,47 +397,70 @@
                     NUESTROS SERVICIOS DE <span class="text-saeBlue">CARGA POR CARRETERA</span>
                 </h2>
             </div>
-            <div class="flex flex-wrap justify-center gap-6">
-                <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-xl hover:border-saeBlue transition-all duration-300 flex flex-col w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] max-w-sm">
-                    <div class="relative h-56 overflow-hidden bg-slate-100"><img src="./frontend/src/8.png" onerror="this.onerror=null; this.src='src/8.png';" loading="lazy" class="w-full h-full object-cover" alt="Minería"></div>
+            
+            <!-- Contenedor adaptado a Grid para 4 elementos exactos -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 justify-items-center">
+                
+                <!-- Servicio 1: Minería -->
+                <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-xl hover:border-saeBlue transition-all duration-300 flex flex-col w-full max-w-sm">
+                    <div class="relative h-56 overflow-hidden bg-slate-100">
+                        <img src="./frontend/src/8.png" onerror="this.onerror=null; this.src='src/8.png';" loading="lazy" class="w-full h-full object-cover" alt="Minería">
+                    </div>
                     <div class="p-6">
-                        <div class="flex items-center justify-between mb-2"><h3 class="font-industrial text-2xl font-extrabold uppercase text-saeNavy">Minería</h3><i class="fa-solid fa-helmet-safety text-saeBlue text-xl"></i></div>
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-industrial text-2xl font-extrabold uppercase text-saeNavy">Minería</h3>
+                            <i class="fa-solid fa-helmet-safety text-saeBlue text-xl"></i>
+                        </div>
                         <p class="text-slate-600 text-sm leading-relaxed mb-4">Transporte de insumos y productos mineros cumpliendo exigentes estándares de seguridad en faena.</p>
                         <span class="text-xs text-slate-400 font-bold uppercase">Ramplas Planas • Camas Bajas</span>
                     </div>
                 </div>
-                <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-xl hover:border-saeBlue transition-all duration-300 flex flex-col w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] max-w-sm">
-                    <div class="relative h-56 overflow-hidden bg-slate-100"><img src="./frontend/src/5.jpeg" onerror="this.onerror=null; this.src='src/5.jpg';" loading="lazy" class="w-full h-full object-cover" alt="Frutícola"></div>
+
+                <!-- Servicio 2: Frutícola -->
+                <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-xl hover:border-saeBlue transition-all duration-300 flex flex-col w-full max-w-sm">
+                    <div class="relative h-56 overflow-hidden bg-slate-100">
+                        <img src="./frontend/src/5.jpeg" onerror="this.onerror=null; this.src='src/5.jpg';" loading="lazy" class="w-full h-full object-cover" alt="Frutícola">
+                    </div>
                     <div class="p-6">
-                        <div class="flex items-center justify-between mb-2"><h3 class="font-industrial text-2xl font-extrabold uppercase text-saeNavy">Frutícola</h3><i class="fa-solid fa-snowflake text-saeBlue text-xl"></i></div>
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-industrial text-2xl font-extrabold uppercase text-saeNavy">Frutícola</h3>
+                            <i class="fa-solid fa-snowflake text-saeBlue text-xl"></i>
+                        </div>
                         <p class="text-slate-600 text-sm leading-relaxed mb-4">Mantenemos la cadena de frío asegurando que los productos lleguen frescos a su destino de exportación.</p>
                         <span class="text-xs text-slate-400 font-bold uppercase">Termos Frigoríficos</span>
                     </div>
                 </div>
-                <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-xl hover:border-saeBlue transition-all duration-300 flex flex-col w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] max-w-sm">
-                    <div class="relative h-56 overflow-hidden bg-slate-100"><img src="./frontend/src/4.jpeg" onerror="this.onerror=null; this.src='src/4.jpg';" loading="lazy" class="w-full h-full object-cover" alt="Granos"></div>
+
+                <!-- Servicio 3: Granos -->
+                <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-xl hover:border-saeBlue transition-all duration-300 flex flex-col w-full max-w-sm">
+                    <div class="relative h-56 overflow-hidden bg-slate-100">
+                        <img src="./frontend/src/4.jpeg" onerror="this.onerror=null; this.src='src/4.jpg';" loading="lazy" class="w-full h-full object-cover" alt="Granos">
+                    </div>
                     <div class="p-6">
-                        <div class="flex items-center justify-between mb-2"><h3 class="font-industrial text-2xl font-extrabold uppercase text-saeNavy">Granos</h3><i class="fa-solid fa-wheat-awn text-saeBlue text-xl"></i></div>
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-industrial text-2xl font-extrabold uppercase text-saeNavy">Granos</h3>
+                            <i class="fa-solid fa-wheat-awn text-saeBlue text-xl"></i>
+                        </div>
                         <p class="text-slate-600 text-sm leading-relaxed mb-4">Logística especializada de alto tonelaje para el traslado eficiente de granos hacia plantas de silos.</p>
                         <span class="text-xs text-slate-400 font-bold uppercase">Tolvas y Etelvinas</span>
                     </div>
                 </div>
-                <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-xl hover:border-saeBlue transition-all duration-300 flex flex-col w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] max-w-sm">
-                    <div class="relative h-56 overflow-hidden bg-slate-100"><img src="./frontend/src/7.jpeg" onerror="this.onerror=null; this.src='src/7.jpeg';" loading="lazy" class="w-full h-full object-cover" alt="Carga Peligrosa"></div>
+
+                <!-- Servicio 4: Carga Peligrosa -->
+                <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-xl hover:border-saeBlue transition-all duration-300 flex flex-col w-full max-w-sm">
+                    <div class="relative h-56 overflow-hidden bg-slate-100">
+                        <img src="./frontend/src/7.jpeg" onerror="this.onerror=null; this.src='src/7.jpeg';" loading="lazy" class="w-full h-full object-cover" alt="Carga Peligrosa">
+                    </div>
                     <div class="p-6">
-                        <div class="flex items-center justify-between mb-2"><h3 class="font-industrial text-2xl font-extrabold uppercase text-saeNavy">Carga Peligrosa</h3><i class="fa-solid fa-fire-flame-curved text-saeBlue text-xl"></i></div>
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-industrial text-2xl font-extrabold uppercase text-saeNavy">Carga Peligrosa</h3>
+                            <i class="fa-solid fa-fire-flame-curved text-saeBlue text-xl"></i>
+                        </div>
                         <p class="text-slate-600 text-sm leading-relaxed mb-4">Transporte seguro de combustibles y sustancias peligrosas bajo estricta normativa vigente.</p>
                         <span class="text-xs text-slate-400 font-bold uppercase">Estanques • Certificaciones Especiales</span>
                     </div>
                 </div>
-                <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-xl hover:border-saeBlue transition-all duration-300 flex flex-col w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] max-w-sm">
-                    <div class="relative h-56 overflow-hidden bg-slate-100"><img src="./frontend/src/image.png" onerror="this.onerror=null; this.src='src/6.jpg';" loading="lazy" class="w-full h-full object-cover" alt="Corporativo"></div>
-                    <div class="p-6">
-                        <div class="flex items-center justify-between mb-2"><h3 class="font-industrial text-2xl font-extrabold uppercase text-saeNavy">Corporativo</h3><i class="fa-solid fa-building text-saeBlue text-xl"></i></div>
-                        <p class="text-slate-600 text-sm leading-relaxed mb-4">Soluciones de transporte y distribución exclusivas a medida para grandes clientes corporativos.</p>
-                        <span class="text-xs text-slate-400 font-bold uppercase">Furgones • Siders • Logística Dedicada</span>
-                    </div>
-                </div>
+
             </div>
         </div>
     </section>
@@ -861,11 +876,11 @@
                     <ul class="space-y-4 text-sm text-slate-400">
                         <li class="flex items-start gap-3">
                             <i class="fa-solid fa-map-location-dot text-saeCyan shrink-0 mt-0.5 text-base"></i>
-                            <span>Barrio Industrial<br>Coquimbo, Región de Coquimbo</span>
+                            <span>Camin la Cantera 2375<br>Coquimbo, Región de Coquimbo</span>
                         </li>
                         <li class="flex items-center gap-3">
                             <i class="fa-solid fa-envelope text-saeCyan shrink-0 text-base"></i>
-                            <a href="mailto:contacto@transportessae.cl" class="hover:text-white transition-colors">contacto@transportessae.cl</a>
+                            <a href="mailto:contacto@transportessae.cl" class="hover:text-white transition-colors">contacto@sae.cl</a>
                         </li>
                         <li class="flex items-center gap-3">
                             <i class="fa-solid fa-phone text-saeCyan shrink-0 text-base"></i>
@@ -877,9 +892,15 @@
 
             <!-- Bottom: Copyright y Firma Zero Ping -->
             <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-6">
-                <p class="text-sm text-slate-500">
-                    &copy; 2026 Transportes SAE Ltda. Todos los derechos reservados.
-                </p>
+                <div class="flex flex-col sm:flex-row items-center gap-2 sm:gap-6 text-sm">
+                    <p class="text-slate-500">
+                        &copy; 2026 Transportes SAE Ltda. Todos los derechos reservados.
+                    </p>
+                    <span class="hidden sm:inline text-slate-700">|</span>
+                    <a href="./frontend/politica-privacidad.html" class="text-slate-400 hover:text-saeCyan transition-colors font-medium">Políticas de Privacidad</a>
+                     <span class="hidden sm:inline text-slate-700">|</span>
+                    <a href="./frontend/politica-proteccion-datos.html" class="text-slate-400 hover:text-saeCyan transition-colors font-medium">Políticas de Protección de Datos</a>
+                </div>
                 
                 <div class="text-sm text-slate-500 flex items-center gap-2 group cursor-default">
                     <span>Desarrollado por</span> 

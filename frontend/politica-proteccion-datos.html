@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Política de Protección de Datos - Transportes SAE</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;0,800;0,900;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Configuración de Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        display: ['"Barlow Condensed"', 'sans-serif'],
+                    },
+                    colors: {
+                        saeNavy: '#06152d',
+                        saeBlue: '#004b93',
+                        saeCyan: '#00b4d8',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .font-industrial {
+            font-family: 'Barlow Condensed', sans-serif;
+            letter-spacing: 0.02em;
+        }
+    </style>
+</head>
+<body class="font-sans text-slate-800 antialiased bg-slate-50 selection:bg-saeCyan selection:text-saeNavy">
+
+    <!-- NAVBAR SIMPLE -->
+    <nav class="sticky top-0 w-full z-50 bg-white border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <a href="../index.html" class="flex items-center gap-3 group">
+                    <img src="./src/logo.png" alt="Transportes SAE Logo" class="h-10 md:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105" onerror="this.style.display='none'; document.getElementById('logo-fallback').classList.remove('hidden');">
+                    <div id="logo-fallback" class="hidden flex-col">
+                        <span class="font-industrial text-4xl font-black text-saeNavy tracking-wider leading-none">
+                            SAE<span class="text-saeCyan text-xl align-top">®</span>
+                        </span>
+                        <span class="font-industrial text-xs font-bold text-saeBlue tracking-[0.28em] uppercase -mt-0.5">
+                            Transportes
+                        </span>
+                    </div>
+                </a>
+                <a href="../index.html" class="font-industrial text-lg font-bold uppercase tracking-wider text-saeNavy hover:text-saeBlue transition flex items-center gap-2">
+                    <i class="fa-solid fa-arrow-left text-sm"></i> Volver al sitio
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HEADER LEGAL -->
+    <header class="bg-saeNavy py-16 border-b-4 border-saeCyan">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <span class="text-saeCyan font-industrial font-bold uppercase tracking-widest text-sm mb-3 block">Cumplimiento Normativo (Ley N° 21.719)</span>
+            <h1 class="font-industrial text-4xl md:text-5xl font-black text-white uppercase leading-tight mb-4">
+                Política de Protección de<br>Datos Personales
+            </h1>
+            <p class="text-slate-300 text-lg">Última actualización: Noviembre 2026</p>
+        </div>
+    </header>
+
+    <!-- CONTENIDO LEGAL -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="bg-white rounded-3xl shadow-lg border border-slate-200 p-8 md:p-12">
+            
+            <div class="prose prose-slate max-w-none">
+                <p class="text-slate-600 mb-8 text-lg leading-relaxed">
+                    En <strong>Transportes SAE Ltda.</strong> (en adelante, "el Responsable de Datos"), garantizamos el estricto cumplimiento del marco legal vigente en la República de Chile para la protección de la información personal de nuestros clientes y partes interesadas. Este documento establece nuestras obligaciones legales derivadas de la <strong>Ley N° 19.628</strong> y las nuevas normativas establecidas por la <strong>Ley N° 21.719</strong> (Nueva Ley de Protección de Datos Personales).
+                </p>
+
+                <h2 class="font-industrial text-3xl font-black text-saeNavy uppercase mb-4 mt-12 border-b pb-2">1. Identificación del Responsable Legal</h2>
+                <ul class="list-none pl-0 text-slate-600 space-y-2 mb-8">
+                    <li><strong>Razón Social:</strong> Transportes SAE Ltda.</li>
+                    <li><strong>RUT:</strong> [RUT_DE_LA_EMPRESA]</li>
+                    <li><strong>Dirección Matriz:</strong> Barrio Industrial, Coquimbo, Región de Coquimbo.</li>
+                    <li><strong>Delegado / Contacto de Privacidad:</strong> privacidad@transportessae.cl</li>
+                </ul>
+
+                <h2 class="font-industrial text-3xl font-black text-saeNavy uppercase mb-4 mt-12 border-b pb-2">2. Principios del Tratamiento de Datos</h2>
+                <p class="text-slate-600 mb-4">De conformidad con la Ley N° 21.719, todas nuestras operaciones de procesamiento se rigen por los siguientes principios irrenunciables:</p>
+                <ul class="list-disc pl-6 text-slate-600 space-y-2 mb-8 marker:text-saeCyan">
+                    <li><strong>Licitud y Lealtad:</strong> El tratamiento de datos se realiza bajo consentimiento explícito, ejecución de un contrato o interés legítimo comercial.</li>
+                    <li><strong>Finalidad Limitada:</strong> Los datos se recogen con fines logísticos, operativos y comerciales específicos, no utilizándose para propósitos incompatibles con estos.</li>
+                    <li><strong>Minimización:</strong> Solo almacenamos los datos estrictamente necesarios para cumplir el objetivo del requerimiento (cotizaciones, seguimiento de cargas, etc.).</li>
+                    <li><strong>Calidad y Exactitud:</strong> Nos esforzamos por mantener los datos exactos y actualizados.</li>
+                    <li><strong>Responsabilidad Demostrable (Accountability):</strong> Transportes SAE implementa controles y registros para demostrar su cumplimiento ante la Agencia de Protección de Datos Personales.</li>
+                </ul>
+
+                <h2 class="font-industrial text-3xl font-black text-saeNavy uppercase mb-4 mt-12 border-b pb-2">3. Derechos ARCO-P de los Titulares</h2>
+                <p class="text-slate-600 mb-4">La ley le otorga a usted facultades específicas sobre sus datos. Usted puede ejercer, en cualquier momento, los siguientes derechos ante nosotros:</p>
+                <ul class="list-disc pl-6 text-slate-600 space-y-2 mb-8 marker:text-saeCyan">
+                    <li><strong>Acceso:</strong> Obtener confirmación sobre si tratamos sus datos y acceder a una copia de los mismos.</li>
+                    <li><strong>Rectificación:</strong> Solicitar la corrección de información inexacta o desactualizada.</li>
+                    <li><strong>Cancelación / Supresión:</strong> Exigir la eliminación de sus datos si estos ya no son necesarios o si retira su consentimiento.</li>
+                    <li><strong>Oposición:</strong> Negarse al tratamiento de sus datos para determinados fines.</li>
+                    <li><strong>Portabilidad:</strong> Solicitar que sus datos le sean entregados en un formato electrónico estructurado o transferidos a otro responsable (si aplica técnicamente).</li>
+                </ul>
+                <p class="text-slate-600 mb-8">Para ejercer estos derechos, envíe una solicitud formal a <strong>privacidad@transportessae.cl</strong>. Su solicitud será procesada en los plazos máximos exigidos por la legislación chilena.</p>
+
+                <h2 class="font-industrial text-3xl font-black text-saeNavy uppercase mb-4 mt-12 border-b pb-2">4. Medidas de Seguridad y Prevención</h2>
+                <p class="text-slate-600 mb-8">
+                    Nuestra empresa aplica el principio de <strong>seguridad por diseño</strong>. La plataforma web corporativa está construida sobre arquitecturas estáticas sin bases de datos tradicionales expuestas, mitigando riesgos de inyección SQL u otros ataques informáticos comunes. Los datos transmitidos se cifran mediante protocolos SSL/TLS y el procesamiento se canaliza mediante APIs autenticadas en infraestructuras de nube de alto estándar.
+                </p>
+
+                <h2 class="font-industrial text-3xl font-black text-saeNavy uppercase mb-4 mt-12 border-b pb-2">5. Protocolo ante Brechas de Seguridad</h2>
+                <p class="text-slate-600 mb-8">
+                    En caso de ocurrir una vulneración o brecha de seguridad que afecte los datos personales, Transportes SAE cuenta con protocolos para mitigar el daño, notificar a los titulares afectados y reportar el incidente a la Agencia de Protección de Datos Personales en los plazos perentorios dictados por la Ley N° 21.719, asumiendo plena responsabilidad en la gestión del incidente.
+                </p>
+
+                <h2 class="font-industrial text-3xl font-black text-saeNavy uppercase mb-4 mt-12 border-b pb-2">6. Actualización de la Política</h2>
+                <p class="text-slate-600 mb-8">
+                    Nos reservamos el derecho de modificar esta Política de Protección de Datos para adaptarla a futuras instrucciones, resoluciones o reglamentos emanados de la Agencia de Protección de Datos u otras entidades fiscalizadoras competentes en Chile.
+                </p>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- FOOTER SAE SIMPLIFICADO -->
+    <footer class="bg-saeNavy text-white pt-10 pb-8 border-t-4 border-saeCyan mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
+            <p class="font-industrial font-bold uppercase tracking-wider mb-2 text-saeCyan text-xl">Transportes SAE Ltda.</p>
+            
+            <div class="border-t border-slate-800 pt-6 flex flex-col md:flex-row justify-center items-center gap-6 w-full">
+                <p class="text-sm text-slate-500">
+                    &copy; 2026 Transportes SAE Ltda. Todos los derechos reservados.
+                </p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
