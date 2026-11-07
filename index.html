@@ -209,7 +209,7 @@
             <div class="flex justify-between items-center h-20">
                 <!-- Logo Real SAE -->
                 <a href="#inicio" class="flex items-center gap-3 group">
-                    <img src="src/logo.png" alt="Transportes SAE" class="h-12 md:h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-105" onerror="this.style.display='none'; document.getElementById('logo-fallback').classList.remove('hidden');">
+                    <img src="./frontend/src/logo.png" alt="Transportes SAE" class="h-12 md:h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-105" onerror="this.style.display='none'; document.getElementById('logo-fallback').classList.remove('hidden');">
                     <div id="logo-fallback" class="hidden flex-col">
                         <span class="font-industrial text-4xl font-black text-saeNavy tracking-wider leading-none">
                             SAE<span class="text-saeCyan text-xl align-top">®</span>
@@ -264,13 +264,13 @@
     <header id="inicio" class="relative bg-white min-h-[88vh] flex items-center overflow-hidden">
         <div class="absolute inset-0 z-0">
             <div class="hero-slide absolute inset-0 opacity-100" data-slide="0">
-                <img id="hero-img-0" src="src/2.png" onerror="this.onerror=null; this.src='src/2.jpeg';" decoding="async" fetchpriority="high" alt="Hero SAE 1" class="w-full h-full object-cover object-center">
+                <img id="hero-img-0" src="./frontend/src/2.png" onerror="this.onerror=null; this.src='./frontend/src/2.jpeg';" decoding="async" fetchpriority="high" alt="Hero SAE 1" class="w-full h-full object-cover object-center">
             </div>
             <div class="hero-slide absolute inset-0 opacity-0 pointer-events-none" data-slide="1">
-                <img id="hero-img-1" src="src/1.jpeg" onerror="this.onerror=null; this.src='src/1.jpeg';" decoding="async" alt="Hero SAE 2" class="w-full h-full object-cover object-center">
+                <img id="hero-img-1" src="./frontend/src/1.jpeg" onerror="this.onerror=null; this.src='./frontend/src/1.jpeg';" decoding="async" alt="Hero SAE 2" class="w-full h-full object-cover object-center">
             </div>
             <div class="hero-slide absolute inset-0 opacity-0 pointer-events-none" data-slide="2">
-                <img id="hero-img-2" src="src/8.jpeg" onerror="this.onerror=null; this.src='src/8.jpeg';" decoding="async" alt="Hero SAE 3" class="w-full h-full object-cover object-center">
+                <img id="hero-img-2" src="./frontend/src/8.jpeg" onerror="this.onerror=null; this.src='./frontend/src/8.jpeg';" decoding="async" alt="Hero SAE 3" class="w-full h-full object-cover object-center">
             </div>
             <div class="absolute inset-0 bg-gradient-to-r from-white/65 via-white/25 to-transparent"></div>
         </div>
@@ -300,18 +300,7 @@
                    
                 </div>
 
-                <div class="flex items-center gap-4 pt-4 border-t border-saeNavy/20">
-                    <span class="font-industrial text-sm uppercase tracking-widest text-saeNavy font-bold">Vista Flota:</span>
-                    <button onclick="setHeroSlide(0)" class="hero-dot px-3 py-1 rounded text-xs font-industrial font-bold uppercase tracking-wider bg-saeNavy text-white transition shadow-sm">
-                        01
-                    </button>
-                    <button onclick="setHeroSlide(1)" class="hero-dot px-3 py-1 rounded text-xs font-industrial font-bold uppercase tracking-wider bg-white text-slate-700 border border-slate-300 hover:bg-slate-100 transition shadow-sm">
-                        02
-                    </button>
-                    <button onclick="setHeroSlide(2)" class="hero-dot px-3 py-1 rounded text-xs font-industrial font-bold uppercase tracking-wider bg-white text-slate-700 border border-slate-300 hover:bg-slate-100 transition shadow-sm">
-                        03
-                    </button>
-                </div>
+                
             </div>
         </div>
     </header>
@@ -425,7 +414,7 @@
             </div>
             <div class="flex flex-wrap justify-center gap-6">
                 <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-xl hover:border-saeBlue transition-all duration-300 flex flex-col w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] max-w-sm">
-                    <div class="relative h-56 overflow-hidden bg-slate-100"><img src="src/8.png" onerror="this.onerror=null; this.src='src/8.png';" loading="lazy" class="w-full h-full object-cover" alt="Minería"></div>
+                    <div class="relative h-56 overflow-hidden bg-slate-100"><img src="./frontend/src/8.png" onerror="this.onerror=null; this.src='src/8.png';" loading="lazy" class="w-full h-full object-cover" alt="Minería"></div>
                     <div class="p-6">
                         <div class="flex items-center justify-between mb-2"><h3 class="font-industrial text-2xl font-extrabold uppercase text-saeNavy">Minería</h3><i class="fa-solid fa-helmet-safety text-saeBlue text-xl"></i></div>
                         <p class="text-slate-600 text-sm leading-relaxed mb-4">Transporte de insumos y productos mineros cumpliendo exigentes estándares de seguridad en faena.</p>
@@ -433,7 +422,7 @@
                     </div>
                 </div>
                 <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-xl hover:border-saeBlue transition-all duration-300 flex flex-col w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] max-w-sm">
-                    <div class="relative h-56 overflow-hidden bg-slate-100"><img src="src/5.jpeg" onerror="this.onerror=null; this.src='src/5.jpg';" loading="lazy" class="w-full h-full object-cover" alt="Frutícola"></div>
+                    <div class="relative h-56 overflow-hidden bg-slate-100"><img src="./frontend/src/5.jpeg" onerror="this.onerror=null; this.src='src/5.jpg';" loading="lazy" class="w-full h-full object-cover" alt="Frutícola"></div>
                     <div class="p-6">
                         <div class="flex items-center justify-between mb-2"><h3 class="font-industrial text-2xl font-extrabold uppercase text-saeNavy">Frutícola</h3><i class="fa-solid fa-snowflake text-saeBlue text-xl"></i></div>
                         <p class="text-slate-600 text-sm leading-relaxed mb-4">Mantenemos la cadena de frío asegurando que los productos lleguen frescos a su destino de exportación.</p>
@@ -441,7 +430,7 @@
                     </div>
                 </div>
                 <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-xl hover:border-saeBlue transition-all duration-300 flex flex-col w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] max-w-sm">
-                    <div class="relative h-56 overflow-hidden bg-slate-100"><img src="src/4.jpeg" onerror="this.onerror=null; this.src='src/4.jpg';" loading="lazy" class="w-full h-full object-cover" alt="Granos"></div>
+                    <div class="relative h-56 overflow-hidden bg-slate-100"><img src="./frontend/src/4.jpeg" onerror="this.onerror=null; this.src='src/4.jpg';" loading="lazy" class="w-full h-full object-cover" alt="Granos"></div>
                     <div class="p-6">
                         <div class="flex items-center justify-between mb-2"><h3 class="font-industrial text-2xl font-extrabold uppercase text-saeNavy">Granos</h3><i class="fa-solid fa-wheat-awn text-saeBlue text-xl"></i></div>
                         <p class="text-slate-600 text-sm leading-relaxed mb-4">Logística especializada de alto tonelaje para el traslado eficiente de granos hacia plantas de silos.</p>
@@ -449,7 +438,7 @@
                     </div>
                 </div>
                 <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-xl hover:border-saeBlue transition-all duration-300 flex flex-col w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] max-w-sm">
-                    <div class="relative h-56 overflow-hidden bg-slate-100"><img src="src/7.jpeg" onerror="this.onerror=null; this.src='src/7.jpeg';" loading="lazy" class="w-full h-full object-cover" alt="Carga Peligrosa"></div>
+                    <div class="relative h-56 overflow-hidden bg-slate-100"><img src="./frontend/src/7.jpeg" onerror="this.onerror=null; this.src='src/7.jpeg';" loading="lazy" class="w-full h-full object-cover" alt="Carga Peligrosa"></div>
                     <div class="p-6">
                         <div class="flex items-center justify-between mb-2"><h3 class="font-industrial text-2xl font-extrabold uppercase text-saeNavy">Carga Peligrosa</h3><i class="fa-solid fa-fire-flame-curved text-saeBlue text-xl"></i></div>
                         <p class="text-slate-600 text-sm leading-relaxed mb-4">Transporte seguro de combustibles y sustancias peligrosas bajo estricta normativa vigente.</p>
@@ -457,7 +446,7 @@
                     </div>
                 </div>
                 <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-xl hover:border-saeBlue transition-all duration-300 flex flex-col w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] max-w-sm">
-                    <div class="relative h-56 overflow-hidden bg-slate-100"><img src="src/6.jpeg" onerror="this.onerror=null; this.src='src/6.jpg';" loading="lazy" class="w-full h-full object-cover" alt="Corporativo"></div>
+                    <div class="relative h-56 overflow-hidden bg-slate-100"><img src="./frontend/src/6.jpeg" onerror="this.onerror=null; this.src='src/6.jpg';" loading="lazy" class="w-full h-full object-cover" alt="Corporativo"></div>
                     <div class="p-6">
                         <div class="flex items-center justify-between mb-2"><h3 class="font-industrial text-2xl font-extrabold uppercase text-saeNavy">Corporativo</h3><i class="fa-solid fa-building text-saeBlue text-xl"></i></div>
                         <p class="text-slate-600 text-sm leading-relaxed mb-4">Soluciones de transporte y distribución exclusivas a medida para grandes clientes corporativos.</p>
@@ -541,33 +530,33 @@
             <div class="pointer-events-none absolute top-0 right-0 h-full w-24 bg-gradient-to-l from-white to-transparent z-10"></div>
             <div id="clients-slider" class="flex overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing select-none py-4">
                 <div class="flex gap-6 sm:gap-8 items-center px-6 min-w-max">
-                    <div class="client-logo-box"><img draggable="false" src="src/cliente1.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+1';" alt="Cliente 1" class="client-logo-img"></div>
-                    <div class="client-logo-box"><img draggable="false" src="src/cliente2.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+2';" alt="Cliente 2" class="client-logo-img"></div>
-                    <div class="client-logo-box"><img draggable="false" src="src/cliente3.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+3';" alt="Cliente 3" class="client-logo-img"></div>
-                    <div class="client-logo-box"><img draggable="false" src="src/cliente4.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+4';" alt="Cliente 4" class="client-logo-img"></div>
-                    <div class="client-logo-box"><img draggable="false" src="src/cliente5.png" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+5';" alt="Cliente 5" class="client-logo-img"></div>
-                    <div class="client-logo-box"><img draggable="false" src="src/cliente6.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+6';" alt="Cliente 6" class="client-logo-img"></div>
-                    <div class="client-logo-box"><img draggable="false" src="src/cliente7.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+7';" alt="Cliente 7" class="client-logo-img"></div>
-                    <div class="client-logo-box"><img draggable="false" src="src/cliente8.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+8';" alt="Cliente 8" class="client-logo-img"></div>
-                    <div class="client-logo-box"><img draggable="false" src="src/cliente9.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+9';" alt="Cliente 9" class="client-logo-img"></div>
-                    <div class="client-logo-box"><img draggable="false" src="src/cliente10.png" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+10';" alt="Cliente 10" class="client-logo-img"></div>
-                    <div class="client-logo-box"><img draggable="false" src="src/cliente11.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+11';" alt="Cliente 11" class="client-logo-img"></div>
-                    <div class="client-logo-box"><img draggable="false" src="src/cliente12.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+12';" alt="Cliente 12" class="client-logo-img"></div>
-                    <div class="client-logo-box"><img draggable="false" src="src/cliente13.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+13';" alt="Cliente 13" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="./frontend/src/cliente1.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+1';" alt="Cliente 1" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="./frontend/src/cliente2.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+2';" alt="Cliente 2" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="./frontend/src/cliente3.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+3';" alt="Cliente 3" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="./frontend/src/cliente4.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+4';" alt="Cliente 4" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="./frontend/src/cliente5.png" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+5';" alt="Cliente 5" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="./frontend/src/cliente6.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+6';" alt="Cliente 6" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="./frontend/src/cliente7.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+7';" alt="Cliente 7" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="./frontend/src/cliente8.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+8';" alt="Cliente 8" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="./frontend/src/cliente9.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+9';" alt="Cliente 9" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="./frontend/src/cliente10.png" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+10';" alt="Cliente 10" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="./frontend/src/cliente11.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+11';" alt="Cliente 11" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="./frontend/src/cliente12.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+12';" alt="Cliente 12" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="./frontend/src/cliente13.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+13';" alt="Cliente 13" class="client-logo-img"></div>
                     <!-- Duplicado -->
-                    <div class="client-logo-box"><img draggable="false" src="src/cliente1.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+1';" alt="Cliente 1" class="client-logo-img"></div>
-                    <div class="client-logo-box"><img draggable="false" src="src/cliente2.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+2';" alt="Cliente 2" class="client-logo-img"></div>
-                    <div class="client-logo-box"><img draggable="false" src="src/cliente3.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+3';" alt="Cliente 3" class="client-logo-img"></div>
-                    <div class="client-logo-box"><img draggable="false" src="src/cliente4.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+4';" alt="Cliente 4" class="client-logo-img"></div>
-                    <div class="client-logo-box"><img draggable="false" src="src/cliente5.png" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+5';" alt="Cliente 5" class="client-logo-img"></div>
-                    <div class="client-logo-box"><img draggable="false" src="src/cliente6.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+6';" alt="Cliente 6" class="client-logo-img"></div>
-                    <div class="client-logo-box"><img draggable="false" src="src/cliente7.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+7';" alt="Cliente 7" class="client-logo-img"></div>
-                    <div class="client-logo-box"><img draggable="false" src="src/cliente8.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+8';" alt="Cliente 8" class="client-logo-img"></div>
-                    <div class="client-logo-box"><img draggable="false" src="src/cliente9.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+9';" alt="Cliente 9" class="client-logo-img"></div>
-                    <div class="client-logo-box"><img draggable="false" src="src/cliente10.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+10';" alt="Cliente 10" class="client-logo-img"></div>
-                    <div class="client-logo-box"><img draggable="false" src="src/cliente11.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+11';" alt="Cliente 11" class="client-logo-img"></div>
-                    <div class="client-logo-box"><img draggable="false" src="src/cliente12.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+12';" alt="Cliente 12" class="client-logo-img"></div>
-                    <div class="client-logo-box"><img draggable="false" src="src/cliente13.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+13';" alt="Cliente 13" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="./frontend/src/cliente1.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+1';" alt="Cliente 1" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="./frontend/src/cliente2.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+2';" alt="Cliente 2" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="./frontend/src/cliente3.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+3';" alt="Cliente 3" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="./frontend/src/cliente4.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+4';" alt="Cliente 4" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="./frontend/src/cliente5.png" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+5';" alt="Cliente 5" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="./frontend/src/cliente6.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+6';" alt="Cliente 6" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="./frontend/src/cliente7.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+7';" alt="Cliente 7" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="./frontend/src/cliente8.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+8';" alt="Cliente 8" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="./frontend/src/cliente9.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+9';" alt="Cliente 9" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="./frontend/src/cliente10.png" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+10';" alt="Cliente 10" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="./frontend/src/cliente11.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+11';" alt="Cliente 11" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="./frontend/src/cliente12.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+12';" alt="Cliente 12" class="client-logo-img"></div>
+                    <div class="client-logo-box"><img draggable="false" src="./frontend/src/cliente13.jpg" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x90/ffffff/94a3b8?text=CLIENTE+13';" alt="Cliente 13" class="client-logo-img"></div>
                 </div>
             </div>
         </div>
@@ -664,83 +653,250 @@
         </div>
     </section>
 
-    <!-- CONTACTO -->
+<!-- CONTACTO -->
     <section id="contacto" class="py-24 bg-white border-t border-slate-200">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 class="font-industrial text-4xl sm:text-5xl font-black text-saeNavy uppercase leading-none mb-6">
-            ¿LISTO PARA OPTIMIZAR TU <span class="text-saeBlue">CADENA DE SUMINISTRO?</span>
-        </h2>
-        <p class="text-slate-600 mb-10 text-lg">Contacta a nuestro equipo comercial para diseñar una solución logística a medida.</p>
-        
-        <form id="form-cotizacion" class="bg-slate-50 border border-slate-200 p-8 rounded-2xl shadow-lg max-w-2xl mx-auto text-left">
-            <!-- 1. Nombre y Empresa -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
-                <div>
-                    <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Nombre de Contacto</label>
-                    <input id="input-nombre" type="text" placeholder="Ej: Juan Pérez" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
-                </div>
-                <div>
-                    <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Nombre Empresa</label>
-                    <input id="input-empresa" type="text" placeholder="Ej: Minera / Exportadora S.A." class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
-                </div>
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="font-industrial text-4xl sm:text-5xl font-black text-saeNavy uppercase leading-none mb-6">
+                CONTÁCTANOS
+            </h2>
+            <div class="w-16 h-1 bg-saeBlue mx-auto mb-6"></div>
+            <p class="text-slate-600 mb-10 text-lg">Seleccione el tipo de requerimiento y nuestro equipo se pondrá en contacto a la brevedad.</p>
+            
+            <!-- TARJETAS DE SELECCIÓN -->
+            <div id="selector-contacto" class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto mb-8">
+                <!-- Tarjeta Cotización -->
+                <button onclick="mostrarFormulario('cotizacion')" class="group bg-white border border-slate-200 rounded-2xl p-8 shadow-sm hover:shadow-md hover:border-saeBlue transition-all duration-300 flex flex-col items-center gap-4">
+                    <div class="w-14 h-14 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-saeBlue group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-file-invoice-dollar text-2xl"></i>
+                    </div>
+                    <span class="font-industrial font-bold text-xl uppercase tracking-wider text-saeNavy">Cotización</span>
+                </button>
+
+                <!-- Tarjeta Consulta -->
+                <button onclick="mostrarFormulario('consulta')" class="group bg-white border border-slate-200 rounded-2xl p-8 shadow-sm hover:shadow-md hover:border-green-600 transition-all duration-300 flex flex-col items-center gap-4">
+                    <div class="w-14 h-14 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-green-600 group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-circle-question text-2xl"></i>
+                    </div>
+                    <span class="font-industrial font-bold text-xl uppercase tracking-wider text-saeNavy">Consulta</span>
+                </button>
+
+                <!-- Tarjeta Opinión/Comentario -->
+                <button onclick="mostrarFormulario('opinion')" class="group bg-white border border-slate-200 rounded-2xl p-8 shadow-sm hover:shadow-md hover:border-red-600 transition-all duration-300 flex flex-col items-center gap-4">
+                    <div class="w-14 h-14 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-red-600 group-hover:text-white transition-colors">
+                        <i class="fa-regular fa-comments text-2xl"></i>
+                    </div>
+                    <span class="font-industrial font-bold text-xl uppercase tracking-wider text-saeNavy">Opinión / Comentario</span>
+                </button>
             </div>
 
-            <!-- 2. Correo y Teléfono -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
-                <div>
-                    <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Correo Corporativo</label>
-                    <input id="input-correo" type="email" placeholder="contacto@empresa.cl" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
+            <!-- CONTENEDOR DE FORMULARIOS (Oculto por defecto) -->
+            <div id="contenedor-formularios" class="hidden max-w-2xl mx-auto">
+                <div class="flex justify-start mb-4">
+                    <button onclick="volverSelector()" class="text-sm font-bold text-slate-500 hover:text-saeBlue transition-colors flex items-center gap-2">
+                        <i class="fa-solid fa-arrow-left"></i> Volver a opciones
+                    </button>
                 </div>
-                <div>
-                    <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Número de Teléfono</label>
-                    <input id="input-telefono" type="tel" placeholder="Ej: +56 9 1234 5678" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
-                </div>
-            </div>
 
-            <!-- 3. Tipo de Servicio (Full width) -->
-            <div class="mb-5">
-                <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Tipo de Servicio</label>
-                <select id="input-servicio" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
-                    <option value="" disabled selected>Seleccione la frecuencia del servicio...</option>
-                    <option value="spot">Spot (Única vez)</option>
-                    <option value="diario">Diario</option>
-                    <option value="semanal">Semanal</option>
-                    <option value="mensual">Mensual</option>
-                    <option value="permanente">Proyecto Permanente</option>
-                </select>
-            </div>
+                <!-- 1. FORMULARIO COTIZACIÓN -->
+                <form id="form-cotizacion" class="form-contacto bg-slate-50 border border-slate-200 p-8 rounded-2xl shadow-lg text-left hidden">
+                    <h3 class="font-industrial text-2xl font-bold text-saeNavy uppercase mb-6 border-b border-slate-200 pb-3">Solicitar Cotización</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+                        <div>
+                            <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Nombre de Contacto</label>
+                            <input id="cot-nombre" type="text" required class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
+                        </div>
+                        <div>
+                            <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Nombre Empresa</label>
+                            <input id="cot-empresa" type="text" required class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+                        <div>
+                            <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Correo Corporativo</label>
+                            <input id="cot-correo" type="email" required class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
+                        </div>
+                        <div>
+                            <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Número de Teléfono</label>
+                            <input id="cot-telefono" type="tel" required class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
+                        </div>
+                    </div>
+                    <div class="mb-5">
+                        <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Tipo de Servicio</label>
+                        <select id="cot-servicio" required class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
+                            <option value="" disabled selected>Seleccione la frecuencia...</option>
+                            <option value="Spot">Spot (Única vez)</option>
+                            <option value="Diario">Diario</option>
+                            <option value="Semanal">Semanal</option>
+                            <option value="Mensual">Mensual</option>
+                            <option value="Proyecto Permanente">Proyecto Permanente</option>
+                        </select>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+                        <div>
+                            <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Origen</label>
+                            <input id="cot-origen" type="text" required class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
+                        </div>
+                        <div>
+                            <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Destino</label>
+                            <input id="cot-destino" type="text" required class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
+                        </div>
+                    </div>
+                    <div class="mb-5">
+                        <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Detalles del Requerimiento</label>
+                        <textarea id="cot-detalles" rows="3" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue"></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit w-full bg-saeNavy hover:bg-saeBlue text-white font-industrial text-xl font-black uppercase tracking-wider py-4 rounded-xl transition shadow-md">
+                        Enviar Cotización
+                    </button>
+                </form>
 
-            <!-- 4. Origen y Destino -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
-                <div>
-                    <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Origen</label>
-                    <input id="input-origen" type="text" placeholder="Ej: Puerto Angamos, Mejillones" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
-                </div>
-                <div>
-                    <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Destino</label>
-                    <input id="input-destino" type="text" placeholder="Ej: Faena Minera, Calama" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
-                </div>
-            </div>
+                <!-- 2. FORMULARIO CONSULTA -->
+                <form id="form-consulta" class="form-contacto bg-slate-50 border border-slate-200 p-8 rounded-2xl shadow-lg text-left hidden">
+                    <h3 class="font-industrial text-2xl font-bold text-saeNavy uppercase mb-6 border-b border-slate-200 pb-3">Realizar Consulta</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+                        <div>
+                            <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Nombre</label>
+                            <input id="con-nombre" type="text" required class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
+                        </div>
+                        <div>
+                            <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Empresa</label>
+                            <input id="con-empresa" type="text" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+                        <div>
+                            <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Correo</label>
+                            <input id="con-correo" type="email" required class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
+                        </div>
+                        <div>
+                            <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Teléfono</label>
+                            <input id="con-telefono" type="tel" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
+                        </div>
+                    </div>
+                    <div class="mb-5">
+                        <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Tipo de Consulta</label>
+                        <select id="con-tipo" required class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
+                            <option value="" disabled selected>Seleccione el área...</option>
+                            <option value="Logística">Logística</option>
+                            <option value="Comercial">Comercial</option>
+                            <option value="Administrativa">Administrativa</option>
+                        </select>
+                    </div>
+                    <div class="mb-5">
+                        <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Detalles de la Consulta</label>
+                        <textarea id="con-detalles" rows="3" required class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue"></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit w-full bg-green-600 hover:bg-green-700 text-white font-industrial text-xl font-black uppercase tracking-wider py-4 rounded-xl transition shadow-md">
+                        Enviar Consulta
+                    </button>
+                </form>
 
-            <!-- 5. Detalles -->
-            <div class="mb-5">
-                <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Detalles del Requerimiento</label>
-                <textarea id="input-detalles" rows="3" placeholder="Indíquenos tipo de carga, tonelaje u otros requerimientos logísticos..." class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue"></textarea>
+                <!-- 3. FORMULARIO OPINIÓN / COMENTARIO -->
+                <form id="form-opinion" class="form-contacto bg-slate-50 border border-slate-200 p-8 rounded-2xl shadow-lg text-left hidden">
+                    <h3 class="font-industrial text-2xl font-bold text-saeNavy uppercase mb-6 border-b border-slate-200 pb-3">Opinión / Comentario</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+                        <div>
+                            <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Nombre</label>
+                            <input id="opi-nombre" type="text" required class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
+                        </div>
+                        <div>
+                            <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Empresa (Opcional)</label>
+                            <input id="opi-empresa" type="text" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+                        <div>
+                            <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Correo</label>
+                            <input id="opi-correo" type="email" required class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
+                        </div>
+                        <div>
+                            <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Teléfono (Opcional)</label>
+                            <input id="opi-telefono" type="tel" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
+                        </div>
+                    </div>
+                    <div class="mb-5">
+                        <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Tipo de Comentario</label>
+                        <select id="opi-tipo" required class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue">
+                            <option value="" disabled selected>Seleccione...</option>
+                            <option value="Sugerencia">Sugerencia</option>
+                            <option value="Reclamo">Reclamo</option>
+                            <option value="Felicitación">Felicitación</option>
+                        </select>
+                    </div>
+                    <div class="mb-5">
+                        <label class="block font-industrial text-sm font-bold uppercase tracking-wider text-saeNavy mb-1.5">Su Comentario</label>
+                        <textarea id="opi-detalles" rows="4" required class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:border-saeBlue focus:ring-1 focus:ring-saeBlue"></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit w-full bg-red-600 hover:bg-red-700 text-white font-industrial text-xl font-black uppercase tracking-wider py-4 rounded-xl transition shadow-md">
+                        Enviar Comentario
+                    </button>
+                </form>
             </div>
-
-            <button type="submit" id="btn-submit" class="w-full bg-saeNavy hover:bg-saeBlue text-white font-industrial text-xl font-black uppercase tracking-wider py-4 rounded-xl transition shadow-md">
-                Enviar Cotización
-            </button>
-         </form>
         </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer class="bg-slate-100 text-slate-600 py-10 border-t border-slate-200">
-        <div class="max-w-7xl mx-auto px-4 text-center flex flex-col items-center">
-            <img src="src/logo.png" alt="Transportes SAE" class="h-12 w-auto object-contain mb-3" onerror="this.style.display='none';">
-            <p class="font-industrial font-bold uppercase tracking-wider mb-1 text-saeNavy text-xl">Transportes SAE Ltda.</p>
-            <p class="text-sm">&copy; 2026. Todos los derechos reservados. Casa Matriz: Coquimbo, Chile.</p>
+<!-- FOOTER SAE ADAPTADO -->
+    <footer class="bg-saeNavy text-white pt-16 pb-8 border-t-4 border-saeCyan">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+                
+                <!-- Columna 1: Branding y Descripción -->
+                <div class="flex flex-col items-start">
+                    <div class="bg-white px-5 py-3.5 rounded-xl mb-6 inline-block shadow-md">
+                        <img src="./frontend/src/logo.png" alt="Transportes SAE Logo" class="h-10 w-auto" onerror="this.style.display='none';">
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Especialistas en transporte terrestre de carga por carretera. Más de 40 años operando la cadena de suministro con cobertura nacional y los más altos estándares de tecnología, trazabilidad y seguridad.
+                    </p>
+                </div>
+
+                <!-- Columna 2: Mapa del Sitio -->
+                <div>
+                    <h4 class="text-lg font-industrial font-bold text-white mb-6 uppercase tracking-wider border-b border-slate-700 pb-2">Secciones</h4>
+                    <ul class="space-y-3 text-sm text-slate-400">
+                        <li><a href="#inicio" class="hover:text-saeCyan transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[10px]"></i> <span>Inicio</span></a></li>
+                        <li><a href="#historia" class="hover:text-saeCyan transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[10px]"></i> <span>Nuestra Historia</span></a></li>
+                        <li><a href="#servicios" class="hover:text-saeCyan transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[10px]"></i> <span>Divisiones Operativas</span></a></li>
+                        <li><a href="#tecnologia" class="hover:text-saeCyan transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[10px]"></i> <span>Tecnología Aplicada</span></a></li>
+                        <li><a href="#cobertura" class="hover:text-saeCyan transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[10px]"></i> <span>Cobertura Nacional</span></a></li>
+                    </ul>
+                </div>
+
+                <!-- Columna 3: Contacto Operativo -->
+                <div>
+                    <h4 class="text-lg font-industrial font-bold text-white mb-6 uppercase tracking-wider border-b border-slate-700 pb-2">Contacto Matriz</h4>
+                    <ul class="space-y-4 text-sm text-slate-400">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-map-location-dot text-saeCyan shrink-0 mt-0.5 text-base"></i>
+                            <span>Barrio Industrial<br>Coquimbo, Región de Coquimbo</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-envelope text-saeCyan shrink-0 text-base"></i>
+                            <a href="mailto:contacto@transportessae.cl" class="hover:text-white transition-colors">contacto@transportessae.cl</a>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-phone text-saeCyan shrink-0 text-base"></i>
+                            <a href="tel:+56912345678" class="hover:text-white transition-colors">+56 9 1234 5678</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom: Copyright y Firma Zero Ping -->
+            <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-6">
+                <p class="text-sm text-slate-500">
+                    &copy; 2026 Transportes SAE Ltda. Todos los derechos reservados.
+                </p>
+                
+                <div class="text-sm text-slate-500 flex items-center gap-2 group cursor-default">
+                    <span>Desarrollado por</span> 
+                    <span class="font-bold text-slate-300 group-hover:text-white transition-colors">Zero Ping</span>
+                    <span class="relative flex h-2.5 w-2.5">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-saeCyan opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-saeCyan"></span>
+                    </span>
+                </div>
+            </div>
         </div>
     </footer>
 
@@ -751,371 +907,19 @@
         <p id="d3-card-desc" class="font-sans text-slate-300 text-xs font-light leading-relaxed"></p>
     </div>
 
-    <!-- LOGICA MAPA REALISTA D3 Y ESTADOS -->
+    <!-- ENLACE AL SCRIPT EXTERNO (Asegúrate de que la ruta coincida con tu carpeta) -->
+    <script src="./frontend/src/js/main.js"></script>
 
-    <script>
-    document.getElementById('form-cotizacion').addEventListener('submit', async (e) => {
-        e.preventDefault(); 
+</body>
+</html>
 
-        const btnSubmit = document.getElementById('btn-submit');
-        const textoOriginal = btnSubmit.innerText;
-        
-        btnSubmit.innerText = 'Enviando...';
-        btnSubmit.disabled = true;
-        btnSubmit.classList.add('opacity-75', 'cursor-not-allowed');
+    <!-- CONTENEDOR TOOLTIP ABSOLUTO AL BODY -->
+    <div id="d3-tooltip-box">
+        <span id="d3-card-badge" class="block text-[#00b4d8] text-[9px] font-bold tracking-[0.15em] uppercase mb-1"></span>
+        <h4 id="d3-card-title" class="font-sans text-white text-base font-extrabold uppercase leading-tight mb-1.5"></h4>
+        <p id="d3-card-desc" class="font-sans text-slate-300 text-xs font-light leading-relaxed"></p>
+    </div>
 
-        const payload = {
-            nombre: document.getElementById('input-nombre').value,
-            empresa: document.getElementById('input-empresa').value,
-            correo: document.getElementById('input-correo').value,
-            telefono: document.getElementById('input-telefono').value,
-            servicio: document.getElementById('input-servicio').value,
-            origen: document.getElementById('input-origen').value,
-            destino: document.getElementById('input-destino').value,
-            detalles: document.getElementById('input-detalles').value
-        };
-
-        try {
-            const response = await fetch('https://sae-08mf.onrender.com/api/cotizar', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-
-            const data = await response.json();
-
-            if (data.success) {
-                // Alerta de Éxito
-                Swal.fire({
-                    title: '¡Cotización Enviada!',
-                    text: 'Nuestro equipo comercial se pondrá en contacto a la brevedad.',
-                    icon: 'success',
-                    confirmButtonColor: '#004b93', // saeBlue
-                    confirmButtonText: 'Entendido',
-                    customClass: {
-                        popup: 'rounded-2xl',
-                        title: 'font-industrial uppercase text-2xl text-[#06152d]'
-                    }
-                });
-                document.getElementById('form-cotizacion').reset();
-            } else {
-                throw new Error('Error en el servidor');
-            }
-        } catch (error) {
-            console.error('Error al enviar:', error);
-            // Alerta de Error
-            Swal.fire({
-                title: 'Error de Conexión',
-                text: 'Hubo un problema al enviar la cotización. Por favor, intenta nuevamente o contáctanos por teléfono.',
-                icon: 'error',
-                confirmButtonColor: '#06152d', // saeNavy
-                confirmButtonText: 'Cerrar',
-                customClass: {
-                    popup: 'rounded-2xl',
-                    title: 'font-industrial uppercase text-2xl text-[#06152d]'
-                }
-            });
-        } finally {
-            btnSubmit.innerText = textoOriginal;
-            btnSubmit.disabled = false;
-            btnSubmit.classList.remove('opacity-75', 'cursor-not-allowed');
-        }
-    });
-</script>
-
-    <script>
-        // Hero Slider
-        let currentHeroSlide = 0;
-        const heroSlides = document.querySelectorAll('.hero-slide');
-        function setHeroSlide(index) {
-            currentHeroSlide = index;
-            heroSlides.forEach((slide, i) => {
-                if (i === index) { slide.classList.remove('opacity-0', 'pointer-events-none'); slide.classList.add('opacity-100'); } 
-                else { slide.classList.remove('opacity-100'); slide.classList.add('opacity-0', 'pointer-events-none'); }
-            });
-            document.querySelectorAll('.hero-dot').forEach((dot, i) => {
-                dot.className = i === index 
-                    ? 'hero-dot px-3 py-1 rounded text-xs font-industrial font-bold uppercase tracking-wider bg-saeNavy text-white transition shadow-sm'
-                    : 'hero-dot px-3 py-1 rounded text-xs font-industrial font-bold uppercase tracking-wider bg-white text-slate-700 border border-slate-300 hover:bg-slate-100 transition shadow-sm';
-            });
-        }
-        setInterval(() => setHeroSlide((currentHeroSlide + 1) % heroSlides.length), 5500);
-
-        // Slider Clientes Drag
-        const clientsSlider = document.getElementById('clients-slider');
-        let isDraggingClients = false, startXClients = 0, scrollLeftClients = 0;
-        clientsSlider.addEventListener('mousedown', (e) => { isDraggingClients = true; startXClients = e.pageX - clientsSlider.offsetLeft; scrollLeftClients = clientsSlider.scrollLeft; });
-        window.addEventListener('mouseup', () => isDraggingClients = false);
-        clientsSlider.addEventListener('mouseleave', () => isDraggingClients = false);
-        clientsSlider.addEventListener('mousemove', (e) => {
-            if (!isDraggingClients) return;
-            e.preventDefault();
-            clientsSlider.scrollLeft = scrollLeftClients - ((e.pageX - clientsSlider.offsetLeft) - startXClients) * 1.8;
-            checkInfiniteLoop();
-        });
-        clientsSlider.addEventListener('touchstart', () => isDraggingClients = true, { passive: true });
-        clientsSlider.addEventListener('touchend', () => isDraggingClients = false, { passive: true });
-
-        function checkInfiniteLoop() {
-            const halfWidth = clientsSlider.scrollWidth / 2;
-            if (clientsSlider.scrollLeft >= halfWidth) clientsSlider.scrollLeft -= halfWidth;
-            else if (clientsSlider.scrollLeft <= 0) clientsSlider.scrollLeft += halfWidth;
-        }
-        function autoScrollClients() {
-            if (!isDraggingClients && !clientsSlider.matches(':hover')) { clientsSlider.scrollLeft += 1; checkInfiniteLoop(); }
-            requestAnimationFrame(autoScrollClients);
-        }
-        requestAnimationFrame(autoScrollClients);
-
-        // 1. Datos Unificados D3 y Mapas
-        const branchesData = {
-            'alto-hospicio': {
-                id: 'alto-hospicio',
-                badge: 'I Región de Tarapacá', title: 'SAE ALTO HOSPICIO',
-                desc: 'Base operativa para logística portuaria y minera del Norte Grande.',
-                coords: [-70.0835, -20.2882], 
-                gmapTitle: 'SAE Alto Hospicio — Tarapacá', gmapAddress: 'Alto Hospicio, Región de Tarapacá',
-                gmapLink: 'https://maps.app.goo.gl/hq4KGef1yJhXZFL27?g_st=ic',
-                gmapEmbed: 'https://maps.google.com/maps?q=-20.288456179416833,-70.08430005734189+(Transportes+SAE+Alto+Hospicio)&t=&z=15&ie=UTF8&iwloc=&output=embed'
-            },
-            'calama': {
-                id: 'calama',
-                badge: 'II Región de Antofagasta', title: 'SAE CALAMA',
-                desc: 'Centro de soporte directo a faenas mineras y operaciones de alta montaña.',
-                coords: [-68.9242, -22.4871], 
-                gmapTitle: 'SAE Calama — Antofagasta', gmapAddress: 'Calama, Región de Antofagasta',
-                gmapLink: 'https://maps.app.goo.gl/Mp3m6zgiWgHDJpoL8?g_st=ic',
-                gmapEmbed: 'https://maps.google.com/maps?q=-22.48721240327381, -68.924308339982+(Transportes+SAE+Calama)&t=&z=15&ie=UTF8&iwloc=&output=embed'
-            },
-            'la-portada': {
-                id: 'la-portada',
-                badge: 'II Región de Antofagasta', title: 'SAE LA PORTADA',
-                desc: 'Sucursal industrial sector La Portada en Antofagasta, enfocada en distribución regional y suministros.',
-                coords: [-70.4158, -23.4977], 
-                gmapTitle: 'SAE La Portada — Antofagasta', gmapAddress: 'Sector La Portada, Antofagasta',
-                gmapLink: 'https://maps.app.goo.gl/pQYVMxQz4D62PWmSA?g_st=ic',
-                gmapEmbed: 'https://maps.google.com/maps?q=-23.497811257167815, -70.41592675255164+(Transportes+SAE+La+Portada)&t=&z=15&ie=UTF8&iwloc=&output=embed'
-            },
-            'la-negra': {
-                id: 'la-negra',
-                badge: 'II Región de Antofagasta', title: 'SAE LA NEGRA',
-                desc: 'Complejo Industrial La Negra, hub estratégico para transporte pesado y carga minera.',
-                coords: [-70.3050, -23.7667],
-                gmapTitle: 'SAE La Negra — Antofagasta', gmapAddress: 'Sector Industrial La Negra, Antofagasta',
-                gmapLink: 'https://maps.app.goo.gl/gRZQFQ1moYK7dL9N6?g_st=ic',
-                gmapEmbed: 'https://maps.google.com/maps?q=-23.766806199664497, -70.30505265636437+(Transportes+SAE+La+Negra)&t=&z=14&ie=UTF8&iwloc=&output=embed'
-            },
-            'copiapo': {
-                id: 'copiapo',
-                badge: 'III Región de Atacama', title: 'SAE COPIAPÓ',
-                desc: 'Base operativa de conexión minera y agroindustrial en la Región de Atacama.',
-                coords: [-70.4019, -27.3140],
-                gmapTitle: 'SAE Copiapó — Atacama', gmapAddress: 'Copiapó, Región de Atacama',
-                gmapLink: 'https://maps.app.goo.gl/qu5jSNEbKRiK4C6Z8?g_st=ic',
-                gmapEmbed: 'https://maps.google.com/maps?q=-27.31423161248198, -70.4021270191673+(Transportes+SAE+Copiapo)&t=&z=15&ie=UTF8&iwloc=&output=embed'
-            },
-            'coquimbo': {
-                id: 'coquimbo',
-                badge: 'IV Región de Coquimbo', title: 'CASA MATRIZ (COQUIMBO)',
-                desc: 'Gerencia General, Torre de Control CIF 24/7 y Centro Logístico Principal.',
-                coords: [-71.2941, -29.9765],
-                gmapTitle: 'Casa Matriz SAE — Coquimbo', gmapAddress: 'Barrio Industrial, Coquimbo',
-                gmapLink: 'https://maps.app.goo.gl/tXTgNYGjikzQHQzv7?g_st=ic',
-                gmapEmbed: 'https://maps.google.com/maps?q=-29.976355620633207, -71.29435459224386+(Casa+Matriz+Transportes+SAE+Coquimbo)&t=&z=15&ie=UTF8&iwloc=&output=embed'
-            },
-            'lampa': {
-                id: 'lampa',
-                badge: 'Región Metropolitana', title: 'SAE LAMPA (SANTIAGO)',
-                desc: 'Centro de consolidación para rutas troncales y distribución a corporativos.',
-                coords: [-70.7504, -33.2597],
-                gmapTitle: 'SAE Lampa — Santiago RM', gmapAddress: 'Lampa, Región Metropolitana, Santiago',
-                gmapLink: 'https://maps.app.goo.gl/TAKzGgL58QskpaR5A?g_st=ic',
-                gmapEmbed: 'https://maps.google.com/maps?q=-33.25979452522498, -70.75052632717413 +(Transportes+SAE+Lampa)&t=&z=14&ie=UTF8&iwloc=&output=embed'
-            }
-        };
-
-        const branchesList = Object.values(branchesData);
-        let d3Svg, d3G, d3Projection;
-
-        // 3. Inicializar Mapa D3 (Chile Completo Oficial)
-        function initD3Map() {
-            const mapContainer = d3.select("#d3-map-canvas");
-            if (!mapContainer.node()) return;
-
-            const vWidth = 400;
-            const vHeight = 600;
-
-            d3Svg = mapContainer.append("svg")
-                .attr("viewBox", `0 0 ${vWidth} ${vHeight}`)
-                .attr("preserveAspectRatio", "xMidYMid meet")
-                .attr("width", "100%")
-                .attr("height", "100%")
-                .style("display", "block");
-
-            d3G = d3Svg.append("g");
-
-            // Paquete oficial TopoJSON 10m (100% estable sin CORS)
-            d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-10m.json").then(function(world) {
-                d3.select("#d3-loading-screen").transition().duration(500).style("opacity", 0).remove();
-                
-                const chile = topojson.feature(world, world.objects.countries).features.find(d => d.id === "152");
-                
-                // Encuadre forzado exclusivo para Chile Continental 
-                // Ignoramos Isla de Pascua que empuja el mapa hacia la derecha
-                const mainlandBounds = {
-                    type: "FeatureCollection",
-                    features: [{
-                        type: "Feature",
-                        geometry: {
-                            type: "LineString",
-                            coordinates: [
-                                [-75.5, -17.5], // Extremo Noroeste
-                                [-66.5, -56.0]  // Extremo Sureste
-                            ]
-                        }
-                    }]
-                };
-
-                const paddingX = 50; 
-                const paddingY = 30; 
-                
-                // Aplicamos el encuadre matemático a los límites de Chile continental
-                d3Projection = d3.geoMercator().fitExtent(
-                    [[paddingX, paddingY], [vWidth - paddingX, vHeight - paddingY]], 
-                    mainlandBounds
-                );
-
-                const path = d3.geoPath().projection(d3Projection);
-
-                // Dibujar Chile
-                d3G.append("path")
-                    .datum(chile)
-                    .attr("d", path)
-                    .attr("class", "d3-map-path");
-
-                // Dibujar pines
-                const markers = d3G.selectAll("g.marker-group")
-                    .data(branchesList)
-                    .enter().append("g")
-                    .attr("class", "marker-group")
-                    .attr("transform", d => {
-                        const [x, y] = d3Projection(d.coords);
-                        return `translate(${x}, ${y})`;
-                    });
-
-                markers.append("circle").attr("r", 4.5).attr("class", "d3-marker-pulse");
-                
-                markers.append("circle")
-                    .attr("r", 4.5)
-                    .attr("class", "d3-marker")
-                    .attr("id", d => `d3-marker-${d.id}`)
-                    .on("click", (event, d) => handleBranchSelection(d.id));
-
-                handleBranchSelection('alto-hospicio');
-
-            }).catch(err => {
-                console.error("Error cargando mapa D3:", err);
-                document.getElementById('d3-loading-screen').innerHTML = "<span class='text-red-500'>Error de conexión al servidor de mapas</span>";
-            });
-        }
-
-        // 4. Controlador Central de Selección
-        function handleBranchSelection(key) {
-            const data = branchesData[key];
-            if (!data) return;
-
-            // Sync Mobile Select
-            const mobileSelect = document.getElementById('mobile-branch-select');
-            if (mobileSelect && mobileSelect.value !== key) mobileSelect.value = key;
-
-            // Actualizar botones (Desktop)
-            document.querySelectorAll('.branch-item').forEach(btn => {
-                btn.classList.remove('bg-blue-50/80', 'border-mapRoyal', 'border-l-mapRoyal', 'shadow-md');
-                btn.classList.add('bg-white', 'border-slate-200');
-                const icon = btn.querySelector('i');
-                if(icon) icon.className = btn.id === 'btn-coquimbo' ? 'fa-solid fa-star text-amber-500 text-base' : 'fa-solid fa-location-dot text-slate-300 text-base transition';
-            });
-            const activeBtn = document.getElementById('btn-' + key);
-            if (activeBtn) {
-                activeBtn.classList.remove('bg-white', 'border-slate-200');
-                activeBtn.classList.add('bg-blue-50/80', 'border-mapRoyal', 'border-l-mapRoyal', 'shadow-md');
-                const activeIcon = activeBtn.querySelector('i');
-                if(activeIcon) activeIcon.className = key === 'coquimbo' ? 'fa-solid fa-star text-amber-500 text-base' : 'fa-solid fa-location-dot text-mapRoyal text-base';
-            }
-
-            // Actualizar Google Maps
-            document.getElementById('gmap-branch-title').textContent = data.gmapTitle;
-            document.getElementById('gmap-external-link').href = data.gmapLink;
-            document.getElementById('gmap-iframe').src = data.gmapEmbed;
-            document.getElementById('gmap-address-footer').innerHTML = `<i class="fa-solid fa-map-pin text-saeBlue mr-1"></i> ${data.gmapAddress}`;
-
-            // Actualizar Mapa D3 y alinear Tooltip usando posiciones absolutas del documento
-            if (d3G && d3Projection) {
-                d3G.selectAll(".d3-marker").classed("active", false);
-                d3.select(`#d3-marker-${key}`).classed("active", true);
-
-                const tooltip = document.getElementById('d3-tooltip-box');
-                document.getElementById('d3-card-badge').textContent = data.badge;
-                document.getElementById('d3-card-title').textContent = data.title;
-                document.getElementById('d3-card-desc').textContent = data.desc;
-                
-                requestAnimationFrame(() => {
-                    const markerNode = document.getElementById(`d3-marker-${key}`);
-                    if(markerNode) {
-                        const markerRect = markerNode.getBoundingClientRect();
-                        
-                        const absoluteLeft = markerRect.left + window.scrollX + (markerRect.width / 2);
-                        const absoluteTop = markerRect.top + window.scrollY;
-                        
-                        tooltip.style.left = `${absoluteLeft}px`;
-                        tooltip.style.top = `${absoluteTop}px`;
-                        tooltip.classList.add('show');
-                    }
-                });
-            }
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            initD3Map();
-            setTimeout(() => { if(!d3Svg) handleBranchSelection('alto-hospicio'); }, 300);
-        });
-
-        // Reposicionar Tooltip si se cambia el tamaño de la ventana o se hace scroll
-        window.addEventListener('resize', () => {
-            const activeDot = document.querySelector('.d3-marker.active');
-            if (activeDot) {
-                const key = activeDot.id.replace('d3-marker-', '');
-                handleBranchSelection(key);
-            }
-        });
-
-        // Contadores Animados
-        const counters = document.querySelectorAll('.counter');
-        const counterObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const el = entry.target;
-                    const target = parseInt(el.getAttribute('data-target'), 10);
-                    let count = 0;
-                    const step = Math.max(1, Math.ceil(target / 45));
-                    const timer = setInterval(() => {
-                        count += step;
-                        if (count >= target) {
-                            el.textContent = target;
-                            clearInterval(timer);
-                        } else {
-                            el.textContent = count;
-                        }
-                    }, 25);
-                    observer.unobserve(el);
-                }
-            });
-        }, { threshold: 0.3 });
-        counters.forEach(counter => counterObserver.observe(counter));
-
-        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
-            document.getElementById('mobile-menu').classList.toggle('hidden');
-        });
-    </script>
+    <script src="./frontend/js/main.js"></script>
 </body>
 </html>
