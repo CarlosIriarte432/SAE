@@ -110,7 +110,6 @@ app.post('/api/chat', async (req, res) => {
 - Frutícola: Mantención de cadena de frío para exportación (Termos Frigoríficos).
 - Granos: Logística de alto tonelaje hacia plantas de silos (Tolvas y Etelvinas).
 - Carga Peligrosa: Transporte de combustibles y sustancias peligrosas (Estanques certificados).
-- Corporativo: Soluciones exclusivas y distribución (Furgones, Siders).
 
 [3. INFRAESTRUCTURA Y FLOTA]
 - Más de 300 colaboradores, 280 camiones motrices y 107 equipos.
