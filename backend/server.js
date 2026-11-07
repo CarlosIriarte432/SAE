@@ -77,7 +77,7 @@ app.post('/api/cotizar', async (req, res) => {
     try {
         const data = await resend.emails.send({
             from: 'Contacto SAE <onboarding@resend.dev>', // En producción cambiar al dominio de SAE
-            to: ['tu_correo_de_prueba@gmail.com'], // Reemplazar por el correo de destino real
+            to: ['carlosiriarte432@hotmail.com'], // Reemplazar por el correo de destino real
             subject: emailSubject,
             html: emailHtml
         });
