@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Colaboradores - Transportes SAE</title>
+    <link rel="icon" type="image/png" href="./frontend/src/favicon.png">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;0,800;0,900;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Configuración de Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        display: ['"Barlow Condensed"', 'sans-serif'],
+                    },
+                    colors: {
+                        saeNavy: '#06152d',
+                        saeBlue: '#004b93',
+                        saeCyan: '#00b4d8',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .font-industrial {
+            font-family: 'Barlow Condensed', sans-serif;
+            letter-spacing: 0.02em;
+        }
+    </style>
+</head>
+<body class="font-sans text-slate-800 antialiased bg-slate-50 selection:bg-saeCyan selection:text-saeNavy min-h-screen flex flex-col">
+
+    <!-- NAVBAR SIMPLE -->
+    <nav class="sticky top-0 w-full z-50 bg-white border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <a href="index.html" class="flex items-center gap-3 group">
+                    <img src="../frontend/src/logo.png" alt="Transportes SAE Logo" class="h-10 md:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105" onerror="this.style.display='none'; document.getElementById('logo-fallback').classList.remove('hidden');">
+                    <div id="logo-fallback" class="hidden flex-col">
+                        <span class="font-industrial text-4xl font-black text-saeNavy tracking-wider leading-none">
+                            SAE<span class="text-saeCyan text-xl align-top">®</span>
+                        </span>
+                        <span class="font-industrial text-xs font-bold text-saeBlue tracking-[0.28em] uppercase -mt-0.5">
+                            Transportes
+                        </span>
+                    </div>
+                </a>
+                <a href="../index.html" class="font-industrial text-lg font-bold uppercase tracking-wider text-saeNavy hover:text-saeBlue transition flex items-center gap-2">
+                    <i class="fa-solid fa-arrow-left text-sm"></i> Volver al sitio
+                </a>
+            </div>
+        </div>
+    </nav>
+     <!-- TARJETAS DE ACCESO -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            <!-- Tarjeta GoTruck -->
+            <a href="https://sae.grupodtg.com/dir/" class="group relative bg-white rounded-3xl p-8 border border-slate-200 shadow-sm hover:shadow-xl hover:border-saeBlue transition-all duration-300 flex flex-col h-full overflow-hidden">
+                <div class="absolute top-0 right-0 w-24 h-24 bg-slate-50 rounded-bl-full -z-0 group-hover:bg-blue-50 transition-colors"></div>
+                <div class="relative z-10 flex flex-col h-full">
+                    <!-- Espacio para el logo de GoTruck -->
+                    <div class="mb-5 h-8 flex justify-start items-center">
+                        <img src="../frontend/src/gotrucklogo.png" alt="GoTruck" class="h-20 w-auto object-contain transition-transform duration-300 group-hover:scale-105" onerror="this.outerHTML='<span class=\'text-xs font-bold text-slate-300 uppercase tracking-widest border border-dashed border-slate-300 px-2 py-1 rounded\'>[ LOGO GOTRUCK ]</span>';">
+                    </div>
+                    <br>
+                    <br>
+                    <h3 class="font-industrial text-3xl font-black text-saeNavy uppercase mb-2">GoTruck TMS</h3>
+                    <p class="text-slate-600 text-sm flex-grow mb-6">Plataforma principal de gestión de transporte operativo. Control de viajes, asignaciones y liquidaciones.</p>
+                    <div class="flex items-center text-saeBlue font-bold text-sm uppercase tracking-wide font-industrial group-hover:translate-x-2 transition-transform">
+                        Ingresar a la plataforma <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Tarjeta SAETracker -->
+            <a href="#" class="group relative bg-white rounded-3xl p-8 border border-slate-200 shadow-sm hover:shadow-xl hover:border-amber-500 transition-all duration-300 flex flex-col h-full overflow-hidden">
+                <div class="absolute top-0 right-0 w-24 h-24 bg-slate-50 rounded-bl-full -z-0 group-hover:bg-amber-50 transition-colors"></div>
+                <div class="absolute top-6 right-6 z-20">
+                    <span class="bg-amber-100 text-amber-700 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full border border-amber-200 flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span> En Desarrollo</span>
+                </div>
+                <div class="relative z-10 flex flex-col h-full">
+                    <!-- Espacio para el logo de SAETracker -->
+                   <div class="mb-5 h-8 flex justify-start items-center">
+                        <img src="../frontend/src/saetrackerlogo.png" alt="SAETracker" class="h-20 w-auto object-contain transition-transform duration-300 group-hover:scale-105" onerror="this.outerHTML='<span class=\'text-xs font-bold text-slate-300 uppercase tracking-widest border border-dashed border-slate-300 px-2 py-1 rounded\'>[ LOGO SAETRACKER ]</span>';">
+                    </div>
+                    <br>
+                    <br>
+                    <h3 class="font-industrial text-3xl font-black text-saeNavy uppercase mb-2">SAETracker</h3>
+                    <p class="text-slate-600 text-sm flex-grow mb-6">Plataforma interna de monitoreo GPS y telemetría de flota en tiempo real integrada a la Torre de Control CIF.</p>
+                    <div class="flex items-center text-slate-400 font-bold text-sm uppercase tracking-wide font-industrial group-hover:text-amber-500 group-hover:translate-x-2 transition-all">
+                        Acceso Próximamente <i class="fa-solid fa-lock ml-2"></i>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Tarjeta SAEDocs -->
+            <a href="https://carlosiriarte432.github.io/SAEDocs/frontend/login.html" class="group relative bg-white rounded-3xl p-8 border border-slate-200 shadow-sm hover:shadow-xl hover:border-saeCyan transition-all duration-300 flex flex-col h-full overflow-hidden">
+                <div class="absolute top-0 right-0 w-24 h-24 bg-slate-50 rounded-bl-full -z-0 group-hover:bg-cyan-50 transition-colors"></div>
+
+                <div class="relative z-10 flex flex-col h-full">
+                    <!-- Espacio para el logo de SAEDocs -->
+                    <div class="mb-5 h-8 flex justify-start items-center">
+                        <img src="../frontend/src/saedocslogo.png" alt="SAEDocs" class="h-20 w-auto object-contain transition-transform duration-300 group-hover:scale-105" onerror="this.outerHTML='<span class=\'text-xs font-bold text-slate-300 uppercase tracking-widest border border-dashed border-slate-300 px-2 py-1 rounded\'>[ LOGO SAEDOCS ]</span>';">
+                    </div>
+                    <br>
+                    <br>
+                    <h3 class="font-industrial text-3xl font-black text-saeNavy uppercase mb-2">SAEDocs</h3>
+                    <p class="text-slate-600 text-sm flex-grow mb-6">Sistema integral de gestión documental de flota mediante control de vigencia por alertas de semáforo.</p>
+                    <div class="flex items-center text-saeBlue font-bold text-sm uppercase tracking-wide font-industrial group-hover:translate-x-2 transition-transform">
+                        Ingresar a la plataforma <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+    </main>
+
+    <!-- FOOTER SIMPLE -->
+    <footer class="bg-white border-t border-slate-200 py-6 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500 font-medium flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p>&copy; 2026 Transportes SAE Ltda. Uso exclusivo para personal autorizado.</p>
+            <div class="flex items-center gap-2 group cursor-default">
+                <span>Powered by</span> 
+                <span class="font-bold text-slate-400 group-hover:text-saeNavy transition-colors">Zero Ping</span>
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-saeCyan opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-saeCyan"></span>
+                </span>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
